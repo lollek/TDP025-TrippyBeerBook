@@ -12,6 +12,7 @@ public class TabFragment extends Fragment {
     public static final int TAB_LIST = 0;
     public static final int TAB_ADD = 1;
     public static final int TAB_SETTINGS = 2;
+    public static final int NUM_TABS = 3;
 
     public TabFragment() {}
 
@@ -22,6 +23,15 @@ public class TabFragment extends Fragment {
         args.putInt(ARG_SECTION_NUMBER, tabID);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public static int getTabNameID(int tabID) {
+        switch (tabID) {
+            case TabFragment.TAB_LIST:     return R.string.tab_header_list;
+            case TabFragment.TAB_ADD:      return R.string.tab_header_add;
+            case TabFragment.TAB_SETTINGS: return R.string.tab_header_settings;
+            default:                       return -1;
+        }
     }
 
     @Override
