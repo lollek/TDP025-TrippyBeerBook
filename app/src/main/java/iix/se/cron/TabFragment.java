@@ -14,8 +14,6 @@ public class TabFragment extends Fragment {
     public static final int TAB_SETTINGS = 2;
     public static final int NUM_TABS = 3;
 
-    public TabFragment() {}
-
     // Returns a new instance of this fragment for the given section number.
     public static TabFragment newInstance(int tabID) {
         TabFragment fragment = new TabFragment();
@@ -27,10 +25,19 @@ public class TabFragment extends Fragment {
 
     public static int getTabNameID(int tabID) {
         switch (tabID) {
-            case TabFragment.TAB_LIST:     return R.string.tab_header_list;
-            case TabFragment.TAB_ADD:      return R.string.tab_header_add;
-            case TabFragment.TAB_SETTINGS: return R.string.tab_header_settings;
-            default:                       return -1;
+            case TAB_LIST:     return R.string.tab_header_list;
+            case TAB_ADD:      return R.string.tab_header_add;
+            case TAB_SETTINGS: return R.string.tab_header_settings;
+            default:           return -1;
+        }
+    }
+
+    public static int getTabLayoutID(int tabID) {
+        switch(tabID) {
+            case TAB_LIST:     return R.layout.fragment_list;
+            case TAB_ADD:      return R.layout.fragment_add;
+            case TAB_SETTINGS: return R.layout.fragment_settings;
+            default:           return -1;
         }
     }
 
@@ -38,14 +45,7 @@ public class TabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Bundle args = getArguments();
-        switch (args == null ? -1 : args.getInt(ARG_SECTION_NUMBER)) {
-            case TAB_LIST:
-                return inflater.inflate(R.layout.fragment_list, container, false);
-            case TAB_ADD:
-                return inflater.inflate(R.layout.fragment_add, container, false);
-            case TAB_SETTINGS:
-                return inflater.inflate(R.layout.fragment_settings, container, false);
-            default: return null;
-        }
+        int fragmentID = getTabLayoutID(args == null ? -1 : args.getInt(ARG_SECTION_NUMBER));
+        return inflater.inflate(fragmentID, container, false);
     }
 }
