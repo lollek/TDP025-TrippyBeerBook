@@ -1,10 +1,14 @@
 package iix.se.cron.add;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -14,27 +18,57 @@ import iix.se.cron.TabFragment;
 public class AddTabFragment extends TabFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
+        final View view = super.onCreateView(inflater, container, savedInstanceState);
         assert view != null;
 
-        final Calendar cal = Calendar.getInstance();
+        initActionPicker(view);
+        initTimePicker(view);
+        initDatePicker(view);
 
-        /* Set up time picker */
+        return view;
+    }
+
+    private void initActionPicker(View view) {
+        final String[] actions = getResources().getStringArray(R.array.actions);
+        final Context context = getActivity();
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(getString(R.string.actions_title));
+        builder.setItems(actions, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(context.getApplicationContext(), actions[i], Toast.LENGTH_SHORT).show();
+            }
+        });
+        final AlertDialog alert = builder.create();
+
+        final Button actionPicker = (Button) view.findViewById(R.id.actionPicker);
+        actionPicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.show();
+            }
+        });
+    }
+
+    private void initTimePicker(View view) {
         final Button timePicker = (Button) view.findViewById(R.id.timePicker);
         final String timeTitle = getString(R.string.time_picker_title);
+        final Calendar cal = Calendar.getInstance();
         final int hour = cal.get(Calendar.HOUR_OF_DAY);
         final int minute = cal.get(Calendar.MINUTE);
         timePicker.setText(TimePickerFragment.getTimeString(timeTitle, hour, minute));
         timePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectTime(view);
+                new TimePickerFragment().show(getFragmentManager(), "timePicker");
             }
         });
+    }
 
-        /* Set up date picker */
+    private void initDatePicker(View view) {
         final Button datePicker = (Button) view.findViewById(R.id.datePicker);
         final String dateTitle = getString(R.string.date_picker_title);
+        final Calendar cal = Calendar.getInstance();
         final int year = cal.get(Calendar.YEAR);
         final int month = cal.get(Calendar.MONTH);
         final int day = cal.get(Calendar.DAY_OF_MONTH);
@@ -42,20 +76,8 @@ public class AddTabFragment extends TabFragment {
         datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectDate(view);
+                new DatePickerFragment().show(getFragmentManager(), "datePicker");
             }
         });
-
-        return view;
-    }
-
-    @SuppressWarnings("UnusedParameters")
-    private void selectDate(View view) {
-        new DatePickerFragment().show(getFragmentManager(), "datePicker");
-    }
-
-    @SuppressWarnings("UnusedParameters")
-    public void selectTime(View view) {
-        new TimePickerFragment().show(getFragmentManager(), "timePicker");
     }
 }

@@ -8,33 +8,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Spinner
+        <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner"
-            android:entries="@array/actions"
-            android:spinnerMode="dropdown"
-            android:contentDescription="@string/title_action"
-            android:textAlignment="center"
-            android:layout_alignParentTop="false" />
+            android:text="@string/action_picker_title"
+            android:id="@+id/actionPicker"
+            android:layout_below="@+id/timePicker" />
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/date_picker_title"
             android:id="@+id/datePicker"
-            android:calendarViewShown="false"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="false"
-            android:layout_below="@+id/spinner" />
+            android:calendarViewShown="false" />
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/time_picker_title"
             android:id="@+id/timePicker"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:layout_below="@+id/datePicker" />
 
     </RelativeLayout>
