@@ -1,4 +1,4 @@
-package iix.se.cron;
+package iix.se.cron.add;
 
 
 import android.app.Dialog;
@@ -12,8 +12,15 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 
+import iix.se.cron.R;
+
 public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
+
+    public static CharSequence getTimeString(String title, int hour, int minute) {
+        return Html.fromHtml(String.format("%s<br/><small>%02d:%02d</small>",
+                title, hour, minute));
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -25,10 +32,8 @@ public class TimePickerFragment extends DialogFragment
     }
 
     @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+    public void onTimeSet(TimePicker view, int hour, int minute) {
         final Button timePicker = (Button) getActivity().findViewById(R.id.timePicker);
-        final String text = String.format("%s<br/><small>%02d:%02d</small>",
-                getString(R.string.time_picker_title), hourOfDay, minute);
-        timePicker.setText(Html.fromHtml(text));
+        timePicker.setText(getTimeString(getString(R.string.time_picker_title), hour, minute));
     }
 }

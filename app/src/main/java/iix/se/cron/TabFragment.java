@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import iix.se.cron.add.AddTabFragment;
+
 // Fragments for the tabs
 public class TabFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";

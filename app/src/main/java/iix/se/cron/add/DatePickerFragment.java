@@ -1,4 +1,4 @@
-package iix.se.cron;
+package iix.se.cron.add;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -10,8 +10,15 @@ import android.widget.DatePicker;
 
 import java.util.Calendar;
 
+import iix.se.cron.R;
+
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
+
+    public static CharSequence getDateString(String title, int year, int month, int day) {
+        return Html.fromHtml(String.format("%s<br/><small>%d-%02d-%02d</small>",
+                title, year, month, day));
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -25,8 +32,7 @@ public class DatePickerFragment extends DialogFragment
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
         final Button datePicker = (Button) getActivity().findViewById(R.id.datePicker);
-        final String text = String.format("%s<br/><small>%d-%02d-%02d</small>",
-                getString(R.string.date_picker_title), year, month, day);
-        datePicker.setText(Html.fromHtml(text));
+        datePicker.setText(getDateString(getString(R.string.date_picker_title), year, month, day));
     }
+
 }
