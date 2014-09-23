@@ -9,7 +9,8 @@
     <string name="title_date">Date</string>
     <string name="title_time">Time</string>
     <string name="title_action">Action</string>
-    
+    <string name="time_picker_title">Time</string>
+
     <string-array name="actions">
         <item>Sms</item>
         <item>Email</item>

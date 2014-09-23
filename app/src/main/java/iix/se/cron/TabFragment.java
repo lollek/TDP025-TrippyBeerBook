@@ -16,7 +16,11 @@ public class TabFragment extends Fragment {
 
     // Returns a new instance of this fragment for the given section number.
     public static TabFragment newInstance(int tabID) {
-        TabFragment fragment = new TabFragment();
+        TabFragment fragment;
+        switch(tabID) {
+            case TAB_ADD: fragment = new AddTabFragment(); break;
+            default:      fragment = new TabFragment(); break;
+        }
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, tabID);
         fragment.setArguments(args);
@@ -40,6 +44,7 @@ public class TabFragment extends Fragment {
             default:           return -1;
         }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
