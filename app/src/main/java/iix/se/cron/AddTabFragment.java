@@ -11,6 +11,7 @@ public class AddTabFragment extends TabFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
+        assert view != null;
         final Button timePicker = (Button) view.findViewById(R.id.timePicker);
         timePicker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -19,10 +20,23 @@ public class AddTabFragment extends TabFragment {
             }
         });
 
+        final Button datePicker = (Button) view.findViewById(R.id.datePicker);
+        datePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePickerFragment(view);
+            }
+        });
+
         return view;
     }
 
-    /* Time Picker in fragment_add */
+    @SuppressWarnings("UnusedParameters")
+    private void showDatePickerFragment(View view) {
+        new DatePickerFragment().show(getFragmentManager(), "datePicker");
+    }
+
+    @SuppressWarnings("UnusedParameters")
     public void showTimePickerFragment(View view) {
         new TimePickerFragment().show(getFragmentManager(), "timePicker");
     }

@@ -27,7 +27,7 @@ public class TimePickerFragment extends DialogFragment
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         final Button timePicker = (Button) getActivity().findViewById(R.id.timePicker);
-        final String text = String.format("%s<br/><small>%d:%d</small>",
+        final String text = String.format("%s<br/><small>%02d:%02d</small>",
                 getString(R.string.time_picker_title), hourOfDay, minute);
         timePicker.setText(Html.fromHtml(text));
     }
