@@ -2,11 +2,9 @@ package iix.se.cron;
 
 import android.app.Activity;
 import android.app.ActionBar;
-import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
@@ -20,6 +18,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
         // Set up the action bar. Add tabs, hide home and title
         final ActionBar actionBar = getActionBar();
+        assert actionBar != null;
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
