@@ -16,6 +16,7 @@ import iix.se.cron.R;
 import iix.se.cron.TabFragment;
 
 public class AddTabFragment extends TabFragment {
+    Calendar mCal;
     DatePickerFragment mDatePicker;
     TimePickerFragment mTimePicker;
 
@@ -24,14 +25,17 @@ public class AddTabFragment extends TabFragment {
         final View view = super.onCreateView(inflater, container, savedInstanceState);
         assert view != null;
 
+        /* Calendar tracks both datePicker and timePicker */
+        mCal = Calendar.getInstance();
+
         initActionPicker(view);
         initTimePicker(view);
 
         /* Init mDatePicker */
         final Button datePickerButton = (Button) view.findViewById(R.id.datePicker);
         final String datePickerTitle = getString(R.string.date_picker_title);
-        mDatePicker = DatePickerFragment.newInstance(R.id.datePicker, R.string.date_picker_title);
-        mDatePicker.resetButtonDate(datePickerButton, datePickerTitle);
+        mDatePicker = DatePickerFragment.newInstance(mCal, R.id.datePicker, R.string.date_picker_title);
+        mDatePicker.updateButtonDate(datePickerButton, datePickerTitle);
         datePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
