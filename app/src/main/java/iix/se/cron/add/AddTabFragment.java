@@ -29,7 +29,18 @@ public class AddTabFragment extends TabFragment {
         mCal = Calendar.getInstance();
 
         initActionPicker(view);
-        initTimePicker(view);
+
+        /* Init mTimePicker */
+        final Button timePickerButton = (Button) view.findViewById(R.id.timePicker);
+        final String timePickerTitle = getString(R.string.time_picker_title);
+        mTimePicker = TimePickerFragment.newInstance(mCal, R.id.timePicker, R.string.time_picker_title);
+        mTimePicker.updateButtonTime(timePickerButton, timePickerTitle);
+        timePickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTimePicker.show(getFragmentManager(), "timePicker");
+            }
+        });
 
         /* Init mDatePicker */
         final Button datePickerButton = (Button) view.findViewById(R.id.datePicker);
@@ -64,22 +75,6 @@ public class AddTabFragment extends TabFragment {
             @Override
             public void onClick(View view) {
                 alert.show();
-            }
-        });
-    }
-
-    private void initTimePicker(View view) {
-        mTimePicker = new TimePickerFragment();
-        final Button timePickerButton = (Button) view.findViewById(R.id.timePicker);
-        final String timeTitle = getString(R.string.time_picker_title);
-        final Calendar cal = Calendar.getInstance();
-        final int hour = cal.get(Calendar.HOUR_OF_DAY);
-        final int minute = cal.get(Calendar.MINUTE);
-        timePickerButton.setText(TimePickerFragment.getTimeString(timeTitle, hour, minute));
-        timePickerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mTimePicker.show(getFragmentManager(), "timePicker");
             }
         });
     }

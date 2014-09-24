@@ -12,28 +12,51 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 
-import iix.se.cron.R;
-
 public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
+    private final static String BUTTON_ID = "BUTTON_ID";
+    private final static String TITLE_STRING_ID = "TITLE_STRING_ID";
+    private Calendar mCal;
 
-    public static CharSequence getTimeString(String title, int hour, int minute) {
-        return Html.fromHtml(String.format("%s<br/><small>%02d:%02d</small>",
-                title, hour, minute));
+    public static TimePickerFragment newInstance(Calendar cal, int buttonID, int titleID) {
+        final TimePickerFragment fragment = new TimePickerFragment();
+        final Bundle args = new Bundle();
+        args.putInt(BUTTON_ID, buttonID);
+        args.putInt(TITLE_STRING_ID, titleID);
+        fragment.setArguments(args);
+
+        /* Link calendar to the main one */
+        fragment.mCal = cal;
+
+        return fragment;
+    }
+
+    public void updateButtonTime(Button button, String title) {
+        button.setText(Html.fromHtml(String.format(
+                "%s<br/><small>%02d:%02d</small>",
+                title,
+                mCal.get(Calendar.HOUR_OF_DAY),
+                mCal.get(Calendar.MINUTE))));
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Calendar cal = Calendar.getInstance();
-        final int hour = cal.get(Calendar.HOUR_OF_DAY);
-        final int min = cal.get(Calendar.MINUTE);
-        final boolean is24h = DateFormat.is24HourFormat(getActivity());
-        return new TimePickerDialog(getActivity(), this, hour, min, is24h);
+        return new TimePickerDialog(
+                getActivity(),
+                this,
+                mCal.get(Calendar.HOUR_OF_DAY),
+                mCal.get(Calendar.MINUTE),
+                DateFormat.is24HourFormat(getActivity()));
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hour, int minute) {
-        final Button timePicker = (Button) getActivity().findViewById(R.id.timePicker);
-        timePicker.setText(getTimeString(getString(R.string.time_picker_title), hour, minute));
+        mCal.set(Calendar.HOUR_OF_DAY, hour);
+        mCal.set(Calendar.MINUTE, minute);
+
+        final Bundle args = getArguments();
+        final Button button = (Button) getActivity().findViewById(args.getInt(BUTTON_ID));
+        final String title = getString(args.getInt(TITLE_STRING_ID));
+        updateButtonTime(button, title);
     }
 }

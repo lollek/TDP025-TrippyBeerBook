@@ -12,44 +12,41 @@ import java.util.Calendar;
 
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
-    final static String BUTTON_ID = "BUTTON_ID";
-    final static String TITLE_STRING_ID = "TITLE_STRING_ID";
-    Calendar mCal;
+    private final static String BUTTON_ID = "BUTTON_ID";
+    private final static String TITLE_STRING_ID = "TITLE_STRING_ID";
+    private Calendar mCal;
 
-    public static DatePickerFragment newInstance(Calendar cal, int buttonID, int stringID) {
-        /* Add button and button title IDs */
+    public static DatePickerFragment newInstance(Calendar cal, int buttonID, int titleID) {
         final DatePickerFragment fragment = new DatePickerFragment();
         final Bundle args = new Bundle();
         args.putInt(BUTTON_ID, buttonID);
-        args.putInt(TITLE_STRING_ID, stringID);
+        args.putInt(TITLE_STRING_ID, titleID);
         fragment.setArguments(args);
 
         /* Link calendar to the main one */
-        fragment.setCal(cal);
+        fragment.mCal = cal;
 
         return fragment;
     }
 
-    public void setCal(Calendar cal) {
-        mCal = cal;
-    }
-
     public void updateButtonDate(Button button, String title) {
-        button.setText(Html.fromHtml(
-                String.format("%s<br/><small>%d-%02d-%02d</small>",
-                        title,
-                        mCal.get(Calendar.YEAR),
-                        mCal.get(Calendar.MONTH) +1, /* NOTE: month is 0-indexed for some reason */
-                        mCal.get(Calendar.DAY_OF_MONTH))));
+        button.setText(Html.fromHtml(String.format(
+                "%s<br/><small>%d-%02d-%02d</small>",
+                title,
+                mCal.get(Calendar.YEAR),
+                mCal.get(Calendar.MONTH) +1, /* NOTE: month is 0-indexed for some reason */
+                mCal.get(Calendar.DAY_OF_MONTH))));
     }
 
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final int year = mCal.get(Calendar.YEAR);
-        final int month = mCal.get(Calendar.MONTH);
-        final int day = mCal.get(Calendar.DAY_OF_MONTH);
-        return new DatePickerDialog(getActivity(), this, year, month, day);
+        return new DatePickerDialog(
+                getActivity(),
+                this,
+                mCal.get(Calendar.YEAR),
+                mCal.get(Calendar.MONTH),
+                mCal.get(Calendar.DAY_OF_MONTH));
     }
 
     @Override
@@ -59,8 +56,8 @@ public class DatePickerFragment extends DialogFragment
         mCal.set(Calendar.DAY_OF_MONTH, day);
 
         final Bundle args = getArguments();
+        final Button button = (Button) getActivity().findViewById(args.getInt(BUTTON_ID));
         final String title = getString(args.getInt(TITLE_STRING_ID));
-        final Button datePicker = (Button) getActivity().findViewById(args.getInt(BUTTON_ID));
-        updateButtonDate(datePicker, title);
+        updateButtonDate(button, title);
     }
 }
