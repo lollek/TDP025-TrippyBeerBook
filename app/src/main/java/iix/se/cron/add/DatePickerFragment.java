@@ -15,6 +15,7 @@ import iix.se.cron.R;
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
+
     public static CharSequence getDateString(String title, int year, int month, int day) {
         return Html.fromHtml(String.format("%s<br/><small>%d-%02d-%02d</small>",
                 title, year, month, day));
@@ -31,8 +32,9 @@ public class DatePickerFragment extends DialogFragment
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
+         /* NOTE: month is 0-indexed for some reason */
         final Button datePicker = (Button) getActivity().findViewById(R.id.datePicker);
-        datePicker.setText(getDateString(getString(R.string.date_picker_title), year, month, day));
+        datePicker.setText(getDateString(getString(R.string.date_picker_title), year, month +1, day));
     }
 
 }
