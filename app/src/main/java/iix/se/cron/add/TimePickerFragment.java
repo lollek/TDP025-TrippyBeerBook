@@ -16,43 +16,46 @@ public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
     private final static String BUTTON_ID = "BUTTON_ID";
     private final static String TITLE_STRING_ID = "TITLE_STRING_ID";
-    private Calendar mCal;
+    private AddTabFragment mOwner;
 
-    public static TimePickerFragment newInstance(Calendar cal, int buttonID, int titleID) {
+    public static TimePickerFragment newInstance(AddTabFragment owner, int buttonID, int titleID) {
         final TimePickerFragment fragment = new TimePickerFragment();
         final Bundle args = new Bundle();
         args.putInt(BUTTON_ID, buttonID);
         args.putInt(TITLE_STRING_ID, titleID);
         fragment.setArguments(args);
 
-        /* Link calendar to the main one */
-        fragment.mCal = cal;
+        /* Add pointer to calendar owner */
+        fragment.mOwner = owner;
 
         return fragment;
     }
 
     public void updateButtonTime(Button button, String title) {
+        Calendar cal = mOwner.getCal();
         button.setText(Html.fromHtml(String.format(
                 "%s<br/><small>%02d:%02d</small>",
                 title,
-                mCal.get(Calendar.HOUR_OF_DAY),
-                mCal.get(Calendar.MINUTE))));
+                cal.get(Calendar.HOUR_OF_DAY),
+                cal.get(Calendar.MINUTE))));
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Calendar cal = mOwner.getCal();
         return new TimePickerDialog(
                 getActivity(),
                 this,
-                mCal.get(Calendar.HOUR_OF_DAY),
-                mCal.get(Calendar.MINUTE),
+                cal.get(Calendar.HOUR_OF_DAY),
+                cal.get(Calendar.MINUTE),
                 DateFormat.is24HourFormat(getActivity()));
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hour, int minute) {
-        mCal.set(Calendar.HOUR_OF_DAY, hour);
-        mCal.set(Calendar.MINUTE, minute);
+        Calendar cal = mOwner.getCal();
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, minute);
 
         final Bundle args = getArguments();
         final Button button = (Button) getActivity().findViewById(args.getInt(BUTTON_ID));

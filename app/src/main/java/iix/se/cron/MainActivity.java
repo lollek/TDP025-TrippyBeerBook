@@ -55,6 +55,10 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         }
     }
 
+    public ActivityDatabase getActivityDatabase() {
+        return mActivityDatabase;
+    }
+
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {

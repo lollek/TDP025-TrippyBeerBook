@@ -1,5 +1,6 @@
 package iix.se.cron.add;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -8,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
+import iix.se.cron.MainActivity;
 import iix.se.cron.R;
 import iix.se.cron.TabFragment;
 
@@ -26,43 +29,7 @@ public class AddTabFragment extends TabFragment {
         final View view = super.onCreateView(inflater, container, savedInstanceState);
         assert view != null;
 
-        /* Calendar tracks both datePicker and timePicker */
-        mCal = Calendar.getInstance();
-        mCal.set(Calendar.SECOND, 0);
-
-        /* Init mActionPicker */
-        mActionPicker = initMActionPicker(view);
-        final Button actionPickerButton = (Button) view.findViewById(R.id.actionPicker);
-        actionPickerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mActionPicker.show();
-            }
-        });
-
-        /* Init mTimePicker */
-        final Button timePickerButton = (Button) view.findViewById(R.id.timePicker);
-        final String timePickerTitle = getString(R.string.time_picker_title);
-        mTimePicker = TimePickerFragment.newInstance(mCal, R.id.timePicker, R.string.time_picker_title);
-        mTimePicker.updateButtonTime(timePickerButton, timePickerTitle);
-        timePickerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mTimePicker.show(getFragmentManager(), "timePicker");
-            }
-        });
-
-        /* Init mDatePicker */
-        final Button datePickerButton = (Button) view.findViewById(R.id.datePicker);
-        final String datePickerTitle = getString(R.string.date_picker_title);
-        mDatePicker = DatePickerFragment.newInstance(mCal, R.id.datePicker, R.string.date_picker_title);
-        mDatePicker.updateButtonDate(datePickerButton, datePickerTitle);
-        datePickerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDatePicker.show(getFragmentManager(), "datePicker");
-            }
-        });
+        resetAllInstances(view);
 
         /* Init mActivateTask */
         final Button activateTaskButton = (Button) view.findViewById(R.id.activateTask);
@@ -76,13 +43,98 @@ public class AddTabFragment extends TabFragment {
         return view;
     }
 
+    public Calendar getCal() {
+        return mCal;
+    }
+
+    private void resetAllInstances(View view) {
+        resetCalendar();
+        resetActionPicker(view);
+        resetTimePicker(view);
+        resetDatePicker(view);
+    }
+
+    private void resetCalendar() {
+        mCal = Calendar.getInstance();
+        mCal.set(Calendar.SECOND, 0);
+    }
+
+    private void resetActionPicker(final View view) {
+        final Button actionPickerButton = (Button) view.findViewById(R.id.actionPicker);
+        final String actionPickerTitle = getString(R.string.actions_title);
+
+        if (mActionPicker == null) {
+            /* Build AlertDialog */
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            final String[] actions = getResources().getStringArray(R.array.actions);
+            builder.setTitle(actionPickerTitle);
+            builder.setItems(actions, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    actionPickerButton.setText(Html.fromHtml(String.format(
+                            "%s<br/><small>%s</small>",
+                            actionPickerTitle, actions[i])));
+                    mAction = i;
+                }
+            });
+
+            /* Set onClickListener */
+            mActionPicker = builder.create();
+            actionPickerButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mActionPicker.show();
+                }
+            });
+        }
+        actionPickerButton.setText(actionPickerTitle);
+    }
+
+
+    /* Reset DatePicker button + fragment, and create it if needed */
+    private void resetDatePicker(View view) {
+        final Button datePickerButton = (Button) view.findViewById(R.id.datePicker);
+        final String datePickerTitle = getString(R.string.date_picker_title);
+        if (mDatePicker == null) {
+            mDatePicker = DatePickerFragment.newInstance(this, R.id.datePicker,
+                    R.string.date_picker_title);
+            datePickerButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mDatePicker.show(getFragmentManager(), "datePicker");
+                }
+            });
+        }
+        mDatePicker.updateButtonDate(datePickerButton, datePickerTitle);
+    }
+
+    /* Reset TimePicker button + fragment, and create it if needed */
+    private void resetTimePicker(View view) {
+        final Button timePickerButton = (Button) view.findViewById(R.id.timePicker);
+        final String timePickerTitle = getString(R.string.time_picker_title);
+        if (mTimePicker == null) {
+            mTimePicker = TimePickerFragment.newInstance(this, R.id.timePicker,
+                    R.string.time_picker_title);
+            timePickerButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mTimePicker.show(getFragmentManager(), "timePicker");
+                }
+            });
+        }
+        mTimePicker.updateButtonTime(timePickerButton, timePickerTitle);
+    }
+
     private void activateNewTask() {
         if (mCal.before(Calendar.getInstance())) {
             displayError("Time and date must be in the future");
         } else if (mAction == -1) {
             displayError("No action chosen");
         } else {
-            displayError("Success!");
+            final Activity activity = getActivity();
+            ((MainActivity) activity).getActivityDatabase().addTask(mCal, mAction);
+            Toast.makeText(activity.getApplicationContext(), "Task added", Toast.LENGTH_SHORT).show();
+            resetAllInstances(getView());
         }
     }
 
@@ -93,26 +145,4 @@ public class AddTabFragment extends TabFragment {
                 .show();
     }
 
-    private AlertDialog initMActionPicker(final View view) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-        /* Set Header */
-        final String action_title = getString(R.string.actions_title);
-        builder.setTitle(action_title);
-
-        /* Create Menu */
-        final String[] actions = getResources().getStringArray(R.array.actions);
-        builder.setItems(actions, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                final Button button = (Button) view.findViewById(R.id.actionPicker);
-                final String text = actions[i];
-                button.setText(Html.fromHtml(String.format(
-                        "%s<br/><small>%s</small>",
-                        action_title, text)));
-                mAction = i;
-            }
-        });
-        return builder.create();
-    }
 }
