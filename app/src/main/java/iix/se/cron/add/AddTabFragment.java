@@ -20,6 +20,7 @@ public class AddTabFragment extends TabFragment {
     int mAction;
     DatePickerFragment mDatePicker;
     TimePickerFragment mTimePicker;
+    AlertDialog mActionPicker;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,29 +31,12 @@ public class AddTabFragment extends TabFragment {
         mCal = Calendar.getInstance();
 
         /* Init ActionPicker */
-        final String[] actions = getResources().getStringArray(R.array.actions);
-        final String action_title = getString(R.string.actions_title);
-        final Context context = getActivity();
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(action_title);
-        builder.setItems(actions, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                final Button button = (Button) view.findViewById(R.id.actionPicker);
-                final String text = actions[i];
-                button.setText(Html.fromHtml(String.format(
-                        "%s<br/><small>%s</small>",
-                        action_title, text)));
-                mAction = i;
-            }
-        });
-        final AlertDialog alert = builder.create();
-
+        mActionPicker = initMActionPicker(view);
         final Button actionPickerButton = (Button) view.findViewById(R.id.actionPicker);
         actionPickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alert.show();
+                mActionPicker.show();
             }
         });
 
@@ -81,5 +65,25 @@ public class AddTabFragment extends TabFragment {
         });
 
         return view;
+    }
+
+    public AlertDialog initMActionPicker(final View view) {
+        final String[] actions = getResources().getStringArray(R.array.actions);
+        final String action_title = getString(R.string.actions_title);
+        final Context context = getActivity();
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(action_title);
+        builder.setItems(actions, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                final Button button = (Button) view.findViewById(R.id.actionPicker);
+                final String text = actions[i];
+                button.setText(Html.fromHtml(String.format(
+                        "%s<br/><small>%s</small>",
+                        action_title, text)));
+                mAction = i;
+            }
+        });
+        return builder.create();
     }
 }
