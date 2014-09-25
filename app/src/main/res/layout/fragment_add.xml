@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/action_picker_title"
+        android:id="@+id/actionPicker"
+        android:layout_below="@+id/timePicker"
+        android:background="@android:color/holo_blue_bright"
+        android:singleLine="false" />
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/action_picker_title"
-            android:id="@+id/actionPicker"
-            android:layout_below="@+id/timePicker" />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/date_picker_title"
+        android:id="@+id/datePicker"
+        android:calendarViewShown="false"
+        android:background="@android:color/holo_blue_dark" />
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/date_picker_title"
-            android:id="@+id/datePicker"
-            android:calendarViewShown="false" />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/time_picker_title"
+        android:id="@+id/timePicker"
+        android:layout_below="@+id/datePicker"
+        android:background="@android:color/holo_blue_light" />
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/time_picker_title"
-            android:id="@+id/timePicker"
-            android:layout_below="@+id/datePicker" />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/activate_task_title"
+        android:id="@+id/activateTask"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/holo_green_light" />
 
-    </RelativeLayout>
-</ScrollView>
+</RelativeLayout>

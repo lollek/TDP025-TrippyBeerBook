@@ -1,7 +1,6 @@
 package iix.se.cron.add;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Html;
@@ -17,7 +16,7 @@ import iix.se.cron.TabFragment;
 
 public class AddTabFragment extends TabFragment {
     Calendar mCal;
-    int mAction;
+    int mAction = -1;
     DatePickerFragment mDatePicker;
     TimePickerFragment mTimePicker;
     AlertDialog mActionPicker;
@@ -29,8 +28,9 @@ public class AddTabFragment extends TabFragment {
 
         /* Calendar tracks both datePicker and timePicker */
         mCal = Calendar.getInstance();
+        mCal.set(Calendar.SECOND, 0);
 
-        /* Init ActionPicker */
+        /* Init mActionPicker */
         mActionPicker = initMActionPicker(view);
         final Button actionPickerButton = (Button) view.findViewById(R.id.actionPicker);
         actionPickerButton.setOnClickListener(new View.OnClickListener() {
@@ -64,15 +64,44 @@ public class AddTabFragment extends TabFragment {
             }
         });
 
+        /* Init mActivateTask */
+        final Button activateTaskButton = (Button) view.findViewById(R.id.activateTask);
+        activateTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activateNewTask();
+            }
+        });
+
         return view;
     }
 
-    public AlertDialog initMActionPicker(final View view) {
-        final String[] actions = getResources().getStringArray(R.array.actions);
+    private void activateNewTask() {
+        if (mCal.before(Calendar.getInstance())) {
+            displayError("Time and date must be in the future");
+        } else if (mAction == -1) {
+            displayError("No action chosen");
+        } else {
+            displayError("Success!");
+        }
+    }
+
+    private void displayError(String s) {
+        new AlertDialog.Builder(getActivity())
+                .setMessage(s)
+                .create()
+                .show();
+    }
+
+    private AlertDialog initMActionPicker(final View view) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        /* Set Header */
         final String action_title = getString(R.string.actions_title);
-        final Context context = getActivity();
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(action_title);
+
+        /* Create Menu */
+        final String[] actions = getResources().getStringArray(R.array.actions);
         builder.setItems(actions, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

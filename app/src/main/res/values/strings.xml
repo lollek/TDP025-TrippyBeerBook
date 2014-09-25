@@ -11,6 +11,7 @@
     <string name="action_picker_title">Action</string>
     <string name="time_picker_title">Time</string>
     <string name="date_picker_title">Date</string>
+    <string name="activate_task_title">Activate Task</string>
 
     <string name="actions_title">Set Action</string>
     <string-array name="actions">
