@@ -6,15 +6,21 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
+import iix.se.cron.db.ActivityDatabase;
+
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
     TabFragmentPagerAdapter mTagFragmentPagerAdapter;
     ViewPager mViewPager;
+    ActivityDatabase mActivityDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /* Set up a connection to the SQLite db */
+        mActivityDatabase = new ActivityDatabase(getBaseContext());
 
         // Set up the action bar. Add tabs, hide home and title
         final ActionBar actionBar = getActionBar();
