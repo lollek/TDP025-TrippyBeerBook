@@ -127,13 +127,14 @@ public class AddTabFragment extends TabFragment {
 
     private void activateNewTask() {
         if (mCal.before(Calendar.getInstance())) {
-            displayError("Time and date must be in the future");
+            displayError(getString(R.string.date_error));
         } else if (mAction == -1) {
-            displayError("No action chosen");
+            displayError(getString(R.string.no_action_error));
         } else {
             final Activity activity = getActivity();
             ((MainActivity) activity).getActivityDatabase().addTask(mCal, mAction);
-            Toast.makeText(activity.getApplicationContext(), "Task added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity.getApplicationContext(), getString(R.string.task_added),
+                    Toast.LENGTH_SHORT).show();
             resetAllInstances(getView());
         }
     }

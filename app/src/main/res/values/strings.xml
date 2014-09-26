@@ -13,6 +13,10 @@
     <string name="date_picker_title">Date</string>
     <string name="activate_task_title">Activate Task</string>
 
+    <string name="date_error">Time and date must be in the future</string>
+    <string name="no_action_error">No action chosen</string>
+    <string name="task_added">Task added</string>
+
     <string name="actions_title">Set Action</string>
     <string-array name="actions">
         <item>Sms</item>
