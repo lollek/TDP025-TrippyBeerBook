@@ -1,4 +1,4 @@
-package iix.se.cron;
+package iix.se.trippybeerbook;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
