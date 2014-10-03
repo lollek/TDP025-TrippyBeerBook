@@ -3,8 +3,9 @@ package iix.se.trippybeerbook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.View;
 
-
+import iix.se.trippybeerbook.dummy.DummyContent;
 
 
 /**
@@ -79,5 +80,11 @@ public class BeerListActivity extends Activity
             detailIntent.putExtra(BeerDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
+    }
+
+    public void addItem(View view) {
+        BeerListFragment beerListFragment = (BeerListFragment) getFragmentManager().
+                findFragmentById(R.id.beer_list);
+        beerListFragment.addItem(new DummyContent.DummyItem("hejsan", "svejsan"));
     }
 }

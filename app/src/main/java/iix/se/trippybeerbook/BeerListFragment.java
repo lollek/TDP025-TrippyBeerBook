@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.List;
 
 import iix.se.trippybeerbook.dummy.DummyContent;
 
@@ -23,7 +24,8 @@ public class BeerListFragment extends ListFragment {
 
     /**
      * The serialization (saved instance state) Bundle key representing the
-     * activated item position. Only used on tablets.
+     * activated item position.
+     * Only used on tablets.
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
@@ -34,9 +36,25 @@ public class BeerListFragment extends ListFragment {
     private Callbacks mCallbacks = sDummyCallbacks;
 
     /**
-     * The current activated item position. Only used on tablets.
+     * The current activated item position.
+     * Only used on tablets.
      */
     private int mActivatedPosition = ListView.INVALID_POSITION;
+
+    /**
+     * The adapter handling the listed items
+     */
+    ArrayAdapter<DummyContent.DummyItem> mAdapter;
+
+    /**
+     * The listed items
+     */
+    List<DummyContent.DummyItem> mList;
+
+    public void addItem(DummyContent.DummyItem item) {
+        mList.add(item);
+        mAdapter.notifyDataSetChanged();
+    }
 
     /**
      * A callback interface that all activities containing this fragment must
@@ -70,13 +88,13 @@ public class BeerListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
+        mList = DummyContent.ITEMS;
+        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                DummyContent.ITEMS));
+                mList);
+        setListAdapter(mAdapter);
     }
 
     @Override

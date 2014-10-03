@@ -1,5 +1,7 @@
 package iix.se.trippybeerbook.dummy;
 
+import android.widget.ArrayAdapter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
