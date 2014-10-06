@@ -9,7 +9,6 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import iix.se.trippybeerbook.dummy.DummyContent;
 
 /**
  * A list fragment representing a list of Beers. This fragment
@@ -33,7 +32,7 @@ public class BeerListFragment extends ListFragment {
      * The fragment's current callback object, which is notified of list item
      * clicks.
      */
-    private Callbacks mCallbacks = sDummyCallbacks;
+    private Callbacks mCallbacks = sBeerCallbacks;
 
     /**
      * The current activated item position.
@@ -44,14 +43,14 @@ public class BeerListFragment extends ListFragment {
     /**
      * The adapter handling the listed items
      */
-    ArrayAdapter<DummyContent.DummyItem> mAdapter;
+    private ArrayAdapter<BeerItem.BeerType> mAdapter;
 
     /**
      * The listed items
      */
-    List<DummyContent.DummyItem> mList;
+    private List<BeerItem.BeerType> mList;
 
-    public void addItem(DummyContent.DummyItem item) {
+    public void addItem(BeerItem.BeerType item) {
         mList.add(item);
         mAdapter.notifyDataSetChanged();
     }
@@ -64,17 +63,18 @@ public class BeerListFragment extends ListFragment {
     public interface Callbacks {
         /**
          * Callback for when an item has been selected.
+         * @param id
          */
-        public void onItemSelected(String id);
+        public void onItemSelected(BeerItem.BeerType id);
     }
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does
      * nothing. Used only when this fragment is not attached to an activity.
      */
-    private static Callbacks sDummyCallbacks = new Callbacks() {
+    private static final Callbacks sBeerCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String id) {
+        public void onItemSelected(BeerItem.BeerType id) {
         }
     };
 
@@ -88,8 +88,8 @@ public class BeerListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mList = DummyContent.ITEMS;
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(
+        mList = BeerItem.BeerList;
+        mAdapter = new ArrayAdapter<BeerItem.BeerType>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
@@ -125,7 +125,7 @@ public class BeerListFragment extends ListFragment {
         super.onDetach();
 
         // Reset the active callbacks interface to the dummy implementation.
-        mCallbacks = sDummyCallbacks;
+        mCallbacks = sBeerCallbacks;
     }
 
     @Override
@@ -134,7 +134,7 @@ public class BeerListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        mCallbacks.onItemSelected(BeerItem.BeerList.get(position));
     }
 
     @Override

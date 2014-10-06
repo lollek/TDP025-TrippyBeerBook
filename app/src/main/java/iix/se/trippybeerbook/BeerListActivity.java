@@ -3,9 +3,11 @@ package iix.se.trippybeerbook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Pair;
 import android.view.View;
 
-import iix.se.trippybeerbook.dummy.DummyContent;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -58,15 +60,16 @@ public class BeerListActivity extends Activity
     /**
      * Callback method from {@link BeerListFragment.Callbacks}
      * indicating that the item with the given ID was selected.
+     * @param id
      */
     @Override
-    public void onItemSelected(String id) {
+    public void onItemSelected(BeerItem.BeerType id) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(BeerDetailFragment.ARG_ITEM_ID, id);
+            arguments.putInt(BeerDetailFragment.ARG_ITEM_ID, BeerItem.BeerList.indexOf(id));
             BeerDetailFragment fragment = new BeerDetailFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
@@ -77,7 +80,7 @@ public class BeerListActivity extends Activity
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, BeerDetailActivity.class);
-            detailIntent.putExtra(BeerDetailFragment.ARG_ITEM_ID, id);
+            detailIntent.putExtra(BeerDetailFragment.ARG_ITEM_ID, BeerItem.BeerList.indexOf(id));
             startActivity(detailIntent);
         }
     }
@@ -85,6 +88,7 @@ public class BeerListActivity extends Activity
     public void addItem(View view) {
         BeerListFragment beerListFragment = (BeerListFragment) getFragmentManager().
                 findFragmentById(R.id.beer_list);
-        beerListFragment.addItem(new DummyContent.DummyItem("hejsan", "svejsan"));
+        List<Pair<Integer, String>> list = new ArrayList<Pair<Integer, String>>();
+        beerListFragment.addItem(new BeerItem.BeerType("Punk IPA", "BrewDog", "IPA", "Scotland", 5.6f, list));
     }
 }
