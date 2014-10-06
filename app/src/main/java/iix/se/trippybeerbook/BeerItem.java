@@ -22,7 +22,6 @@ public class BeerItem {
         BeerList.add(item);
     }
 
-
     public static class BeerType {
         public final String mName;
         public final String mBrewery;

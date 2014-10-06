@@ -3,12 +3,7 @@ package iix.se.trippybeerbook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
-import android.util.Pair;
 import android.view.View;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * An activity representing a list of Beers. This activity
@@ -86,9 +81,20 @@ public class BeerListActivity extends Activity
     }
 
     public void addItem(View view) {
-        BeerListFragment beerListFragment = (BeerListFragment) getFragmentManager().
-                findFragmentById(R.id.beer_list);
-        List<Pair<Integer, String>> list = new ArrayList<Pair<Integer, String>>();
-        beerListFragment.addItem(new BeerItem.BeerType("Punk IPA", "BrewDog", "IPA", "Scotland", 5.6f, list));
+        if (mTwoPane) {
+            // In two-pane mode, show the detail view in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+            AddBeerFragment fragment = new AddBeerFragment();
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.beer_detail_container, fragment)
+                    .commit();
+        } else {
+            // In single-pane mode, simply start the detail activity
+            // for the selected item ID.
+            Intent detailIntent = new Intent(this, AddBeerActivity.class);
+            startActivity(detailIntent);
+        }
     }
 }
