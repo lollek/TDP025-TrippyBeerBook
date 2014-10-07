@@ -24,11 +24,7 @@ import android.view.View;
 public class BeerListActivity extends Activity
         implements BeerListFragment.Callbacks {
 
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private boolean mTwoPane;
+    private boolean mTwoPane; // Are we running in 2-pane mode (tablet) ?
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +51,6 @@ public class BeerListActivity extends Activity
     /**
      * Callback method from {@link BeerListFragment.Callbacks}
      * indicating that the item with the given ID was selected.
-     * @param id
      */
     @Override
     public void onItemSelected(BeerItem.BeerType id) {

@@ -63,7 +63,6 @@ public class BeerListFragment extends ListFragment {
     public interface Callbacks {
         /**
          * Callback for when an item has been selected.
-         * @param id
          */
         public void onItemSelected(BeerItem.BeerType id);
     }
@@ -107,9 +106,9 @@ public class BeerListFragment extends ListFragment {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
 
-        if (!BeerItem.beerListQueue.isEmpty()) {
-            mList.addAll(BeerItem.beerListQueue);
-            BeerItem.beerListQueue.clear();
+        if (!BeerItem.beerListQ.isEmpty()) {
+            mList.addAll(BeerItem.beerListQ);
+            BeerItem.beerListQ.clear();
             mAdapter.notifyDataSetChanged();
         }
     }

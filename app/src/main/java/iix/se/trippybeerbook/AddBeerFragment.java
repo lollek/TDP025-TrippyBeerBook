@@ -1,22 +1,20 @@
 package iix.se.trippybeerbook;
 
 import android.app.Fragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
+/**
+ * This class is just a placeholder, and will either be extended or removed in the future
+ */
 public class AddBeerFragment extends Fragment {
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public AddBeerFragment() {
-    }
 
+    // Mandatory empty constructor for screen orientation changes and stuff
+    public AddBeerFragment() {}
+
+    /*
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         return view;
     }
+    */
 }
