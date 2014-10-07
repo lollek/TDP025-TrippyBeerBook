@@ -40,7 +40,7 @@ public class BeerDetailFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = BeerItem.BeerList.get(getArguments().getInt(ARG_ITEM_ID));
+            mItem = BeerItem.beerList.get(getArguments().getInt(ARG_ITEM_ID));
         }
     }
 

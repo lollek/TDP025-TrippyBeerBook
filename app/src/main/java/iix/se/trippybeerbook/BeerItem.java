@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BeerItem {
-    public static final List<BeerType> BeerList = new ArrayList<BeerType>();
+    public static final List<BeerType> beerList = new ArrayList<BeerType>();
+    public static final List<BeerType> beerListQueue = new ArrayList<BeerType>();
     static { /* TODO: Remove these placeholders */
         Pair<Integer, String> olle = new Pair<Integer, String>(4, "olle");
         Pair<Integer, String> sofie = new Pair<Integer, String>(4, "sofie");
@@ -19,7 +20,7 @@ public class BeerItem {
         addItem(new BeerType("Rochefort 10", "Brasserie Rochefort", "Trappist", "Belgium", 11.3f, list));
     }
     private static void addItem(BeerType item) {
-        BeerList.add(item);
+        beerList.add(item);
     }
 
     public static class BeerType {

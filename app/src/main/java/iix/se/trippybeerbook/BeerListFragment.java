@@ -88,7 +88,7 @@ public class BeerListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mList = BeerItem.BeerList;
+        mList = BeerItem.beerList;
         mAdapter = new ArrayAdapter<BeerItem.BeerType>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
@@ -105,6 +105,12 @@ public class BeerListFragment extends ListFragment {
         if (savedInstanceState != null
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
+        }
+
+        if (!BeerItem.beerListQueue.isEmpty()) {
+            mList.addAll(BeerItem.beerListQueue);
+            BeerItem.beerListQueue.clear();
+            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -134,7 +140,7 @@ public class BeerListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(BeerItem.BeerList.get(position));
+        mCallbacks.onItemSelected(BeerItem.beerList.get(position));
     }
 
     @Override

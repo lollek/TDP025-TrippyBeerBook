@@ -4,5 +4,11 @@
     <string name="app_name">TrippyBeerBook</string>
     <string name="title_beer_detail">Beer Detail</string>
     <string name="button_add_beer">Add Beer</string>
+    <string name="text_beer_name">Beer Name</string>
+    <string name="text_brewery">Brewery</string>
+    <string name="text_beer_type">Beer Type</string>
+    <string name="text_country_of_origin">Country of origin</string>
+    <string name="text_alcohol_percentage">Alcohol Percentage</string>
+    <string name="text_add_new_beer">Add Beer</string>
 
 </resources>

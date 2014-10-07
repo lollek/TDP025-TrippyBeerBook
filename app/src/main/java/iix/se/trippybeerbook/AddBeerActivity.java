@@ -4,7 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Pair;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddBeerActivity extends Activity {
 
@@ -53,5 +59,23 @@ public class AddBeerActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addBeer(View view) {
+        final String beer = ((EditText)findViewById(R.id.beerNameText)).getText().toString();
+        final String brewery = ((EditText)findViewById(R.id.breweryNameText)).getText().toString();
+        final String type = ((EditText)findViewById(R.id.beerTypeText)).getText().toString();
+        final String country = ((EditText)findViewById(R.id.countryNameText)).getText().toString();
+        float percentage;
+        try {
+            percentage = Float.parseFloat(((EditText) findViewById(R.id.countryNameText)).getText().toString());
+        } catch (NumberFormatException e) {
+            percentage = 0f;
+        }
+        final List<Pair<Integer, String>> list = new ArrayList<Pair<Integer, String>>();
+
+        final BeerItem.BeerType item = new BeerItem.BeerType(beer, brewery, type, country, percentage, list);
+        BeerItem.beerListQueue.add(item);
+        NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
     }
 }
