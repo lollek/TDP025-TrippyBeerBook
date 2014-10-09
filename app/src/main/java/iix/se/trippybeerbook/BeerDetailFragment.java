@@ -40,8 +40,11 @@ public class BeerDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.beer_detail))
-                    .setText(mItem.toString());
+            ((TextView) rootView.findViewById(R.id.beer_name)).setText(mItem.mName);
+            ((TextView) rootView.findViewById(R.id.brewery_name)).setText(mItem.mBrewery);
+            ((TextView) rootView.findViewById(R.id.beer_type)).setText(mItem.mBeerType);
+            ((TextView) rootView.findViewById(R.id.country)).setText(mItem.mCountry);
+            ((TextView) rootView.findViewById(R.id.percentage)).setText(mItem.mPercentage);
         }
 
         return rootView;

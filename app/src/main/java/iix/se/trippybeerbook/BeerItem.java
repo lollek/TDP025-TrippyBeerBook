@@ -16,9 +16,9 @@ public class BeerItem {
         list.add(olle);
         list.add(sofie);
 
-        addItem(new BeerType("Punk IPA", "BrewDog", "IPA", "Scotland", 5.6f, list));
-        addItem(new BeerType("Five AM Saint", "BrewDog", "Amber Ale", "Scotland", 5f, list));
-        addItem(new BeerType("Rochefort 10", "Brasserie Rochefort", "Trappist", "Belgium", 11.3f, list));
+        addItem(new BeerType("Punk IPA", "BrewDog", "IPA", "Scotland", "5.6", list));
+        addItem(new BeerType("Five AM Saint", "BrewDog", "Amber Ale", "Scotland", "5", list));
+        addItem(new BeerType("Rochefort 10", "Brasserie Rochefort", "Trappist", "Belgium", "11.3", list));
     }
 
     private static void addItem(BeerType item) {
@@ -30,11 +30,11 @@ public class BeerItem {
         public final String mBrewery;
         public final String mBeerType;
         public final String mCountry;
-        public final float mPercentage;
+        public final String mPercentage;
         public final List<Pair<Integer, String>> mPoints;
 
         public BeerType(String name, String brewery, String beerType,
-                        String country, float percentage,
+                        String country, String percentage,
                         List<Pair<Integer, String>> points) {
             mName = name;
             mBrewery = brewery;

@@ -51,16 +51,9 @@ public class AddBeerActivity extends Activity {
         final String brewery = stringFromTextField(R.id.breweryNameText);
         final String type = stringFromTextField(R.id.beerTypeText);
         final String country = stringFromTextField(R.id.countryNameText);
-        float percentage;
+        final String percentage = stringFromTextField(R.id.percentageText);
         final List<Pair<Integer, String>> list =
                 new ArrayList<Pair<Integer, String>>();
-
-        try {
-            percentage = Float.parseFloat(
-                    stringFromTextField(R.id.countryNameText));
-        } catch (NumberFormatException e) {
-            percentage = 0f;
-        }
 
         final BeerItem.BeerType item = new BeerItem.BeerType(beer, brewery,
                 type, country, percentage, list);
