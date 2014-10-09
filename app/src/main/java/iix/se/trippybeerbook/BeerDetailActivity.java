@@ -1,11 +1,19 @@
 package iix.se.trippybeerbook;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An activity representing a single Beer detail screen. This
@@ -17,6 +25,7 @@ import android.view.MenuItem;
  * more than a {@link BeerDetailFragment}.
  */
 public class BeerDetailActivity extends Activity {
+    boolean mModifying = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,5 +61,45 @@ public class BeerDetailActivity extends Activity {
 
             default: return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void modify(View view) {
+        final int viewMod = mModifying ? View.VISIBLE : View.GONE;
+        final int editMod = mModifying ? View.GONE : View.VISIBLE;
+
+        final List<Integer> viewIDs = new ArrayList<Integer>();
+        viewIDs.add(R.id.beer_name);
+        viewIDs.add(R.id.beer_type);
+        viewIDs.add(R.id.brewery_name);
+        viewIDs.add(R.id.country);
+        viewIDs.add(R.id.percentage);
+
+        final List<Integer> editIDs = new ArrayList<Integer>();
+        editIDs.add(R.id.beer_name_edit);
+        editIDs.add(R.id.beer_type_edit);
+        editIDs.add(R.id.brewery_name_edit);
+        editIDs.add(R.id.country_edit);
+        editIDs.add(R.id.percentage_edit);
+
+        for (int i = 0; i < viewIDs.size(); ++i) {
+            TextView viewable = (TextView) findViewById(viewIDs.get(i));
+            viewable.setVisibility(viewMod);
+
+            EditText editable = (EditText) findViewById(editIDs.get(i));
+            editable.setVisibility(editMod);
+
+            if (viewable.getText() != editable.getText()) {
+                if (mModifying) {
+                    viewable.setText(editable.getText());
+                } else {
+                    editable.setText(viewable.getText());
+                }
+            }
+        }
+
+        ((Button)findViewById(R.id.do_modify))
+                .setText(getString(mModifying ? R.string.text_modify : R.string.text_modify_done));
+
+        mModifying = !mModifying;
     }
 }
