@@ -7,6 +7,14 @@
     tools:context=".AddBeerActivity"
     tools:ignore="MergeRootFrame">
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_add_new_beer"
+        android:id="@+id/addBeerButton"
+        android:layout_gravity="center_horizontal"
+        android:onClick="addBeer"
+        android:background="@android:color/holo_orange_light" />
 
     <EditText
         android:layout_width="match_parent"
@@ -44,11 +52,4 @@
         android:layout_gravity="center_horizontal"
         android:hint="@string/text_alcohol_percentage" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/text_add_new_beer"
-        android:id="@+id/addBeerButton"
-        android:layout_gravity="center_horizontal"
-        android:onClick="addBeer"/>
 </LinearLayout>

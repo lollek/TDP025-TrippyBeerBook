@@ -10,7 +10,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/add_button"
         android:text="@string/button_add_beer"
-        android:onClick="addItem"/>
+        android:onClick="addItem"
+        android:background="@android:color/holo_green_light"
+        android:clickable="false" />
 
     <fragment
         android:id="@+id/beer_list"

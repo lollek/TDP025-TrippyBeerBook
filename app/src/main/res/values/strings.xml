@@ -4,6 +4,7 @@
     <string name="app_name">TrippyBeerBook</string>
     <string name="title_beer_detail">Beer Detail</string>
     <string name="button_add_beer">Add Beer</string>
+    <string name="text_delete">Delete</string>
     <string name="text_modify">Modify</string>
     <string name="text_modify_done">Done Modifying</string>
     <string name="text_beer_name">Beer Name</string>
