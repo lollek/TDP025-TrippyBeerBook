@@ -4,5 +4,5 @@
 /.idea/libraries
 .DS_Store
 /build
-/lib
+/app/libs
 /key.txt
