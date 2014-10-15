@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
+import com.amazon.insights.*;
 
 /**
  * An activity representing a list of Beers. This activity
@@ -25,6 +26,7 @@ public class BeerListActivity extends Activity
         implements BeerListFragment.Callbacks {
 
     private boolean mTwoPane; // Are we running in 2-pane mode (tablet) ?
+    private AmazonInsights mAmazonInsights;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,12 @@ public class BeerListActivity extends Activity
             ((BeerListFragment) getFragmentManager()
                     .findFragmentById(R.id.beer_list))
                     .setActivateOnItemClick(true);
+        }
+
+        if (mAmazonInsights == null) {
+            /* TODO: Replace with real key */
+            InsightsCredentials credentials = AmazonInsights.newCredentials("PUBLIC", "PRIVATE");
+            mAmazonInsights = AmazonInsights.newInstance(credentials, getApplicationContext());
         }
 
         // TODO: If exposing deep links into your app, handle intents here.
