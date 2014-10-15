@@ -1,0 +1,51 @@
+
+
+Vetenskapliga källor
+1. http://www.sciencedirect.com/science/article/pii/S0736585309000793
+- Studie över användandet av mobilapplikationer. Hur applikationer ger intryck av att vara lätt eller svåranvända, och hur det väger mot hur användbar en 
+applikation är.
+2. http://www.sciencedirect.com/science/article/pii/S0747563204001827
+- Hur förstaintrycket av en applikation påverkar användare. Hur viktigt det är man följer en "standard" för sin UI för att inte förvirra användare.
+3. http://dl.acm.org/citation.cfm?id=1924559.1924599&coll=DL&dl=GUIDE&CFID=577239262&CFTOKEN=77002439
+- Hur användare uppfattar färger, och hur man modifierar färgernas koppling till attribut (kallt, varm, mjukt) 
+4. http://dl.acm.org/citation.cfm?id=1468168.1468731&coll=DL&dl=GUIDE&CFID=577239262&CFTOKEN=77002439
+- Vilka känslor en användare känner vi iaktagelse av olika färger, och hur man genom den data förutser detta.
+5. https://nzdis.org/projects/attachments/299/colorassociation-students.pdf
+- En studie hur studenter uppfattar färger, och nyanser. Studenterna skriver och varför de uppfattar färgerna som de gör.
+6. http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5473412&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5473412
+- En beskrivning hur man använder ListViews och parar ihop dem med sin SQLite-databas.
+7. http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5231398&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5231398
+- Teoretiskt om hur SQLite fungerar i inbyggda system (ARM-Linux), för en ökat förståelse vid implementation. 
+8. http://www.tandfonline.com/doi/abs/10.1207/s15327590ijhc2003_3
+- Hur man mäter bra User Interface på mobiltelefonsapplikationer under utvecklingsstadiet. Fokus ligger på att bygga upp en checklista som man sedan arbetar emot. 
+9. http://dl.acm.org/citation.cfm?id=2172352.2172372&coll=DL&dl=GUIDE&CFID=577239262&CFTOKEN=77002439
+- Exempel på hur man bygger en applikation i Android, och ger därmed en inblick i hur man snabbt prototypar applikationer. Samt en inblick i delar som UI, 
+sockets, osv.
+10. http://www.academia.edu/download/30867297/sp09.pdf
+- En beskrivning över hur säkerheten fungerar i Android, och hur applikationerna separeras.
+
+Industriella källor
+1. http://www.diva-portal.org/smash/record.jsf?pid=diva2:604264
+- Ett X-jobb då de utvecklar en Android-applikationer. En bra referensmall för sin egen Android-applikation, då man kan se hur de hanterat vissa faser eller 
+problem.
+2. 
+http://androidsampletoturial.googlecode.com/svn/trunk/Android%20SQLite%20Database%20and%20ContentProvider/Android%20SQLite%20Database%20and%20ContentProvider.doc
+- En tutorial för hur man använder sig av SQLite i android. Finns också bilder på hur de olika delar ser ut på skärm.
+3. http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.13.1040
+- Bäst praxis i Java för att undvika bottlenecks i sin applikation. Relevant till användande av SQLite, filsparning samt sockets.
+4.http://www.google.com/books?hl=sv&lr=&id=GJgQAwAAQBAJ&oi=fnd&pg=PP3&dq=android+best+practice&ots=yCv0GDkSlr&sig=0G6SKN_M1Ke8H4l9Pp06S0DIR4g
+- Bäst praxis i Android, hur man följer kodstandarden när man arbetar.
+5. http://www.mkyong.com/android/android-listview-example/
+- En beskrivning över ListView i Android, och hur man bäst implementerar det, med lite olika typer
+6. http://www.vogella.com/tutorials/AndroidListView/article.html
+- Alternativ beskrivning över ListView i Android, med lite designtillägg.
+7. http://karanbalkar.com/2012/10/tutorial-9-working-with-images-in-android/
+- En guide för hur man kan ladda hem, redigera och spara ner bilder i Android.
+8. https://developers.facebook.com/docs/android
+- Dokumentation för hur man arbetar mot facebook i sin android-applikation.
+9. https://developer.android.com/tools/testing/activity_test.html
+- Officiell guide för enhetstestning i Android, med exempel hur man enhetstestar applikationer och klasser.
+10. http://www.vogella.com/tutorials/AndroidTesting/article.html
+- En mer utförlig, men inofficiell guide hur man enhetstestar Android med lite olika verktyp.
+
+
