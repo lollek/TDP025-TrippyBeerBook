@@ -55,7 +55,7 @@ public class AddBeerActivity extends Activity {
         final List<Pair<Integer, String>> list =
                 new ArrayList<Pair<Integer, String>>();
 
-        final BeerItem.BeerType item = new BeerItem.BeerType(beer, brewery,
+        final BeerItem.Beer item = new BeerItem.Beer(beer, brewery,
                 type, country, percentage, list);
         BeerItem.beerListQ.add(item);
         NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));

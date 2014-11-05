@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BeerItem {
-    public static final List<BeerType> beerList = new ArrayList<BeerType>();
-    public static final List<BeerType> beerListQ = new ArrayList<BeerType>();
+    public static final List<Beer> beerList = new ArrayList<Beer>();
+    public static final List<Beer> beerListQ = new ArrayList<Beer>();
 
     static { /* TODO: Remove these placeholders */
         Pair<Integer, String> olle = new Pair<Integer, String>(4, "olle");
@@ -16,16 +16,16 @@ public class BeerItem {
         list.add(olle);
         list.add(sofie);
 
-        addItem(new BeerType("Punk IPA", "BrewDog", "IPA", "Scotland", "5.6", list));
-        addItem(new BeerType("Five AM Saint", "BrewDog", "Amber Ale", "Scotland", "5", list));
-        addItem(new BeerType("Rochefort 10", "Brasserie Rochefort", "Trappist", "Belgium", "11.3", list));
+        addItem(new Beer("Punk IPA", "BrewDog", "IPA", "Scotland", "5.6", list));
+        addItem(new Beer("Five AM Saint", "BrewDog", "Amber Ale", "Scotland", "5", list));
+        addItem(new Beer("Rochefort 10", "Brasserie Rochefort", "Trappist", "Belgium", "11.3", list));
     }
 
-    private static void addItem(BeerType item) {
+    private static void addItem(Beer item) {
         beerList.add(item);
     }
 
-    public static class BeerType {
+    public static class Beer {
         public final String mName;
         public final String mBrewery;
         public final String mBeerType;
@@ -33,9 +33,9 @@ public class BeerItem {
         public final String mPercentage;
         public final List<Pair<Integer, String>> mPoints;
 
-        public BeerType(String name, String brewery, String beerType,
-                        String country, String percentage,
-                        List<Pair<Integer, String>> points) {
+        public Beer(String name, String brewery, String beerType,
+                    String country, String percentage,
+                    List<Pair<Integer, String>> points) {
             mName = name;
             mBrewery = brewery;
             mBeerType = beerType;

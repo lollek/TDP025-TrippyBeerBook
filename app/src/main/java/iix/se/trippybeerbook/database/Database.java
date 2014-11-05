@@ -18,7 +18,7 @@ public class Database {
         mHelper = new DatabaseHelper(context);
     }
 
-    public void addBeer(BeerItem.BeerType item) {
+    public void addBeer(BeerItem.Beer item) {
         ContentValues values = new ContentValues();
         values.put(DatabaseContract.BeerColumns.BEER_NAME, item.mName);
         values.put(DatabaseContract.BeerColumns.BREWERY, item.mBrewery);

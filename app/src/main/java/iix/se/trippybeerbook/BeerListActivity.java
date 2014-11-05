@@ -61,7 +61,7 @@ public class BeerListActivity extends Activity
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(BeerItem.BeerType id) {
+    public void onItemSelected(BeerItem.Beer id) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a

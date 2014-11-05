@@ -15,7 +15,7 @@ import android.widget.TextView;
  */
 public class BeerDetailFragment extends Fragment {
     public static final String ARG_ITEM_ID = "item_id"; // Item ID to display
-    private BeerItem.BeerType mItem;                    // Item to display
+    private BeerItem.Beer mItem;                    // Item to display
 
     // Mandatory empty constructor for screen orientation changes and stuff
     public BeerDetailFragment() {}

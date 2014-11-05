@@ -43,14 +43,14 @@ public class BeerListFragment extends ListFragment {
     /**
      * The adapter handling the listed items
      */
-    private ArrayAdapter<BeerItem.BeerType> mAdapter;
+    private ArrayAdapter<BeerItem.Beer> mAdapter;
 
     /**
      * The listed items
      */
-    private List<BeerItem.BeerType> mList;
+    private List<BeerItem.Beer> mList;
 
-    public void addItem(BeerItem.BeerType item) {
+    public void addItem(BeerItem.Beer item) {
         mList.add(item);
         mAdapter.notifyDataSetChanged();
     }
@@ -64,7 +64,7 @@ public class BeerListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(BeerItem.BeerType id);
+        public void onItemSelected(BeerItem.Beer id);
     }
 
     /**
@@ -73,7 +73,7 @@ public class BeerListFragment extends ListFragment {
      */
     private static final Callbacks sBeerCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(BeerItem.BeerType id) {
+        public void onItemSelected(BeerItem.Beer id) {
         }
     };
 
@@ -88,7 +88,7 @@ public class BeerListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mList = BeerItem.beerList;
-        mAdapter = new ArrayAdapter<BeerItem.BeerType>(
+        mAdapter = new ArrayAdapter<BeerItem.Beer>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
