@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import iix.se.trippybeerbook.database.Beer;
+import iix.se.trippybeerbook.database.Database;
+
 /**
  * A fragment representing a single Beer detail screen.
  * This fragment is either contained in a {@link BeerListActivity}
@@ -15,7 +18,7 @@ import android.widget.TextView;
  */
 public class BeerDetailFragment extends Fragment {
     public static final String ARG_ITEM_ID = "item_id"; // Item ID to display
-    private BeerItem.Beer mItem;                    // Item to display
+    private Beer mItem;                                 // Item to display
 
     // Mandatory empty constructor for screen orientation changes and stuff
     public BeerDetailFragment() {}
@@ -25,10 +28,8 @@ public class BeerDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            mItem = BeerItem.beerList.get(getArguments().getInt(ARG_ITEM_ID));
+            final long id = getArguments().getLong(ARG_ITEM_ID);
+            mItem = new Database(getActivity().getApplicationContext()).getBeerById(id);
         }
     }
 

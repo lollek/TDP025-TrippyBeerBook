@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.List;
+import iix.se.trippybeerbook.database.Beer;
+import iix.se.trippybeerbook.database.Database;
 
 
 /**
@@ -41,18 +41,12 @@ public class BeerListFragment extends ListFragment {
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
     /**
-     * The adapter handling the listed items
+     * Database for storing items
      */
-    private ArrayAdapter<BeerItem.Beer> mAdapter;
+    private Database mDatabase;
 
-    /**
-     * The listed items
-     */
-    private List<BeerItem.Beer> mList;
-
-    public void addItem(BeerItem.Beer item) {
-        mList.add(item);
-        mAdapter.notifyDataSetChanged();
+    public void addItem(Beer item) {
+        mDatabase.addBeer(item);
     }
 
     /**
@@ -64,7 +58,7 @@ public class BeerListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(BeerItem.Beer id);
+        public void onItemSelected(Beer id);
     }
 
     /**
@@ -73,7 +67,7 @@ public class BeerListFragment extends ListFragment {
      */
     private static final Callbacks sBeerCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(BeerItem.Beer id) {
+        public void onItemSelected(Beer id) {
         }
     };
 
@@ -87,13 +81,10 @@ public class BeerListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mList = BeerItem.beerList;
-        mAdapter = new ArrayAdapter<BeerItem.Beer>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                mList);
-        setListAdapter(mAdapter);
+        if (mDatabase == null) {
+            mDatabase = new Database(getActivity().getApplicationContext());
+        }
+        setListAdapter(mDatabase.getAdapter(getActivity()));
     }
 
     @Override
@@ -106,11 +97,13 @@ public class BeerListFragment extends ListFragment {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
 
+        /*
         if (!BeerItem.beerListQ.isEmpty()) {
             mList.addAll(BeerItem.beerListQ);
             BeerItem.beerListQ.clear();
             mAdapter.notifyDataSetChanged();
         }
+        */
     }
 
     @Override
@@ -139,7 +132,7 @@ public class BeerListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(BeerItem.beerList.get(position));
+        mCallbacks.onItemSelected(mDatabase.getList().get(position));
     }
 
     @Override

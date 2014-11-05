@@ -38,8 +38,8 @@ public class BeerDetailActivity extends Activity {
         // Add fragment if we don't already have one
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
-            arguments.putInt(BeerDetailFragment.ARG_ITEM_ID,
-                    getIntent().getIntExtra(BeerDetailFragment.ARG_ITEM_ID, 0));
+            arguments.putLong(BeerDetailFragment.ARG_ITEM_ID,
+                    getIntent().getLongExtra(BeerDetailFragment.ARG_ITEM_ID, 0));
             BeerDetailFragment fragment = new BeerDetailFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()

@@ -22,4 +22,13 @@ public class DatabaseContract {
         public static final String COUNTRY = "country";
         public static final String PERCENTAGE = "percentage";
     }
+
+    public static final String[] projection = {
+            BeerColumns._ID,
+            BeerColumns.BEER_NAME,
+            BeerColumns.BREWERY,
+            BeerColumns.BEER_TYPE,
+            BeerColumns.COUNTRY,
+            BeerColumns.PERCENTAGE
+    };
 }

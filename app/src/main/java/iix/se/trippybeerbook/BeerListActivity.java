@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.view.View;
 import com.amazon.insights.*;
 
+import iix.se.trippybeerbook.database.Beer;
+
 /**
  * An activity representing a list of Beers. This activity
  * has different presentations for handset and tablet-size devices. On
@@ -52,7 +54,6 @@ public class BeerListActivity extends Activity
             InsightsCredentials credentials = AmazonInsights.newCredentials("PUBLIC", "PRIVATE");
             mAmazonInsights = AmazonInsights.newInstance(credentials, getApplicationContext());
         }
-
         // TODO: If exposing deep links into your app, handle intents here.
     }
 
@@ -61,13 +62,13 @@ public class BeerListActivity extends Activity
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(BeerItem.Beer id) {
+    public void onItemSelected(Beer id) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putInt(BeerDetailFragment.ARG_ITEM_ID, BeerItem.beerList.indexOf(id));
+            arguments.putLong(BeerDetailFragment.ARG_ITEM_ID, id.mID);
             BeerDetailFragment fragment = new BeerDetailFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
@@ -78,7 +79,7 @@ public class BeerListActivity extends Activity
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, BeerDetailActivity.class);
-            detailIntent.putExtra(BeerDetailFragment.ARG_ITEM_ID, BeerItem.beerList.indexOf(id));
+            detailIntent.putExtra(BeerDetailFragment.ARG_ITEM_ID, id.mID);
             startActivity(detailIntent);
         }
     }

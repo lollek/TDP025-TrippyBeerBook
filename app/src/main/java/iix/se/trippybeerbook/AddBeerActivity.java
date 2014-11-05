@@ -4,13 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import java.util.ArrayList;
-import java.util.List;
+import iix.se.trippybeerbook.database.Beer;
+import iix.se.trippybeerbook.database.Database;
 
 public class AddBeerActivity extends Activity {
 
@@ -52,12 +51,9 @@ public class AddBeerActivity extends Activity {
         final String type = stringFromTextField(R.id.beerTypeText);
         final String country = stringFromTextField(R.id.countryNameText);
         final String percentage = stringFromTextField(R.id.percentageText);
-        final List<Pair<Integer, String>> list =
-                new ArrayList<Pair<Integer, String>>();
 
-        final BeerItem.Beer item = new BeerItem.Beer(beer, brewery,
-                type, country, percentage, list);
-        BeerItem.beerListQ.add(item);
+        final Beer item = new Beer(beer, brewery, type, country, percentage);
+        new Database(getApplicationContext()).addBeer(item);
         NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
     }
 
