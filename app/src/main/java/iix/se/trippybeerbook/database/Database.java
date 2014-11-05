@@ -17,10 +17,8 @@ public class Database {
     private DatabaseHelper mHelper;
     private ArrayAdapter<Beer> mAdapter;
     private List<Beer> mList;
-    private Context mContext;
 
     public Database(Context context) {
-        mContext = context;
         mHelper = new DatabaseHelper(context);
     }
 
