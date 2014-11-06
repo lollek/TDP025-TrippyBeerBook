@@ -1,6 +1,5 @@
 package iix.se.trippybeerbook;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.view.View;
@@ -15,9 +14,6 @@ import iix.se.trippybeerbook.database.Database;
  * also supports tablet devices by allowing list items to be given an
  * 'activated' state upon selection. This helps indicate which item is
  * currently being viewed in a {@link BeerDetailFragment}.
- * <p>
- * Activities containing this fragment MUST implement the {@link Callbacks}
- * interface.
  */
 public class BeerListFragment extends ListFragment {
 
@@ -27,12 +23,6 @@ public class BeerListFragment extends ListFragment {
      * Only used on tablets.
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
-
-    /**
-     * The fragment's current callback object, which is notified of list item
-     * clicks.
-     */
-    private Callbacks mCallbacks = sBeerCallbacks;
 
     /**
      * The current activated item position.
@@ -45,37 +35,14 @@ public class BeerListFragment extends ListFragment {
      */
     private Database mDatabase;
 
-    public void addItem(Beer item) {
-        mDatabase.addBeer(item);
-    }
-
-    /**
-     * A callback interface that all activities containing this fragment must
-     * implement. This mechanism allows activities to be notified of item
-     * selections.
-     */
-    public interface Callbacks {
-        /**
-         * Callback for when an item has been selected.
-         */
-        public void onItemSelected(Beer id);
-    }
-
-    /**
-     * A dummy implementation of the {@link Callbacks} interface that does
-     * nothing. Used only when this fragment is not attached to an activity.
-     */
-    private static final Callbacks sBeerCallbacks = new Callbacks() {
-        @Override
-        public void onItemSelected(Beer id) {
-        }
-    };
-
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public BeerListFragment() {
+    public BeerListFragment() {}
+
+    public void addItem(Beer item) {
+        mDatabase.addBeer(item);
     }
 
     @Override
@@ -99,32 +66,10 @@ public class BeerListFragment extends ListFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        // Activities containing this fragment must implement its callbacks.
-        if (!(activity instanceof Callbacks)) {
-            throw new IllegalStateException("Activity must implement fragment's callbacks.");
-        }
-
-        mCallbacks = (Callbacks) activity;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-        // Reset the active callbacks interface to the dummy implementation.
-        mCallbacks = sBeerCallbacks;
-    }
-
-    @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-
-        // Notify the active callbacks interface (the activity, if the
-        // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(mDatabase.getList().get(position));
+        ((BeerListActivity)getActivity())
+                .onItemSelected(mDatabase.getList().get(position));
     }
 
     @Override

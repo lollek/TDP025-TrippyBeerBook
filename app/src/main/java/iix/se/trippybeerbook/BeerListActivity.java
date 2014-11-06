@@ -19,13 +19,8 @@ import iix.se.trippybeerbook.database.Beer;
  * The activity makes heavy use of fragments. The list of items is a
  * {@link BeerListFragment} and the item details
  * (if present) is a {@link BeerDetailFragment}.
- * <p>
- * This activity also implements the required
- * {@link BeerListFragment.Callbacks} interface
- * to listen for item selections.
  */
-public class BeerListActivity extends Activity
-        implements BeerListFragment.Callbacks {
+public class BeerListActivity extends Activity {
 
     private boolean mTwoPane; // Are we running in 2-pane mode (tablet) ?
     private AmazonInsights mAmazonInsights;
@@ -57,11 +52,6 @@ public class BeerListActivity extends Activity
         // TODO: If exposing deep links into your app, handle intents here.
     }
 
-    /**
-     * Callback method from {@link BeerListFragment.Callbacks}
-     * indicating that the item with the given ID was selected.
-     */
-    @Override
     public void onItemSelected(Beer id) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
