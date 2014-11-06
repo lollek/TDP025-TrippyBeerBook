@@ -1,7 +1,6 @@
 package iix.se.trippybeerbook.database;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.widget.ArrayAdapter;
@@ -56,16 +55,25 @@ public class Database {
     }
 
     public void addBeer(Beer item) {
-        final ContentValues values = new ContentValues();
-        values.put(DatabaseContract.BeerColumns.BEER_NAME, item.mName);
-        values.put(DatabaseContract.BeerColumns.BREWERY, item.mBrewery);
-        values.put(DatabaseContract.BeerColumns.BEER_TYPE, item.mBeerType);
-        values.put(DatabaseContract.BeerColumns.COUNTRY, item.mCountry);
-        values.put(DatabaseContract.BeerColumns.PERCENTAGE, item.mPercentage);
-
-        mHelper.insertOrThrowThenClose(DatabaseContract.BeerColumns.TABLE_NAME, values);
+        mHelper.insertOrThrowThenClose(item);
         if (mList != null) {
             mList.add(item);
+        }
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public void updateBeer(Beer item) {
+        mHelper.update(item);
+        if (mList != null) {
+            for (int i = 0; i < mList.size(); i++) {
+                if (mList.get(i).mID == item.mID) {
+                    mList.remove(i);
+                    mList.add(i, item);
+                    break;
+                }
+            }
         }
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();

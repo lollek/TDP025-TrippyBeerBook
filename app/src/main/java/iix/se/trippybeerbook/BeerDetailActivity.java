@@ -6,12 +6,11 @@ import android.app.Activity;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
+import iix.se.trippybeerbook.database.Beer;
+import iix.se.trippybeerbook.database.Database;
 
 /**
  * An activity representing a single Beer detail screen. This
@@ -23,7 +22,8 @@ import java.util.List;
  * more than a {@link BeerDetailFragment}.
  */
 public class BeerDetailActivity extends Activity {
-    boolean mModifying = false;
+    Database mDatabase;
+    long mItemID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +38,8 @@ public class BeerDetailActivity extends Activity {
         // Add fragment if we don't already have one
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
-            arguments.putLong(BeerDetailFragment.ARG_ITEM_ID,
-                    getIntent().getLongExtra(BeerDetailFragment.ARG_ITEM_ID, 0));
+            mItemID = getIntent().getLongExtra(BeerDetailFragment.ARG_ITEM_ID, 0);
+            arguments.putLong(BeerDetailFragment.ARG_ITEM_ID, mItemID);
             BeerDetailFragment fragment = new BeerDetailFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
@@ -61,43 +61,49 @@ public class BeerDetailActivity extends Activity {
         }
     }
 
-    public void modify(View view) {
-        final int viewMod = mModifying ? View.VISIBLE : View.GONE;
-        final int editMod = mModifying ? View.GONE : View.VISIBLE;
-
-        final List<Integer> viewIDs = new ArrayList<Integer>();
-        viewIDs.add(R.id.beer_name);
-        viewIDs.add(R.id.beer_type);
-        viewIDs.add(R.id.brewery_name);
-        viewIDs.add(R.id.country);
-        viewIDs.add(R.id.percentage);
-
-        final List<Integer> editIDs = new ArrayList<Integer>();
-        editIDs.add(R.id.beer_name_edit);
-        editIDs.add(R.id.beer_type_edit);
-        editIDs.add(R.id.brewery_name_edit);
-        editIDs.add(R.id.country_edit);
-        editIDs.add(R.id.percentage_edit);
-
-        for (int i = 0; i < viewIDs.size(); ++i) {
-            TextView viewable = (TextView) findViewById(viewIDs.get(i));
-            viewable.setVisibility(viewMod);
-
-            EditText editable = (EditText) findViewById(editIDs.get(i));
-            editable.setVisibility(editMod);
-
-            if (viewable.getText() != editable.getText()) {
-                if (mModifying) {
-                    viewable.setText(editable.getText());
-                } else {
-                    editable.setText(viewable.getText());
-                }
-            }
+    public void save(View view) {
+        unmodifyText(R.id.beer_name, R.id.beer_name_edit);
+        unmodifyText(R.id.beer_type, R.id.beer_type_edit);
+        unmodifyText(R.id.brewery_name, R.id.brewery_name_edit);
+        unmodifyText(R.id.country, R.id.country_edit);
+        unmodifyText(R.id.percentage, R.id.percentage_edit);
+        findViewById(R.id.save_btn).setVisibility(View.GONE);
+        if (mDatabase == null) {
+            mDatabase = new Database(this);
         }
-
-        ((Button)findViewById(R.id.do_modify))
-                .setText(getString(mModifying ? R.string.text_modify : R.string.text_modify_done));
-
-        mModifying = !mModifying;
+        Beer item = new Beer(
+                ((TextView)findViewById(R.id.beer_name)).getText().toString(),
+                ((TextView)findViewById(R.id.brewery_name)).getText().toString(),
+                ((TextView)findViewById(R.id.beer_type)).getText().toString(),
+                ((TextView)findViewById(R.id.country)).getText().toString(),
+                ((TextView)findViewById(R.id.percentage)).getText().toString());
+        item.mID = mItemID;
+        mDatabase.updateBeer(item);
     }
+
+    private void unmodifyText(int roId, int rwId) {
+        final EditText rwText = (EditText) findViewById(rwId);
+        if (rwText.getVisibility() == View.VISIBLE) {
+            final TextView roText = (TextView) findViewById(roId);
+            roText.setText(rwText.getText());
+            roText.setVisibility(View.VISIBLE);
+            rwText.setVisibility(View.GONE);
+        }
+    }
+
+    private void modifyText(int roId, int rwId) {
+        findViewById(R.id.save_btn).setVisibility(View.VISIBLE);
+        final TextView roText = (TextView) findViewById(roId);
+        final EditText rwText = (EditText) findViewById(rwId);
+
+        rwText.setText(roText.getText());
+
+        roText.setVisibility(View.GONE);
+        rwText.setVisibility(View.VISIBLE);
+    }
+    public void modifyBeerName(View view) { modifyText(R.id.beer_name, R.id.beer_name_edit); }
+    public void modifyBeerType(View view) { modifyText(R.id.beer_type, R.id.beer_type_edit); }
+    public void modifyBrewery(View view) { modifyText(R.id.brewery_name, R.id.brewery_name_edit); }
+    public void modifyCountry(View view) { modifyText(R.id.country, R.id.country_edit); }
+    public void modifyPercentage(View view) { modifyText(R.id.percentage, R.id.percentage_edit); }
 }

@@ -34,10 +34,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 sort);
     }
 
-    public void insertOrThrowThenClose(String table, ContentValues values) {
+    public void insertOrThrowThenClose(Beer item) {
+        final ContentValues values = new ContentValues();
+        values.put(DatabaseContract.BeerColumns.BEER_NAME, item.mName);
+        values.put(DatabaseContract.BeerColumns.BREWERY, item.mBrewery);
+        values.put(DatabaseContract.BeerColumns.BEER_TYPE, item.mBeerType);
+        values.put(DatabaseContract.BeerColumns.COUNTRY, item.mCountry);
+        values.put(DatabaseContract.BeerColumns.PERCENTAGE, item.mPercentage);
+
         close();
         mCurrentDB = getWritableDatabase();
-        mCurrentDB.insertOrThrow(table, null, values);
+        mCurrentDB.insertOrThrow(DatabaseContract.BeerColumns.TABLE_NAME, null, values);
+        mCurrentDB.close();
+    }
+
+    public void update (Beer item) {
+        final String where = DatabaseContract.BeerColumns._ID + " = " + item.mID;
+        final ContentValues values = new ContentValues();
+        values.put(DatabaseContract.BeerColumns.BEER_NAME, item.mName);
+        values.put(DatabaseContract.BeerColumns.BREWERY, item.mBrewery);
+        values.put(DatabaseContract.BeerColumns.BEER_TYPE, item.mBeerType);
+        values.put(DatabaseContract.BeerColumns.COUNTRY, item.mCountry);
+        values.put(DatabaseContract.BeerColumns.PERCENTAGE, item.mPercentage);
+
+        close();
+        mCurrentDB = getWritableDatabase();
+        mCurrentDB.update(DatabaseContract.BeerColumns.TABLE_NAME, values, where, null);
         mCurrentDB.close();
     }
 
