@@ -21,16 +21,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor query(String table, String[] columns, String selection, String sort) {
+    public Cursor query(String selection, String sort) {
         close();
         mCurrentDB = getReadableDatabase();
-        return mCurrentDB.query(table, columns, selection, null, null, null, sort);
+        return mCurrentDB.query(
+                DatabaseContract.BeerColumns.TABLE_NAME,
+                DatabaseContract.projection,
+                selection,
+                null,
+                null,
+                null,
+                sort);
     }
 
     public void insertOrThrowThenClose(String table, ContentValues values) {
         close();
         mCurrentDB = getWritableDatabase();
         mCurrentDB.insertOrThrow(table, null, values);
+        mCurrentDB.close();
+    }
+
+    public void remove(long id) {
+        String where = DatabaseContract.BeerColumns._ID + " = " + id;
+        close();
+        mCurrentDB = getWritableDatabase();
+        mCurrentDB.delete(DatabaseContract.BeerColumns.TABLE_NAME, where, null);
         mCurrentDB.close();
     }
 

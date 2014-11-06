@@ -13,5 +13,8 @@
     <string name="text_country_of_origin">Country of Origin</string>
     <string name="text_alcohol_percentage">Alcohol Percentage</string>
     <string name="text_add_new_beer">Add Beer</string>
+    <string name="delete">Delete</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

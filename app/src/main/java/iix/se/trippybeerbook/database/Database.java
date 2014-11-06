@@ -25,13 +25,7 @@ public class Database {
     public List<Beer> getList() {
         if (mList == null) {
             mList = new ArrayList<Beer>();
-            final String[] projection = DatabaseContract.projection;
-            final Cursor cursor = mHelper.query(
-                    DatabaseContract.BeerColumns.TABLE_NAME,
-                    projection,
-                    null,
-                    DatabaseContract.BeerColumns._ID);
-
+            final Cursor cursor = mHelper.query(null, DatabaseContract.BeerColumns._ID);
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 Beer beer = new Beer(cursor);
@@ -78,13 +72,18 @@ public class Database {
         }
     }
 
+    public void removeBeer(Beer item) {
+        mHelper.remove(item.mID);
+        if (mList != null) {
+            mList.remove(item);
+        }
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
     public Beer getBeerById(long id) {
-        final String[] projection = DatabaseContract.projection;
-        final Cursor cursor = mHelper.query(
-                DatabaseContract.BeerColumns.TABLE_NAME,
-                projection,
-                DatabaseContract.BeerColumns._ID + " = " + id,
-                null);
+        final Cursor cursor = mHelper.query(DatabaseContract.BeerColumns._ID + " = " + id, null);
 
         cursor.moveToFirst();
         Beer return_value = new Beer(cursor);

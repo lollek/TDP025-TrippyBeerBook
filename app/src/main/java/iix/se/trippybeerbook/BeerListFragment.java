@@ -1,8 +1,11 @@
 package iix.se.trippybeerbook;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import iix.se.trippybeerbook.database.Beer;
@@ -55,12 +58,18 @@ public class BeerListFragment extends ListFragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getListView().setOnItemLongClickListener(new OnItemLongClickListener());
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         // Restore the previously serialized activated item position.
-        if (savedInstanceState != null
-                && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
+        if (savedInstanceState != null &&
+            savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
     }
@@ -101,5 +110,24 @@ public class BeerListFragment extends ListFragment {
         }
 
         mActivatedPosition = position;
+    }
+
+    private class OnItemLongClickListener implements AdapterView.OnItemLongClickListener {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long id) {
+            final int item_pos = i;
+            final String item_name = mDatabase.getList().get(item_pos).toString();
+            new AlertDialog.Builder(getActivity())
+                    .setMessage(getString(R.string.delete) + " " + item_name + "?")
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            mDatabase.removeBeer(mDatabase.getList().get(item_pos));
+                        }
+                    })
+                    .setNegativeButton(R.string.no, null)
+                    .show();
+            return true;
+        }
     }
 }
