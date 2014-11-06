@@ -96,14 +96,6 @@ public class BeerListFragment extends ListFragment {
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
-
-        /*
-        if (!BeerItem.beerListQ.isEmpty()) {
-            mList.addAll(BeerItem.beerListQ);
-            BeerItem.beerListQ.clear();
-            mAdapter.notifyDataSetChanged();
-        }
-        */
     }
 
     @Override
