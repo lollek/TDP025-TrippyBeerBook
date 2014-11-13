@@ -34,7 +34,8 @@
             <EditText
                 style="@style/BeerDetailWrite"
                 android:id="@+id/beer_name_edit"
-                android:inputType="textAutoComplete"/>
+                android:inputType="textCapWords"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -52,7 +53,7 @@
             <EditText
                 style="@style/BeerDetailWrite"
                 android:id="@+id/brewery_name_edit"
-                android:inputType="textAutoComplete"/>
+                android:inputType="textCapWords"/>
         </LinearLayout>
 
         <LinearLayout
@@ -70,7 +71,7 @@
             <EditText
                 style="@style/BeerDetailWrite"
                 android:id="@+id/beer_type_edit"
-                android:inputType="textAutoComplete"/>
+                android:inputType="textCapWords"/>
         </LinearLayout>
 
         <LinearLayout
@@ -88,7 +89,7 @@
             <EditText
                 style="@style/BeerDetailWrite"
                 android:id="@+id/country_edit"
-                android:inputType="textAutoComplete"/>
+                android:inputType="textCapWords"/>
         </LinearLayout>
 
         <LinearLayout
