@@ -61,13 +61,24 @@ public class BeerDetailActivity extends Activity {
         }
     }
 
-    public void save(View view) {
-        unmodifyText(R.id.beer_name, R.id.beer_name_edit);
-        unmodifyText(R.id.beer_type, R.id.beer_type_edit);
-        unmodifyText(R.id.brewery_name, R.id.brewery_name_edit);
-        unmodifyText(R.id.country, R.id.country_edit);
-        unmodifyText(R.id.percentage, R.id.percentage_edit);
+    public void cancel(View view) {
+        unmodifyText(R.id.beer_name, R.id.beer_name_edit, false);
+        unmodifyText(R.id.beer_type, R.id.beer_type_edit, false);
+        unmodifyText(R.id.brewery_name, R.id.brewery_name_edit, false);
+        unmodifyText(R.id.country, R.id.country_edit, false);
+        unmodifyText(R.id.percentage, R.id.percentage_edit, false);
         findViewById(R.id.save_btn).setVisibility(View.GONE);
+        findViewById(R.id.cancel_btn).setVisibility(View.GONE);
+    }
+
+    public void save(View view) {
+        unmodifyText(R.id.beer_name, R.id.beer_name_edit, true);
+        unmodifyText(R.id.beer_type, R.id.beer_type_edit, true);
+        unmodifyText(R.id.brewery_name, R.id.brewery_name_edit, true);
+        unmodifyText(R.id.country, R.id.country_edit, true);
+        unmodifyText(R.id.percentage, R.id.percentage_edit, true);
+        findViewById(R.id.save_btn).setVisibility(View.GONE);
+        findViewById(R.id.cancel_btn).setVisibility(View.GONE);
         if (mDatabase == null) {
             mDatabase = new Database(this);
         }
@@ -86,11 +97,13 @@ public class BeerDetailActivity extends Activity {
         }
     }
 
-    private void unmodifyText(int roId, int rwId) {
+    private void unmodifyText(int roId, int rwId, boolean save) {
         final EditText rwText = (EditText) findViewById(rwId);
         if (rwText.getVisibility() == View.VISIBLE) {
             final TextView roText = (TextView) findViewById(roId);
-            roText.setText(rwText.getText());
+            if (save) {
+                roText.setText(rwText.getText());
+            }
             roText.setVisibility(View.VISIBLE);
             rwText.setVisibility(View.GONE);
         }
@@ -98,6 +111,7 @@ public class BeerDetailActivity extends Activity {
 
     private void modifyText(int roId, int rwId) {
         findViewById(R.id.save_btn).setVisibility(View.VISIBLE);
+        findViewById(R.id.cancel_btn).setVisibility(View.VISIBLE);
         final TextView roText = (TextView) findViewById(roId);
         final EditText rwText = (EditText) findViewById(rwId);
 

@@ -10,14 +10,32 @@
         android:layout_width="match_parent"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/save_btn"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/save"
-            android:onClick="save"
-            android:visibility="gone"
-            android:background="@android:color/holo_green_light" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/save_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/save"
+                android:onClick="save"
+                android:visibility="gone"
+                android:background="@android:color/holo_green_light" />
+                <!--android:visibility="gone"-->
+
+            <Button
+                android:id="@+id/cancel_btn"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:onClick="cancel"
+                android:visibility="gone"
+                android:background="@android:color/holo_red_light"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,8 +52,7 @@
             <EditText
                 style="@style/BeerDetailWrite"
                 android:id="@+id/beer_name_edit"
-                android:inputType="textCapWords"
-                />
+                android:inputType="textCapWords"/>
         </LinearLayout>
 
         <LinearLayout
@@ -111,5 +128,6 @@
         </LinearLayout>
 
     </LinearLayout>
+
 
 </ScrollView>

@@ -6,6 +6,7 @@
     <string name="button_add_beer">Add Beer</string>
     <string name="text_delete">Delete</string>
     <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
     <string name="text_beer_name">Name</string>
     <string name="text_brewery">Brewery</string>
     <string name="text_beer_type">Type</string>
