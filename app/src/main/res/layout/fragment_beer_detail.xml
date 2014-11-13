@@ -25,25 +25,16 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:padding="16dp"
+                style="@style/BeerDetailHeader"
                 android:text="@string/text_beer_name"/>
             <TextView
+                style="@style/BeerDetailRead"
                 android:id="@+id/beer_name"
-                android:clickable="true"
-                android:onClick="modifyBeerName"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"/>
+                android:onClick="modifyBeerName"/>
             <EditText
+                style="@style/BeerDetailWrite"
                 android:id="@+id/beer_name_edit"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:inputType="textAutoComplete"
-                android:visibility="gone"/>
+                android:inputType="textAutoComplete"/>
         </LinearLayout>
 
         <LinearLayout
@@ -52,25 +43,16 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:padding="16dp"
+                style="@style/BeerDetailHeader"
                 android:text="@string/text_brewery"/>
             <TextView
+                style="@style/BeerDetailRead"
                 android:id="@+id/brewery_name"
-                android:clickable="true"
-                android:onClick="modifyBrewery"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"/>
+                android:onClick="modifyBrewery"/>
             <EditText
+                style="@style/BeerDetailWrite"
                 android:id="@+id/brewery_name_edit"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:inputType="textAutoComplete"
-                android:visibility="gone"/>
+                android:inputType="textAutoComplete"/>
         </LinearLayout>
 
         <LinearLayout
@@ -79,25 +61,16 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:padding="16dp"
+                style="@style/BeerDetailHeader"
                 android:text="@string/text_beer_type"/>
             <TextView
+                style="@style/BeerDetailRead"
                 android:id="@+id/beer_type"
-                android:clickable="true"
-                android:onClick="modifyBeerType"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"/>
+                android:onClick="modifyBeerType"/>
             <EditText
+                style="@style/BeerDetailWrite"
                 android:id="@+id/beer_type_edit"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:inputType="textAutoComplete"
-                android:visibility="gone"/>
+                android:inputType="textAutoComplete"/>
         </LinearLayout>
 
         <LinearLayout
@@ -106,25 +79,16 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:padding="16dp"
+                style="@style/BeerDetailHeader"
                 android:text="@string/text_country_of_origin"/>
             <TextView
+                style="@style/BeerDetailRead"
                 android:id="@+id/country"
-                android:clickable="true"
-                android:onClick="modifyCountry"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp" />
+                android:onClick="modifyCountry"/>
             <EditText
+                style="@style/BeerDetailWrite"
                 android:id="@+id/country_edit"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:inputType="textAutoComplete"
-                android:visibility="gone"/>
+                android:inputType="textAutoComplete"/>
         </LinearLayout>
 
         <LinearLayout
@@ -133,25 +97,16 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:padding="16dp"
+                style="@style/BeerDetailHeader"
                 android:text="@string/text_alcohol_percentage"/>
             <TextView
+                style="@style/BeerDetailRead"
                 android:id="@+id/percentage"
-                android:clickable="true"
-                android:onClick="modifyPercentage"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp" />
+                android:onClick="modifyPercentage"/>
             <EditText
+                style="@style/BeerDetailWrite"
                 android:id="@+id/percentage_edit"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:inputType="numberDecimal"
-                android:visibility="gone"/>
+                android:inputType="numberDecimal"/>
         </LinearLayout>
 
     </LinearLayout>
