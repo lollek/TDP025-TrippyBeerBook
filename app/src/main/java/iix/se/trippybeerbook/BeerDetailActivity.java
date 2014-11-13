@@ -77,8 +77,13 @@ public class BeerDetailActivity extends Activity {
                 ((TextView)findViewById(R.id.beer_type)).getText().toString(),
                 ((TextView)findViewById(R.id.country)).getText().toString(),
                 ((TextView)findViewById(R.id.percentage)).getText().toString());
-        item.mID = mItemID;
-        mDatabase.updateBeer(item);
+        if (mItemID != -1) {
+            item.mID = mItemID;
+            mDatabase.updateBeer(item);
+        } else {
+            mDatabase.addBeer(item);
+            NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
+        }
     }
 
     private void unmodifyText(int roId, int rwId) {

@@ -29,7 +29,9 @@ public class BeerDetailFragment extends Fragment {
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             final long id = getArguments().getLong(ARG_ITEM_ID);
-            mItem = new Database(getActivity().getApplicationContext()).getBeerById(id);
+            if (id != -1) {
+                mItem = new Database(getActivity().getApplicationContext()).getBeerById(id);
+            }
         }
     }
 
@@ -39,13 +41,29 @@ public class BeerDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_beer_detail,
                 container, false);
 
-        // Show the dummy content as text in a TextView.
+        // Editing an existing item
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.beer_name)).setText(mItem.mName);
             ((TextView) rootView.findViewById(R.id.brewery_name)).setText(mItem.mBrewery);
             ((TextView) rootView.findViewById(R.id.beer_type)).setText(mItem.mBeerType);
             ((TextView) rootView.findViewById(R.id.country)).setText(mItem.mCountry);
             ((TextView) rootView.findViewById(R.id.percentage)).setText(mItem.mPercentage);
+
+        // Creating a new item
+        } else {
+            rootView.findViewById(R.id.beer_name).setVisibility(View.GONE);
+            rootView.findViewById(R.id.brewery_name).setVisibility(View.GONE);
+            rootView.findViewById(R.id.beer_type).setVisibility(View.GONE);
+            rootView.findViewById(R.id.country).setVisibility(View.GONE);
+            rootView.findViewById(R.id.percentage).setVisibility(View.GONE);
+
+            rootView.findViewById(R.id.beer_name_edit).setVisibility(View.VISIBLE);
+            rootView.findViewById(R.id.brewery_name_edit).setVisibility(View.VISIBLE);
+            rootView.findViewById(R.id.beer_type_edit).setVisibility(View.VISIBLE);
+            rootView.findViewById(R.id.country_edit).setVisibility(View.VISIBLE);
+            rootView.findViewById(R.id.percentage_edit).setVisibility(View.VISIBLE);
+
+            rootView.findViewById(R.id.save_btn).setVisibility(View.VISIBLE);
         }
 
         return rootView;

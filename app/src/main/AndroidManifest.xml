@@ -28,14 +28,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".BeerListActivity" />
         </activity>
-        
-        <activity
-            android:name=".AddBeerActivity"
-            android:label="@string/button_add_beer"
-            android:parentActivityName=".BeerListActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BeerListActivity" />
-        </activity>
+
     </application>
 </manifest>

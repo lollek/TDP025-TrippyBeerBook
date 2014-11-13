@@ -49,46 +49,42 @@ public class BeerListActivity extends Activity {
             InsightsCredentials credentials = AmazonInsights.newCredentials("PUBLIC", "PRIVATE");
             mAmazonInsights = AmazonInsights.newInstance(credentials, getApplicationContext());
         }
-        // TODO: If exposing deep links into your app, handle intents here.
     }
 
     public void onItemSelected(Beer id) {
         if (mTwoPane) {
-            // In two-pane mode, show the detail view in this activity by
-            // adding or replacing the detail fragment using a
-            // fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putLong(BeerDetailFragment.ARG_ITEM_ID, id.mID);
-            BeerDetailFragment fragment = new BeerDetailFragment();
-            fragment.setArguments(arguments);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.beer_detail_container, fragment)
-                    .commit();
-
+            changeFragmentForTwoPane(id.mID);
         } else {
-            // In single-pane mode, simply start the detail activity
-            // for the selected item ID.
-            Intent detailIntent = new Intent(this, BeerDetailActivity.class);
-            detailIntent.putExtra(BeerDetailFragment.ARG_ITEM_ID, id.mID);
-            startActivity(detailIntent);
+            changeFragmentForSinglePane(id.mID);
         }
     }
 
     public void addItem(View view) {
         if (mTwoPane) {
-            // In two-pane mode, show the detail view in this activity by
-            // adding or replacing the detail fragment using a
-            // fragment transaction.
-            AddBeerFragment fragment = new AddBeerFragment();
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.beer_detail_container, fragment)
-                    .commit();
+            changeFragmentForTwoPane(-1);
         } else {
-            // In single-pane mode, simply start the detail activity
-            // for the selected item ID.
-            Intent detailIntent = new Intent(this, AddBeerActivity.class);
-            startActivity(detailIntent);
+            changeFragmentForSinglePane(-1);
         }
+    }
+
+    void changeFragmentForTwoPane(long id) {
+        // In two-pane mode, show the detail view in this activity by
+        // adding or replacing the detail fragment using a
+        // fragment transaction.
+        Bundle arguments = new Bundle();
+        arguments.putLong(BeerDetailFragment.ARG_ITEM_ID, id);
+        BeerDetailFragment fragment = new BeerDetailFragment();
+        fragment.setArguments(arguments);
+        getFragmentManager().beginTransaction()
+                .replace(R.id.beer_detail_container, fragment)
+                .commit();
+    }
+
+    void changeFragmentForSinglePane(long id) {
+        // In single-pane mode, simply start the detail activity
+        // for the selected item ID.
+        Intent detailIntent = new Intent(this, BeerDetailActivity.class);
+        detailIntent.putExtra(BeerDetailFragment.ARG_ITEM_ID, id);
+        startActivity(detailIntent);
     }
 }
