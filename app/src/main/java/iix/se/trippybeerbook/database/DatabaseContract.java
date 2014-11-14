@@ -10,7 +10,9 @@ public class DatabaseContract {
                     BeerColumns.BREWERY    + " TEXT," +
                     BeerColumns.BEER_TYPE  + " TEXT," +
                     BeerColumns.COUNTRY    + " TEXT," +
-                    BeerColumns.PERCENTAGE + " TEXT)";
+                    BeerColumns.PERCENTAGE + " TEXT," +
+                    BeerColumns.STARS      + " TEXT," +
+                    BeerColumns.COMMENT    + " TEXT)";
     public static final String SQL_DROP_ENTRIES =
             "DROP TABLE IF EXISTS " + BeerColumns.TABLE_NAME;
 
@@ -21,6 +23,8 @@ public class DatabaseContract {
         public static final String BEER_TYPE = "type";
         public static final String COUNTRY = "country";
         public static final String PERCENTAGE = "percentage";
+        public static final String STARS = "stars";
+        public static final String COMMENT = "comment";
     }
 
     public static final String[] projection = {
@@ -29,6 +33,8 @@ public class DatabaseContract {
             BeerColumns.BREWERY,
             BeerColumns.BEER_TYPE,
             BeerColumns.COUNTRY,
-            BeerColumns.PERCENTAGE
+            BeerColumns.PERCENTAGE,
+            BeerColumns.STARS,
+            BeerColumns.COMMENT
     };
 }

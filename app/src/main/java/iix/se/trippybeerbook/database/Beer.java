@@ -9,6 +9,8 @@ public class Beer {
     public String mBeerType;
     public String mCountry;
     public String mPercentage;
+    public String mStars;
+    public String mComment;
 
     public Beer(String name, String brewery, String beerType,
                 String country, String percentage) {
@@ -17,6 +19,8 @@ public class Beer {
         mBeerType = beerType;
         mCountry = country;
         mPercentage = percentage;
+        mStars = "";
+        mComment = "";
     }
 
     public Beer(Cursor cursor) {
@@ -26,6 +30,8 @@ public class Beer {
         mBeerType = cursor.getString(3);
         mCountry = cursor.getString(4);
         mPercentage = cursor.getString(5);
+        mStars = cursor.getString(6);
+        mComment = cursor.getString(7);
     }
 
     public String toString() {

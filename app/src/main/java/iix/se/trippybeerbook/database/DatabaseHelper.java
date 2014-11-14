@@ -41,6 +41,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(DatabaseContract.BeerColumns.BEER_TYPE, item.mBeerType);
         values.put(DatabaseContract.BeerColumns.COUNTRY, item.mCountry);
         values.put(DatabaseContract.BeerColumns.PERCENTAGE, item.mPercentage);
+        values.put(DatabaseContract.BeerColumns.STARS, item.mStars);
+        values.put(DatabaseContract.BeerColumns.COMMENT, item.mComment);
 
         close();
         mCurrentDB = getWritableDatabase();
@@ -56,6 +58,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(DatabaseContract.BeerColumns.BEER_TYPE, item.mBeerType);
         values.put(DatabaseContract.BeerColumns.COUNTRY, item.mCountry);
         values.put(DatabaseContract.BeerColumns.PERCENTAGE, item.mPercentage);
+        values.put(DatabaseContract.BeerColumns.STARS, item.mStars);
+        values.put(DatabaseContract.BeerColumns.COMMENT, item.mComment);
 
         close();
         mCurrentDB = getWritableDatabase();
@@ -78,6 +82,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        /* Add code here later if needed */
+
     }
 }

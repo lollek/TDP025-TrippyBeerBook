@@ -6,6 +6,7 @@
     android:layout_width="fill_parent">
 
     <LinearLayout
+        android:id="@+id/detail_layout"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical">
@@ -24,7 +25,6 @@
                 android:onClick="save"
                 android:visibility="gone"
                 android:background="@android:color/holo_green_light" />
-                <!--android:visibility="gone"-->
 
             <Button
                 android:id="@+id/cancel_btn"
@@ -126,6 +126,14 @@
                 android:id="@+id/percentage_edit"
                 android:inputType="numberDecimal"/>
         </LinearLayout>
+
+        <RatingBar
+            android:id="@+id/RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:numStars="5"
+            android:stepSize="1"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

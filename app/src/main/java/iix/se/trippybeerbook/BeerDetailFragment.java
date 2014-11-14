@@ -5,10 +5,12 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import iix.se.trippybeerbook.database.Beer;
 import iix.se.trippybeerbook.database.Database;
+
 
 /**
  * A fragment representing a single Beer detail screen.
@@ -38,11 +40,19 @@ public class BeerDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_beer_detail,
+        final View rootView = inflater.inflate(R.layout.fragment_beer_detail,
                 container, false);
 
         // Editing an existing item
         if (mItem != null) {
+            Float rating;
+            try {
+                rating = Float.parseFloat(mItem.mStars);
+            } catch (Exception e) {
+                rating = 0f;
+            }
+            ((RatingBar) rootView.findViewById(R.id.RatingBar)).setRating(rating);
+
             ((TextView) rootView.findViewById(R.id.beer_name)).setText(mItem.mName);
             ((TextView) rootView.findViewById(R.id.brewery_name)).setText(mItem.mBrewery);
             ((TextView) rootView.findViewById(R.id.beer_type)).setText(mItem.mBeerType);
