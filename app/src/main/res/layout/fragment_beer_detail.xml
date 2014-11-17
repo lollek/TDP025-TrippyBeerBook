@@ -137,6 +137,21 @@
             android:stepSize="1"
             android:layout_height="wrap_content"/>
 
+        <TextView
+            android:id="@+id/beer_comment"
+            android:layout_width="match_parent"
+            android:layout_margin="18dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="editMode"/>
+        <EditText
+            android:id="@+id/beer_comment_edit"
+            android:layout_width="match_parent"
+            android:layout_margin="18dp"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
 

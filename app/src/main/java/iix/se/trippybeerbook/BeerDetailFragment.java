@@ -75,6 +75,7 @@ public class BeerDetailFragment extends Fragment {
         ((TextView) view.findViewById(R.id.beer_type)).setText(mItem.mBeerType);
         ((TextView) view.findViewById(R.id.country)).setText(mItem.mCountry);
         ((TextView) view.findViewById(R.id.percentage)).setText(mItem.mPercentage);
+        ((TextView) view.findViewById(R.id.beer_comment)).setText(mItem.mComment);
     }
 
     void onCreateViewNew(final View view) {
@@ -83,12 +84,14 @@ public class BeerDetailFragment extends Fragment {
         view.findViewById(R.id.beer_type).setVisibility(View.GONE);
         view.findViewById(R.id.country).setVisibility(View.GONE);
         view.findViewById(R.id.percentage).setVisibility(View.GONE);
+        view.findViewById(R.id.beer_comment).setVisibility(View.GONE);
 
         view.findViewById(R.id.beer_name_edit).setVisibility(View.VISIBLE);
         view.findViewById(R.id.brewery_name_edit).setVisibility(View.VISIBLE);
         view.findViewById(R.id.beer_type_edit).setVisibility(View.VISIBLE);
         view.findViewById(R.id.country_edit).setVisibility(View.VISIBLE);
         view.findViewById(R.id.percentage_edit).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.beer_comment_edit).setVisibility(View.VISIBLE);
 
         view.findViewById(R.id.save_btn).setVisibility(View.VISIBLE);
     }
@@ -104,6 +107,7 @@ public class BeerDetailFragment extends Fragment {
         disableEditMode(R.id.brewery_name, R.id.brewery_name_edit, false);
         disableEditMode(R.id.country, R.id.country_edit, false);
         disableEditMode(R.id.percentage, R.id.percentage_edit, false);
+        disableEditMode(R.id.beer_comment, R.id.beer_comment_edit, false);
     }
 
     void saveChanges() {
@@ -117,6 +121,7 @@ public class BeerDetailFragment extends Fragment {
         disableEditMode(R.id.brewery_name, R.id.brewery_name_edit, true);
         disableEditMode(R.id.country, R.id.country_edit, true);
         disableEditMode(R.id.percentage, R.id.percentage_edit, true);
+        disableEditMode(R.id.beer_comment, R.id.beer_comment_edit, true);
 
         if (mDatabase == null) {
             mDatabase = new Database(activity);
@@ -128,7 +133,8 @@ public class BeerDetailFragment extends Fragment {
                 ((TextView)activity.findViewById(R.id.beer_type)).getText().toString(),
                 ((TextView)activity.findViewById(R.id.country)).getText().toString(),
                 ((TextView)activity.findViewById(R.id.percentage)).getText().toString(),
-                Float.toString(((RatingBar)activity.findViewById(R.id.RatingBar)).getRating()));
+                Float.toString(((RatingBar)activity.findViewById(R.id.RatingBar)).getRating()),
+                ((TextView)activity.findViewById(R.id.beer_comment)).getText().toString());
 
         if (mItem != null) {
             item.mID = mItem.mID;
@@ -174,6 +180,7 @@ public class BeerDetailFragment extends Fragment {
             case R.id.beer_type: activateEditMode(id, R.id.beer_type_edit); break;
             case R.id.country: activateEditMode(id, R.id.country_edit); break;
             case R.id.percentage: activateEditMode(id, R.id.percentage_edit); break;
+            case R.id.beer_comment: activateEditMode(id, R.id.beer_comment_edit); break;
         }
     }
 }

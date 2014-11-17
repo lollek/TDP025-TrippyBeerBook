@@ -13,14 +13,15 @@ public class Beer {
     public String mComment;
 
     public Beer(String name, String brewery, String beerType,
-                String country, String percentage, String stars) {
+                String country, String percentage, String stars,
+                String comment) {
         mName = name;
         mBrewery = brewery;
         mBeerType = beerType;
         mCountry = country;
         mPercentage = percentage;
         mStars = stars;
-        mComment = "";
+        mComment = comment;
     }
 
     public Beer(Cursor cursor) {
