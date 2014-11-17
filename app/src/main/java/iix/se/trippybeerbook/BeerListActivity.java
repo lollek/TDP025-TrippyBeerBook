@@ -52,6 +52,14 @@ public class BeerListActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Fragment listFragment = getFragmentManager().findFragmentById(R.id.beer_list);
+        ((BeerListFragment)listFragment).resetListAdapter();
+    }
+
     public void onItemSelected(Beer id) {
         if (mTwoPane) {
             changeFragmentForTwoPane(id.mID);
@@ -90,8 +98,11 @@ public class BeerListActivity extends Activity {
     }
 
     public void saveChanges(View view) {
-        Fragment fragment = getFragmentManager().findFragmentByTag("DetailFragment");
-        ((BeerDetailFragment)fragment).saveChanges();
+        Fragment detailFragment = getFragmentManager().findFragmentByTag("DetailFragment");
+        ((BeerDetailFragment)detailFragment).saveChanges();
+
+        Fragment listFragment = getFragmentManager().findFragmentById(R.id.beer_list);
+        ((BeerListFragment)listFragment).resetListAdapter();
     }
 
     public void cancelChanges(View view) {

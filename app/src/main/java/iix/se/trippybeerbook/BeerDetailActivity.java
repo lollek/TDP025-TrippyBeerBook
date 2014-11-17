@@ -57,9 +57,15 @@ public class BeerDetailActivity extends Activity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, BeerListActivity.class));
+    }
+
     public void saveChanges(View view) {
-        Fragment fragment = getFragmentManager().findFragmentByTag("DetailFragment");
-        ((BeerDetailFragment)fragment).saveChanges();
+        Fragment detailFragment = getFragmentManager().findFragmentByTag("DetailFragment");
+        ((BeerDetailFragment)detailFragment).saveChanges();
 
         if (newItem) {
             NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
