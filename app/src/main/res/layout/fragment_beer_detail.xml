@@ -17,22 +17,24 @@
             android:orientation="horizontal">
 
             <Button
+                style="?android:attr/buttonBarButtonStyle"
                 android:id="@+id/save_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/save"
-                android:onClick="save"
+                android:onClick="saveChanges"
                 android:visibility="gone"
                 android:background="@android:color/holo_green_light" />
 
             <Button
+                style="?android:attr/buttonBarButtonStyle"
                 android:id="@+id/cancel_btn"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/cancel"
-                android:onClick="cancel"
+                android:onClick="cancelChanges"
                 android:visibility="gone"
                 android:background="@android:color/holo_red_light"/>
         </LinearLayout>
@@ -48,7 +50,7 @@
             <TextView
                 style="@style/BeerDetailRead"
                 android:id="@+id/beer_name"
-                android:onClick="modifyBeerName"/>
+                android:onClick="editMode"/>
             <EditText
                 style="@style/BeerDetailWrite"
                 android:id="@+id/beer_name_edit"
@@ -66,7 +68,7 @@
             <TextView
                 style="@style/BeerDetailRead"
                 android:id="@+id/brewery_name"
-                android:onClick="modifyBrewery"/>
+                android:onClick="editMode"/>
             <EditText
                 style="@style/BeerDetailWrite"
                 android:id="@+id/brewery_name_edit"
@@ -84,7 +86,7 @@
             <TextView
                 style="@style/BeerDetailRead"
                 android:id="@+id/beer_type"
-                android:onClick="modifyBeerType"/>
+                android:onClick="editMode"/>
             <EditText
                 style="@style/BeerDetailWrite"
                 android:id="@+id/beer_type_edit"
@@ -102,7 +104,7 @@
             <TextView
                 style="@style/BeerDetailRead"
                 android:id="@+id/country"
-                android:onClick="modifyCountry"/>
+                android:onClick="editMode"/>
             <EditText
                 style="@style/BeerDetailWrite"
                 android:id="@+id/country_edit"
@@ -120,7 +122,7 @@
             <TextView
                 style="@style/BeerDetailRead"
                 android:id="@+id/percentage"
-                android:onClick="modifyPercentage"/>
+                android:onClick="editMode"/>
             <EditText
                 style="@style/BeerDetailWrite"
                 android:id="@+id/percentage_edit"

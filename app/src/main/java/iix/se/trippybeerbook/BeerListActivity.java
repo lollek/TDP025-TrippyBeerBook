@@ -1,5 +1,6 @@
 package iix.se.trippybeerbook;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
@@ -76,7 +77,7 @@ public class BeerListActivity extends Activity {
         BeerDetailFragment fragment = new BeerDetailFragment();
         fragment.setArguments(arguments);
         getFragmentManager().beginTransaction()
-                .replace(R.id.beer_detail_container, fragment)
+                .replace(R.id.beer_detail_container, fragment, "DetailFragment")
                 .commit();
     }
 
@@ -86,5 +87,20 @@ public class BeerListActivity extends Activity {
         Intent detailIntent = new Intent(this, BeerDetailActivity.class);
         detailIntent.putExtra(BeerDetailFragment.ARG_ITEM_ID, id);
         startActivity(detailIntent);
+    }
+
+    public void saveChanges(View view) {
+        Fragment fragment = getFragmentManager().findFragmentByTag("DetailFragment");
+        ((BeerDetailFragment)fragment).saveChanges();
+    }
+
+    public void cancelChanges(View view) {
+        Fragment fragment = getFragmentManager().findFragmentByTag("DetailFragment");
+        ((BeerDetailFragment)fragment).cancelChanges();
+    }
+
+    public void editMode(View view) {
+        Fragment fragment = getFragmentManager().findFragmentByTag("DetailFragment");
+        ((BeerDetailFragment)fragment).editMode(view.getId());
     }
 }
