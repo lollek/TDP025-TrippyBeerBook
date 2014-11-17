@@ -46,12 +46,18 @@ public class BeerDetailFragment extends Fragment {
         // Editing an existing item
         if (mItem != null) {
             Float rating;
-            try {
-                rating = Float.parseFloat(mItem.mStars);
-            } catch (Exception e) {
-                rating = 0f;
-            }
-            ((RatingBar) rootView.findViewById(R.id.RatingBar)).setRating(rating);
+            try                 { rating = Float.parseFloat(mItem.mStars); }
+            catch (Exception e) { rating = 0f; }
+
+            final RatingBar stars = (RatingBar) rootView.findViewById(R.id.RatingBar);
+            stars.setRating(rating);
+            stars.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                    mItem.mStars = Float.toString(v);
+                    ((BeerDetailActivity)getActivity()).save(rootView);
+                }
+            });
 
             ((TextView) rootView.findViewById(R.id.beer_name)).setText(mItem.mName);
             ((TextView) rootView.findViewById(R.id.brewery_name)).setText(mItem.mBrewery);

@@ -47,7 +47,7 @@ public class Database {
             List<Beer> list = getList();
             mAdapter = new ArrayAdapter<Beer>(
                     activity,
-                    android.R.layout.simple_list_item_activated_1,
+                    android.R.layout.two_line_list_item,
                     android.R.id.text1,
                     list);
         }
