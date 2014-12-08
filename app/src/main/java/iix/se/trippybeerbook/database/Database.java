@@ -117,4 +117,9 @@ public class Database {
             case STARS: mCurrentSort = DatabaseContract.BeerColumns.STARS + " DESC"; break;
         }
     }
+
+    public void forceRefresh() {
+        mList = null;
+        mAdapter = null;
+    }
 }

@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import iix.se.trippybeerbook.database.Beer;
-import iix.se.trippybeerbook.database.BeerArrayAdapter;
 import iix.se.trippybeerbook.database.Database;
 
 
@@ -104,12 +103,7 @@ public class BeerListFragment extends ListFragment {
         editor.apply();
 
         mDatabase.sortBy(sorting);
-        BeerArrayAdapter adapter = mDatabase.getAdapter(getActivity());
-        setListAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }
-
-    public void resetListAdapter() {
+        mDatabase.forceRefresh();
         setListAdapter(mDatabase.getAdapter(getActivity()));
     }
 

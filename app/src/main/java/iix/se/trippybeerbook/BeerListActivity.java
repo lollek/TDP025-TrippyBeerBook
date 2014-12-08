@@ -57,14 +57,6 @@ public class BeerListActivity extends Activity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        Fragment listFragment = getFragmentManager().findFragmentById(R.id.beer_list);
-        ((BeerListFragment)listFragment).resetListAdapter();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.actionbar, menu);
@@ -123,9 +115,6 @@ public class BeerListActivity extends Activity {
     public void saveChanges(View view) {
         Fragment detailFragment = getFragmentManager().findFragmentByTag("DetailFragment");
         ((BeerDetailFragment)detailFragment).saveChanges();
-
-        Fragment listFragment = getFragmentManager().findFragmentById(R.id.beer_list);
-        ((BeerListFragment)listFragment).resetListAdapter();
     }
 
     public void cancelChanges(View view) {
