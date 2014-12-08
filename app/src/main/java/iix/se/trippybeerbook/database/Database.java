@@ -2,41 +2,35 @@ package iix.se.trippybeerbook.database;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * ALL OF THESE FUNCTIONS NEED TO RUN ON ASYNC TASKS LATER!
- */
-
+/**
+ * Database is an abstraction for interacting with the SQLite database.
+ * The real action takes place in {@link DatabaseHelper} */
 public class Database {
-    private DatabaseHelper mHelper;
-    private BeerArrayAdapter mAdapter;
-    private List<Beer> mList;
-    private String mCurrentSort;
+    DatabaseHelper mHelper;             /* SQLite backend */
+    BeerArrayAdapter mAdapter;          /* Adapter for mList */
+    List<Beer> mList;                   /* List of items in database */
 
-    public static enum SortBy {
-        NEW,
-        NAME,
-        BREWERY,
-        STARS
-    }
-
+    /**
+     * Standard constructor
+     * NB: This should not run on the UI-thread! */
     public Database(Context context) {
-        this(context, SortBy.NEW);
-    }
-
-    public Database(Context context, SortBy sorting) {
         mHelper = new DatabaseHelper(context);
-        sortBy(sorting);
     }
 
-    public List<Beer> getList() {
+    /**
+     * Returns list of database items
+     * NB: This should not run on the UI-thread! */
+    public List<Beer> getList(Activity activity) {
         if (mList == null) {
             mList = new ArrayList<Beer>();
-            final Cursor cursor = mHelper.query(null, mCurrentSort);
+            final Cursor cursor = mHelper.query(null, getCurrentSorting(activity));
+
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 Beer beer = new Beer(cursor);
@@ -47,21 +41,22 @@ public class Database {
             cursor.close();
             mHelper.close();
 
-            if (mAdapter != null) {
+            if (mAdapter != null)
                 mAdapter.notifyDataSetChanged();
-            }
         }
         return mList;
     }
 
+    /**
+     * Returns an adapter for the database's list
+     * NB: There might be issues if this runs on the UI-thread! */
     public BeerArrayAdapter getAdapter(Activity activity) {
-        if (mAdapter == null) {
-            final List<Beer> list = getList();
-            mAdapter = new BeerArrayAdapter(activity, list);
-        }
+        if (mAdapter == null)
+            mAdapter = new BeerArrayAdapter(activity, getList(activity));
         return mAdapter;
     }
 
+    /* Add an item, TODO: Make this run on a thread */
     public void addBeer(Beer item) {
         mHelper.insertOrThrowThenClose(item);
         if (mList != null) {
@@ -72,6 +67,7 @@ public class Database {
         }
     }
 
+    /* Modify an existing item, TODO: Make this run on a thread */
     public void updateBeer(Beer item) {
         mHelper.update(item);
         if (mList != null) {
@@ -88,6 +84,7 @@ public class Database {
         }
     }
 
+    /* Remove an existing item, TODO: Make this run on a thread */
     public void removeBeer(Beer item) {
         mHelper.remove(item.mID);
         if (mList != null) {
@@ -98,6 +95,10 @@ public class Database {
         }
     }
 
+    /**
+     * Return the item with the given id.
+     * NB: This should not be run on the UI-thread
+     * NB: This may well crash the app if the id is not found */
     public Beer getBeerById(long id) {
         final Cursor cursor = mHelper.query(DatabaseContract.BeerColumns._ID + " = " + id, null);
 
@@ -109,17 +110,27 @@ public class Database {
         return return_value;
     }
 
-    public void sortBy(SortBy sort) {
-        switch(sort) {
-            case NEW: mCurrentSort = DatabaseContract.BeerColumns._ID; break;
-            case NAME: mCurrentSort = DatabaseContract.BeerColumns.BEER_NAME; break;
-            case BREWERY: mCurrentSort = DatabaseContract.BeerColumns.BREWERY; break;
-            case STARS: mCurrentSort = DatabaseContract.BeerColumns.STARS + " DESC"; break;
+    /**
+     * Change the way the database is sorted.
+     * NB: You will need to setListAdapter() after this */
+    public void sortBy(Activity activity, String sort, Boolean refresh) {
+        final SharedPreferences.Editor editor =
+                activity.getPreferences(Context.MODE_PRIVATE).edit();
+        editor.putString("sort", sort);
+        editor.apply();
+        if (refresh) {
+            mList = null;
+            mAdapter = null;
         }
     }
 
-    public void forceRefresh() {
-        mList = null;
-        mAdapter = null;
+    /* Returns how we should sort the list */
+    String getCurrentSorting(Activity activity) {
+        String sortingString = activity
+                .getPreferences(Context.MODE_PRIVATE)
+                .getString("sort", DatabaseContract.BeerColumns._ID);
+        if (sortingString.equals(DatabaseContract.BeerColumns.STARS))
+            sortingString += " DESC";
+        return sortingString;
     }
 }

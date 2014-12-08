@@ -11,7 +11,7 @@ import android.view.View;
 import com.amazon.insights.*;
 
 import iix.se.trippybeerbook.database.Beer;
-import iix.se.trippybeerbook.database.Database;
+import iix.se.trippybeerbook.database.DatabaseContract;
 
 /**
  * An activity representing a list of Beers. This activity
@@ -67,10 +67,10 @@ public class BeerListActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_bar_item_new: setSorting(Database.SortBy.NEW); return true;
-            case R.id.action_bar_item_score: setSorting(Database.SortBy.STARS); return true;
-            case R.id.action_bar_item_name: setSorting(Database.SortBy.NAME); return true;
-            case R.id.action_bar_item_brewery: setSorting(Database.SortBy.BREWERY); return true;
+            case R.id.action_bar_item_new: return setSorting(DatabaseContract.BeerColumns._ID);
+            case R.id.action_bar_item_score: return setSorting(DatabaseContract.BeerColumns.STARS);
+            case R.id.action_bar_item_name: return setSorting(DatabaseContract.BeerColumns.BEER_NAME);
+            case R.id.action_bar_item_brewery: return setSorting(DatabaseContract.BeerColumns.BREWERY);
             default: return super.onOptionsItemSelected(item);
         }
     }
@@ -127,8 +127,9 @@ public class BeerListActivity extends Activity {
         ((BeerDetailFragment)fragment).editMode(view.getId());
     }
 
-    public void setSorting(Database.SortBy sort) {
+    public boolean setSorting(String sort) {
         ((BeerListFragment) getFragmentManager().findFragmentById(R.id.beer_list))
                            .setSorting(sort);
+        return true;
     }
 }
