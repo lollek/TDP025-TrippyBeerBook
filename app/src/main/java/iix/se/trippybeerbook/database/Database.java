@@ -17,15 +17,18 @@ public class Database {
     List<Beer> mList;                   /* List of items in database */
 
     /**
-     * Standard constructor
-     * NB: This should not run on the UI-thread! */
-    public Database(Context context) {
+     * Constructor
+     * @param context Context
+     */
+     public Database(Context context) {
         mHelper = new DatabaseHelper(context);
     }
 
     /**
-     * Returns list of database items
-     * NB: This should not run on the UI-thread! */
+     * Get all database items
+     * @param activity Activity
+     * @return A list of database items
+     */
     public List<Beer> getList(Activity activity) {
         if (mList == null) {
             mList = new ArrayList<Beer>();
@@ -49,14 +52,19 @@ public class Database {
 
     /**
      * Returns an adapter for the database's list
-     * NB: There might be issues if this runs on the UI-thread! */
-    public BeerArrayAdapter getAdapter(Activity activity) {
+     * @param activity Activity
+     * @return An adapter of the database item list
+     */
+     public BeerArrayAdapter getAdapter(Activity activity) {
         if (mAdapter == null)
             mAdapter = new BeerArrayAdapter(activity, getList(activity));
         return mAdapter;
     }
 
-    /* Add an item, TODO: Make this run on a thread */
+    /**
+     * Add item to list
+     * @param item Item to add
+     */
     public void addBeer(Beer item) {
         mHelper.insertOrThrowThenClose(item);
         if (mList != null) {
@@ -67,39 +75,40 @@ public class Database {
         }
     }
 
-    /* Modify an existing item, TODO: Make this run on a thread */
+    /**
+     * Modify an existing item
+     * @param item Item to modify
+     */
     public void updateBeer(Beer item) {
         mHelper.update(item);
         if (mList != null) {
-            for (int i = 0; i < mList.size(); i++) {
-                if (mList.get(i).mID == item.mID) {
-                    mList.remove(i);
-                    mList.add(i, item);
-                    break;
-                }
-            }
+            int pos = mList.indexOf(item);
+            if (pos != -1)
+                mList.set(pos, item);
         }
-        if (mAdapter != null) {
+        if (mAdapter != null)
             mAdapter.notifyDataSetChanged();
-        }
     }
 
-    /* Remove an existing item, TODO: Make this run on a thread */
+    /**
+     * Remove an existing item
+     * @param item Item to modify
+     */
     public void removeBeer(Beer item) {
         mHelper.remove(item.mID);
         if (mList != null) {
             mList.remove(item);
-        }
-        if (mAdapter != null) {
-            mAdapter.notifyDataSetChanged();
+            if (mAdapter != null)
+                mAdapter.notifyDataSetChanged();
         }
     }
 
     /**
-     * Return the item with the given id.
-     * NB: This should not be run on the UI-thread
-     * NB: This may well crash the app if the id is not found */
-    public Beer getBeerById(long id) {
+     * NB: This may well crash the app if the id is not found
+     * @param id ID to find item from
+     * @return Return the item with the given id.
+     */
+     public Beer getBeerById(long id) {
         final Cursor cursor = mHelper.query(DatabaseContract.BeerColumns._ID + " = " + id, null);
 
         cursor.moveToFirst();
@@ -112,8 +121,12 @@ public class Database {
 
     /**
      * Change the way the database is sorted.
-     * NB: You will need to setListAdapter() after this */
-    public void sortBy(Activity activity, String sort, Boolean refresh) {
+     * NB: You will need to setListAdapter() after this
+     * @param activity Activity
+     * @param sort Columnt to sort by
+     * @param refresh Should we reset the list and adapter?
+     */
+     public void sortBy(Activity activity, String sort, Boolean refresh) {
         final SharedPreferences.Editor editor =
                 activity.getPreferences(Context.MODE_PRIVATE).edit();
         editor.putString("sort", sort);
@@ -124,7 +137,10 @@ public class Database {
         }
     }
 
-    /* Returns how we should sort the list */
+    /**
+     * @param activity Activity
+     * @return Return how we should sort the list
+     */
     String getCurrentSorting(Activity activity) {
         String sortingString = activity
                 .getPreferences(Context.MODE_PRIVATE)
