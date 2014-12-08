@@ -2,12 +2,8 @@ package iix.se.trippybeerbook.database;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.Shape;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -46,11 +42,15 @@ public class BeerArrayAdapter extends ArrayAdapter<Beer> {
         final GradientDrawable shape = (GradientDrawable) stars.getBackground();
 
         switch((int)Float.parseFloat(item.mStars)) {
-            case 1: shape.setColor(Color.rgb(255, 136, 0)); break;
-            case 2: shape.setColor(Color.rgb(255,187,51)); break;
-            case 3: shape.setColor(Color.YELLOW); break;
-            case 4: shape.setColor(Color.rgb(153,204,0)); break;
-            case 5: shape.setColor(Color.rgb(102,153,0)); break;
+            case 1: shape.setColor(Color.rgb(255, 136,  0)); break;  /* Dark orange */
+            case 2: shape.setColor(Color.rgb(255, 187, 51)); break;  /* Light orange */
+            case 3: shape.setColor(Color.YELLOW); break;             /* Yellow */
+            case 4: shape.setColor(Color.rgb(153, 204,  0)); break;  /* Light green */
+            case 5: shape.setColor(Color.rgb(102, 153,  0)); break;  /* Dark green */
+            default:                                                 /* No score = white "?" */
+                shape.setColor(Color.WHITE);
+                stars.setText("?");
+                break;
         }
         return view;
     }
