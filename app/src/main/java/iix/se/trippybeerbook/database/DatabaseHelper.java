@@ -22,7 +22,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor query(String selection, String sort) {
-        close();
         mCurrentDB = getReadableDatabase();
         return mCurrentDB.query(
                 DatabaseContract.BeerColumns.TABLE_NAME,
@@ -44,7 +43,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(DatabaseContract.BeerColumns.STARS, item.mStars);
         values.put(DatabaseContract.BeerColumns.COMMENT, item.mComment);
 
-        close();
         mCurrentDB = getWritableDatabase();
         mCurrentDB.insertOrThrow(DatabaseContract.BeerColumns.TABLE_NAME, null, values);
         mCurrentDB.close();
@@ -61,7 +59,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(DatabaseContract.BeerColumns.STARS, item.mStars);
         values.put(DatabaseContract.BeerColumns.COMMENT, item.mComment);
 
-        close();
         mCurrentDB = getWritableDatabase();
         mCurrentDB.update(DatabaseContract.BeerColumns.TABLE_NAME, values, where, null);
         mCurrentDB.close();
@@ -69,7 +66,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void remove(long id) {
         String where = DatabaseContract.BeerColumns._ID + " = " + id;
-        close();
         mCurrentDB = getWritableDatabase();
         mCurrentDB.delete(DatabaseContract.BeerColumns.TABLE_NAME, where, null);
         mCurrentDB.close();
