@@ -46,7 +46,7 @@
 
             <TextView
                 style="@style/BeerDetailHeader"
-                android:text="@string/text_beer_name"/>
+                android:text="@string/beer_name"/>
             <TextView
                 style="@style/BeerDetailRead"
                 android:id="@+id/beer_name"
@@ -64,7 +64,7 @@
 
             <TextView
                 style="@style/BeerDetailHeader"
-                android:text="@string/text_brewery"/>
+                android:text="@string/brewery"/>
             <TextView
                 style="@style/BeerDetailRead"
                 android:id="@+id/brewery_name"
@@ -82,7 +82,7 @@
 
             <TextView
                 style="@style/BeerDetailHeader"
-                android:text="@string/text_beer_type"/>
+                android:text="@string/beer_type"/>
             <TextView
                 style="@style/BeerDetailRead"
                 android:id="@+id/beer_type"
@@ -100,7 +100,7 @@
 
             <TextView
                 style="@style/BeerDetailHeader"
-                android:text="@string/text_country_of_origin"/>
+                android:text="@string/country"/>
             <TextView
                 style="@style/BeerDetailRead"
                 android:id="@+id/country"
@@ -118,7 +118,7 @@
 
             <TextView
                 style="@style/BeerDetailHeader"
-                android:text="@string/text_alcohol_percentage"/>
+                android:text="@string/percentage"/>
             <TextView
                 style="@style/BeerDetailRead"
                 android:id="@+id/percentage"

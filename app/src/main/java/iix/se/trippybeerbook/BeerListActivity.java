@@ -4,10 +4,14 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import com.amazon.insights.*;
 
 import iix.se.trippybeerbook.database.Beer;
+import iix.se.trippybeerbook.database.Database;
 
 /**
  * An activity representing a list of Beers. This activity
@@ -58,6 +62,25 @@ public class BeerListActivity extends Activity {
 
         Fragment listFragment = getFragmentManager().findFragmentById(R.id.beer_list);
         ((BeerListFragment)listFragment).resetListAdapter();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.actionbar, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_bar_item_new: setSorting(Database.SortBy.NEW); return true;
+            case R.id.action_bar_item_score: setSorting(Database.SortBy.STARS); return true;
+            case R.id.action_bar_item_name: setSorting(Database.SortBy.NAME); return true;
+            case R.id.action_bar_item_brewery: setSorting(Database.SortBy.BREWERY); return true;
+            default: return super.onOptionsItemSelected(item);
+        }
     }
 
     public void onItemSelected(Beer id) {
@@ -113,5 +136,10 @@ public class BeerListActivity extends Activity {
     public void editMode(View view) {
         Fragment fragment = getFragmentManager().findFragmentByTag("DetailFragment");
         ((BeerDetailFragment)fragment).editMode(view.getId());
+    }
+
+    public void setSorting(Database.SortBy sort) {
+        ((BeerListFragment) getFragmentManager().findFragmentById(R.id.beer_list))
+                           .setSorting(sort);
     }
 }

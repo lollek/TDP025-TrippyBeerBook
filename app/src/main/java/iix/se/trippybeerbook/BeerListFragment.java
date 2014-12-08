@@ -1,7 +1,9 @@
 package iix.se.trippybeerbook;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import iix.se.trippybeerbook.database.Beer;
+import iix.se.trippybeerbook.database.BeerArrayAdapter;
 import iix.se.trippybeerbook.database.Database;
 
 
@@ -52,7 +55,11 @@ public class BeerListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (mDatabase == null) {
-            mDatabase = new Database(getActivity().getApplicationContext());
+            String tmpStr = getActivity().getPreferences(Context.MODE_PRIVATE).getString("sort", "");
+            Database.SortBy sorting = tmpStr.isEmpty()
+                    ? Database.SortBy.NEW
+                    : Database.SortBy.valueOf(tmpStr);
+            mDatabase = new Database(getActivity().getApplicationContext(), sorting);
         }
         setListAdapter(mDatabase.getAdapter(getActivity()));
     }
@@ -88,6 +95,18 @@ public class BeerListFragment extends ListFragment {
             // Serialize and persist the activated item position.
             outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
         }
+    }
+
+    public void setSorting(Database.SortBy sorting) {
+        final SharedPreferences.Editor editor =
+                getActivity().getPreferences(Context.MODE_PRIVATE).edit();
+        editor.putString("sort", sorting.toString());
+        editor.apply();
+
+        mDatabase.sortBy(sorting);
+        BeerArrayAdapter adapter = mDatabase.getAdapter(getActivity());
+        setListAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     public void resetListAdapter() {

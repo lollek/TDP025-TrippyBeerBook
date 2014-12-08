@@ -15,15 +15,28 @@ public class Database {
     private DatabaseHelper mHelper;
     private BeerArrayAdapter mAdapter;
     private List<Beer> mList;
+    private String mCurrentSort;
+
+    public static enum SortBy {
+        NEW,
+        NAME,
+        BREWERY,
+        STARS
+    }
 
     public Database(Context context) {
+        this(context, SortBy.NEW);
+    }
+
+    public Database(Context context, SortBy sorting) {
         mHelper = new DatabaseHelper(context);
+        sortBy(sorting);
     }
 
     public List<Beer> getList() {
         if (mList == null) {
             mList = new ArrayList<Beer>();
-            final Cursor cursor = mHelper.query(null, DatabaseContract.BeerColumns._ID);
+            final Cursor cursor = mHelper.query(null, mCurrentSort);
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 Beer beer = new Beer(cursor);
@@ -94,5 +107,14 @@ public class Database {
         cursor.close();
         mHelper.close();
         return return_value;
+    }
+
+    public void sortBy(SortBy sort) {
+        switch(sort) {
+            case NEW: mCurrentSort = DatabaseContract.BeerColumns._ID; break;
+            case NAME: mCurrentSort = DatabaseContract.BeerColumns.BEER_NAME; break;
+            case BREWERY: mCurrentSort = DatabaseContract.BeerColumns.BREWERY; break;
+            case STARS: mCurrentSort = DatabaseContract.BeerColumns.STARS + " DESC"; break;
+        }
     }
 }

@@ -2,19 +2,21 @@
 <resources>
 
     <string name="app_name">TrippyBeerBook</string>
-    <string name="title_beer_detail">Beer Detail</string>
-    <string name="button_add_beer">Add Beer</string>
-    <string name="text_delete">Delete</string>
-    <string name="save">Save</string>
-    <string name="cancel">Cancel</string>
-    <string name="text_beer_name">Name</string>
-    <string name="text_brewery">Brewery</string>
-    <string name="text_beer_type">Type</string>
-    <string name="text_country_of_origin">Country</string>
-    <string name="text_alcohol_percentage">%</string>
-    <string name="text_add_new_beer">Add Beer</string>
+    <string name="title_beer_detail">Beer Details</string>
+    <string name="beer_name">Name</string>
+    <string name="brewery">Brewery</string>
+    <string name="beer_type">Type</string>
+    <string name="country">Country</string>
+    <string name="percentage">%</string>
+    <string name="add_beer">Add Beer</string>
+
     <string name="delete">Delete</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="sort_by">Sort By</string>
+    <string name="score">Score</string>
+    <string name="id">New</string>
 
 </resources>
