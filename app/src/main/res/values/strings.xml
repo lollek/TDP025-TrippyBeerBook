@@ -18,5 +18,6 @@
     <string name="sort_by">Sort By</string>
     <string name="score">Score</string>
     <string name="id">New</string>
+    <string name="add_comment">Click here to add a comment</string>
 
 </resources>
