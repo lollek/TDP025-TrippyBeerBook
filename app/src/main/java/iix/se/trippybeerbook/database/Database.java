@@ -41,8 +41,7 @@ public class Database {
                 cursor.moveToNext();
             }
 
-            cursor.close();
-            mHelper.close();
+            mHelper.close(cursor);
 
             if (mAdapter != null)
                 mAdapter.notifyDataSetChanged();
@@ -114,8 +113,7 @@ public class Database {
         cursor.moveToFirst();
         Beer return_value = new Beer(cursor);
 
-        cursor.close();
-        mHelper.close();
+        mHelper.close(cursor);
         return return_value;
     }
 

@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * Backend class which accesses the SQLite database
+ */
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static int DATABASE_VERSION = 1;
     public static String DATABASE_NAME = "TrippyBeerBook.db";
@@ -15,10 +18,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public void close() {
-        if (mCurrentDB != null) {
-            mCurrentDB.close();
-        }
+    public void close(Cursor cursor) {
+        cursor.close();
+        mCurrentDB.close();
     }
 
     public Cursor query(String selection, String sort) {
