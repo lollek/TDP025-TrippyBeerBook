@@ -25,7 +25,7 @@ public class BeerDetailFragment extends Fragment {
     private Database mDatabase;
     private Beer mItem;
 
-    // Mandatory empty constructor for screen orientation changes and stuff
+    /* Mandatory empty constructor for screen orientation changes and stuff */
     public BeerDetailFragment() {}
 
     @Override
@@ -34,34 +34,31 @@ public class BeerDetailFragment extends Fragment {
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             final long id = getArguments().getLong(ARG_ITEM_ID);
-            if (id != -1) {
+            if (id != -1)
                 mItem = new Database(getActivity().getApplicationContext()).getBeerById(id);
-            }
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle _unused) {
         final View rootView = inflater.inflate(R.layout.fragment_beer_detail,
                 container, false);
 
-        if (mItem != null) {
+        if (mItem != null)
             onCreateViewExisting(rootView);
-        } else {
+        else
             onCreateViewNew(rootView);
-        }
 
         return rootView;
     }
 
+    /**
+     * onCreateView for editing or viewing an item
+     * @param view The root view
+     */
     void onCreateViewExisting(final View view) {
-        Float rating;
-        try                 { rating = Float.parseFloat(mItem.mStars); }
-        catch (Exception e) { rating = 0f; }
-
         final RatingBar stars = (RatingBar) view.findViewById(R.id.RatingBar);
-        stars.setRating(rating);
+        stars.setRating(Float.parseFloat(mItem.mStars));
         stars.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
@@ -78,6 +75,10 @@ public class BeerDetailFragment extends Fragment {
         ((TextView) view.findViewById(R.id.beer_comment)).setText(mItem.mComment);
     }
 
+    /**
+     * onCreateview for new items
+     * @param view The root view
+     */
     void onCreateViewNew(final View view) {
         view.findViewById(R.id.beer_name).setVisibility(View.GONE);
         view.findViewById(R.id.brewery_name).setVisibility(View.GONE);
@@ -96,6 +97,9 @@ public class BeerDetailFragment extends Fragment {
         view.findViewById(R.id.save_btn).setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Unset any changes made and return to "view mode"
+     */
     void cancelChanges() {
         final Activity activity = getActivity();
 
@@ -110,6 +114,9 @@ public class BeerDetailFragment extends Fragment {
         disableEditMode(R.id.beer_comment, R.id.beer_comment_edit, false);
     }
 
+    /**
+     * Save any changes made and return to "view mode"
+     */
     void saveChanges() {
         final Activity activity = getActivity();
 
@@ -144,6 +151,11 @@ public class BeerDetailFragment extends Fragment {
         }
     }
 
+    /**
+     * Helper function to enter edit mode for one field
+     * @param readID ID of the TextView
+     * @param writeID ID of the EditView
+     */
     void activateEditMode(int readID, int writeID) {
         final Activity activity = getActivity();
 
@@ -159,20 +171,29 @@ public class BeerDetailFragment extends Fragment {
         writeText.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Helper function to exit edit mode for one field
+     * @param readID ID of the TextView
+     * @param writeID ID of the EditView
+     * @param saveChangedData Should we copy the changed data to the TextView?
+     */
     void disableEditMode(int readID, int writeID, boolean saveChangedData) {
         final Activity activity = getActivity();
         final EditText writeText = (EditText) activity.findViewById(writeID);
 
         if (writeText.getVisibility() == View.VISIBLE) {
             final TextView readText = (TextView) activity.findViewById(readID);
-            if (saveChangedData) {
+            if (saveChangedData)
                 readText.setText(writeText.getText());
-            }
             readText.setVisibility(View.VISIBLE);
             writeText.setVisibility(View.GONE);
         }
     }
 
+    /**
+     * Helper function for activateEditMode
+     * @param id ID of the TextView to edit
+     */
     void editMode(int id) {
         switch (id) {
             case R.id.beer_name: activateEditMode(id, R.id.beer_name_edit); break;
