@@ -1,6 +1,5 @@
 package iix.se.trippybeerbook;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
@@ -18,7 +17,8 @@ import android.view.View;
  * more than a {@link BeerDetailFragment}.
  */
 public class BeerDetailActivity extends Activity {
-    boolean newItem;
+    boolean mCurrentItem;
+    boolean mEditMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class BeerDetailActivity extends Activity {
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
             long mItemID = getIntent().getLongExtra(BeerDetailFragment.ARG_ITEM_ID, 0);
-            newItem = mItemID == -1;
+            mCurrentItem = mItemID == -1;
             arguments.putLong(BeerDetailFragment.ARG_ITEM_ID, mItemID);
             BeerDetailFragment fragment = new BeerDetailFragment();
             fragment.setArguments(arguments);
@@ -46,39 +46,58 @@ public class BeerDetailActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case android.R.id.home:
-                NavUtils.navigateUpTo(this,
-                        new Intent(this, BeerListActivity.class));
-                return true;
-
-            default: return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(this, BeerListActivity.class));
+        if (mEditMode)
+            cancelChanges(null);
+        else
+            NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
     }
 
+    /**
+     * Save any modifications we have done
+     * @param view Unused
+     */
     public void saveChanges(View view) {
-        Fragment detailFragment = getFragmentManager().findFragmentByTag("DetailFragment");
-        ((BeerDetailFragment)detailFragment).saveChanges();
+        mEditMode = false;
+        getBeerDetailFragment().saveChanges();
 
-        if (newItem) {
+        // If we're creating a new item, saving returns us to the BeerList
+        if (mCurrentItem) {
             NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
         }
     }
 
+    /**
+     * Cancel any modifications we have done.
+     * @param view Unused
+     */
     public void cancelChanges(View view) {
-        Fragment fragment = getFragmentManager().findFragmentByTag("DetailFragment");
-        ((BeerDetailFragment)fragment).cancelChanges();
+        mEditMode = false;
+        getBeerDetailFragment().cancelChanges();
     }
 
+    /**
+     * Make a View editable
+     * @param view View to edit
+     */
     public void editMode(View view) {
-        Fragment fragment = getFragmentManager().findFragmentByTag("DetailFragment");
-        ((BeerDetailFragment)fragment).editMode(view.getId());
+        mEditMode = true;
+        getBeerDetailFragment().editMode(view.getId());
+    }
+
+    /**
+     * Helper function to avoid clutter
+     * @return The attached BeerDetailFragment
+     */
+    BeerDetailFragment getBeerDetailFragment() {
+        return (BeerDetailFragment)getFragmentManager().findFragmentByTag("DetailFragment");
     }
 }
