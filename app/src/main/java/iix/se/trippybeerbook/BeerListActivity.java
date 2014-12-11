@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import com.amazon.insights.*;
 
 import iix.se.trippybeerbook.database.Beer;
 import iix.se.trippybeerbook.database.DatabaseContract;
@@ -27,13 +26,18 @@ import iix.se.trippybeerbook.database.DatabaseContract;
  */
 public class BeerListActivity extends Activity {
 
-    private boolean mTwoPane; // Are we running in 2-pane mode (tablet) ?
-    private AmazonInsights mAmazonInsights;
+    boolean mTwoPane; // Are we running in 2-pane mode (tablet) ?
+    ABTest mABTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_beer_list);
+        if (mABTest == null)
+            mABTest = ABTest.getInstance(this);
+
+        setContentView(mABTest.addButtonInList()
+                ? R.layout.activity_beer_list_withadd
+                : R.layout.activity_beer_list);
 
         if (findViewById(R.id.beer_detail_container) != null) {
             // The detail container view will be present only in the
@@ -48,17 +52,15 @@ public class BeerListActivity extends Activity {
                     .findFragmentById(R.id.beer_list))
                     .setActivateOnItemClick(true);
         }
-
-        if (mAmazonInsights == null) {
-            InsightsCredentials credentials = AmazonInsights.newCredentials("2156346903af452c8e6e6af077a32899", "Z2gS+6/7h4vqBhKCuczMjXQ1wq/hK/Vwx5zFmA1D9AM=");
-            mAmazonInsights = AmazonInsights.newInstance(credentials, getApplicationContext());
-        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.actionbar, menu);
+        inflater.inflate(mABTest.addButtonInList()
+                ? R.menu.actionbar_noadd
+                : R.menu.actionbar,
+                menu);
         return true;
     }
 
@@ -66,6 +68,7 @@ public class BeerListActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_bar_add: addItem(null); return true;
             case R.id.action_bar_item_new: return setSorting(DatabaseContract.BeerColumns._ID);
             case R.id.action_bar_item_score: return setSorting(DatabaseContract.BeerColumns.STARS);
             case R.id.action_bar_item_name: return setSorting(DatabaseContract.BeerColumns.BEER_NAME);

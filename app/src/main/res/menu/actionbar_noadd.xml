@@ -2,11 +2,6 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_bar_add"
-        android:title="@string/add_beer"
-        android:icon="@drawable/ic_action_new"
-        android:showAsAction="ifRoom"/>
-    <item
         android:id="@+id/action_bar_text"
         android:title="@string/sort_by" >
         <menu>
