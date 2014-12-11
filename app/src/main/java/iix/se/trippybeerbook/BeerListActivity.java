@@ -50,8 +50,7 @@ public class BeerListActivity extends Activity {
         }
 
         if (mAmazonInsights == null) {
-            /* TODO: Replace with real key */
-            InsightsCredentials credentials = AmazonInsights.newCredentials("PUBLIC", "PRIVATE");
+            InsightsCredentials credentials = AmazonInsights.newCredentials("2156346903af452c8e6e6af077a32899", "Z2gS+6/7h4vqBhKCuczMjXQ1wq/hK/Vwx5zFmA1D9AM=");
             mAmazonInsights = AmazonInsights.newInstance(credentials, getApplicationContext());
         }
     }
