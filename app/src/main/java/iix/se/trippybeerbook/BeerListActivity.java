@@ -35,7 +35,7 @@ public class BeerListActivity extends Activity {
         if (mABTest == null)
             mABTest = ABTest.getInstance(this);
 
-        setContentView(mABTest.addButtonInList()
+        setContentView(mABTest.buttonsOnViewScreen()
                 ? R.layout.activity_beer_list_withadd
                 : R.layout.activity_beer_list);
 
@@ -57,7 +57,7 @@ public class BeerListActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(mABTest.addButtonInList()
+        inflater.inflate(mABTest.buttonsOnViewScreen()
                 ? R.menu.actionbar_noadd
                 : R.menu.actionbar,
                 menu);
@@ -77,6 +77,12 @@ public class BeerListActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mABTest.submitEvents();
+    }
+
     public void onItemSelected(Beer id) {
         if (mTwoPane) {
             changeFragmentForTwoPane(id.mID);
@@ -86,6 +92,7 @@ public class BeerListActivity extends Activity {
     }
 
     public void addItem(View view) {
+        mABTest.recordEvent("AddButtonClick");
         if (mTwoPane) {
             changeFragmentForTwoPane(-1);
         } else {
