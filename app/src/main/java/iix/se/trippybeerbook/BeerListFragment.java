@@ -30,6 +30,10 @@ public class BeerListFragment extends ListFragment {
     // Mandatory empty constructor for screen orientation changes and stuff
     public BeerListFragment() {}
 
+    /**
+     * Add item to the beer list
+     * @param item Item to add
+     */
     public void addItem(Beer item) {
         mDatabase.addBeer(item);
     }
@@ -74,14 +78,18 @@ public class BeerListFragment extends ListFragment {
         }
     }
 
+    /**
+     * Change the way the list is sorted
+     * @param sorting See {@link DatabaseContract.BeerColumns}
+     */
     public void setSorting(String sorting) {
         mDatabase.sortBy(getActivity(), sorting, true);
         setListAdapter(mDatabase.getAdapter(getActivity()));
     }
 
     /**
-     * Turns on activate-on-click mode. When this mode is on, list items will be
-     * given the 'activated' state when touched.
+     * Turns on activate-on-click mode.
+     * When this mode is on, list items will be given the 'activated' state when touched.
      */
     public void setActivateOnItemClick(boolean activateOnItemClick) {
         // When setting CHOICE_MODE_SINGLE, ListView will automatically
@@ -91,6 +99,10 @@ public class BeerListFragment extends ListFragment {
                 : ListView.CHOICE_MODE_NONE);
     }
 
+    /**
+     * Set activated item
+     * @param position Index of the activated item
+     */
     private void setActivatedPosition(int position) {
         if (position == ListView.INVALID_POSITION) {
             getListView().setItemChecked(mActivatedPosition, false);
@@ -101,6 +113,9 @@ public class BeerListFragment extends ListFragment {
         mActivatedPosition = position;
     }
 
+    /**
+     * Class for handling long clicks on items in the beer list
+     */
     private class OnItemLongClickListener implements AdapterView.OnItemLongClickListener {
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long id) {
@@ -121,6 +136,9 @@ public class BeerListFragment extends ListFragment {
         }
     }
 
+    /**
+     * Async Task for populating the beer list from database
+     */
     private class AsyncCreateList extends AsyncTask<Void, Void, BeerArrayAdapter> {
 
         @Override

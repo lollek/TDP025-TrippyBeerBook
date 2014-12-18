@@ -12,7 +12,7 @@ import android.view.View;
  * activity is only used on handset devices. On tablet-size devices,
  * item details are presented side-by-side with a list of items
  * in a {@link BeerListActivity}.
- * <p>
+ *
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link BeerDetailFragment}.
  */

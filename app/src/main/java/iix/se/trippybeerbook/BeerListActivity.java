@@ -19,7 +19,7 @@ import iix.se.trippybeerbook.database.DatabaseContract;
  * lead to a {@link BeerDetailActivity} representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
- * <p>
+ *
  * The activity makes heavy use of fragments. The list of items is a
  * {@link BeerListFragment} and the item details
  * (if present) is a {@link BeerDetailFragment}.
@@ -83,6 +83,10 @@ public class BeerListActivity extends Activity {
         mABTest.submitEvents();
     }
 
+    /**
+     * Handle onClick events for list items
+     * @param id ID of the clicked item
+     */
     public void onItemSelected(Beer id) {
         if (mTwoPane) {
             changeFragmentForTwoPane(id.mID);
@@ -91,7 +95,11 @@ public class BeerListActivity extends Activity {
         }
     }
 
-    public void addItem(View view) {
+    /**
+     * Handle onClick for the add-new-beer-button
+     * @param _unused Unused
+     */
+    public void addItem(View _unused) {
         mABTest.recordEvent("AddButtonClick");
         if (mTwoPane) {
             changeFragmentForTwoPane(-1);
@@ -100,10 +108,14 @@ public class BeerListActivity extends Activity {
         }
     }
 
+    /**
+     * Display a beer in a separate fragment.
+     * In two-pane mode, show the detail view in this activity by
+     * adding or replacing the detail fragment using a
+     * fragment transaction.
+     * @param id ID of item to display
+     */
     void changeFragmentForTwoPane(long id) {
-        // In two-pane mode, show the detail view in this activity by
-        // adding or replacing the detail fragment using a
-        // fragment transaction.
         Bundle arguments = new Bundle();
         arguments.putLong(BeerDetailFragment.ARG_ITEM_ID, id);
         BeerDetailFragment fragment = new BeerDetailFragment();
@@ -113,29 +125,49 @@ public class BeerListActivity extends Activity {
                 .commit();
     }
 
+    /** Display a beer in a separate fragment.
+     * In single-pane mode, simply start the detail activity
+     * for the selected item ID.
+     * @param id ID of the item to display
+     */
     void changeFragmentForSinglePane(long id) {
-        // In single-pane mode, simply start the detail activity
-        // for the selected item ID.
         Intent detailIntent = new Intent(this, BeerDetailActivity.class);
         detailIntent.putExtra(BeerDetailFragment.ARG_ITEM_ID, id);
         startActivity(detailIntent);
     }
 
+    /**
+     * Handle onClick for save-button.
+     * This is only used to make Android Studio stop complaining
+     */
     public void saveChanges(View view) {
         Fragment detailFragment = getFragmentManager().findFragmentByTag("DetailFragment");
         ((BeerDetailFragment)detailFragment).saveChanges();
     }
 
+    /**
+     * Handle onClick for cancel-button.
+     * This is only used to make Android Studio stop complaining
+     */
     public void cancelChanges(View view) {
         Fragment fragment = getFragmentManager().findFragmentByTag("DetailFragment");
         ((BeerDetailFragment)fragment).cancelChanges();
     }
 
+    /**
+     * Handle onClick for edit-button.
+     * This is only used to make Android Studio stop complaining
+     */
     public void editMode(View view) {
         Fragment fragment = getFragmentManager().findFragmentByTag("DetailFragment");
         ((BeerDetailFragment)fragment).editMode(view.getId());
     }
 
+    /**
+     * Change the way the list is sorted.
+     * @param sort The column to sort by.
+     * See {@link DatabaseContract.BeerColumns} for more info
+     */
     public boolean setSorting(String sort) {
         ((BeerListFragment) getFragmentManager().findFragmentById(R.id.beer_list))
                            .setSorting(sort);
