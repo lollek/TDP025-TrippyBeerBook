@@ -36,9 +36,9 @@ public class BeerListActivity extends Activity {
             mABTest = ABTest.getInstance(this);
         mABTest.recordEvent("AddButtonShown");
 
-        setContentView(mABTest.colorfulButtons()
-                ? R.layout.activity_beer_list_withadd
-                : R.layout.activity_beer_list);
+        setContentView(R.layout.activity_beer_list);
+        if (mABTest.colorfulButtons())
+            findViewById(R.id.add_button).setVisibility(View.VISIBLE);
 
         if (findViewById(R.id.beer_detail_container) != null) {
             // The detail container view will be present only in the
@@ -58,10 +58,9 @@ public class BeerListActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(mABTest.colorfulButtons()
-                ? R.menu.actionbar_noadd
-                : R.menu.actionbar,
-                menu);
+        inflater.inflate(R.menu.actionbar, menu);
+        if (mABTest.colorfulButtons())
+            menu.findItem(R.id.action_bar_add).setVisible(false);
         return true;
     }
 

@@ -6,6 +6,15 @@
     android:orientation="vertical"
     tools:context=".BeerListActivity">
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_button"
+        android:text="@string/add_beer"
+        android:onClick="addItem"
+        android:background="@android:color/holo_green_light"
+        android:visibility="gone"/>
+
     <fragment
         android:id="@+id/beer_list"
         android:name="iix.se.trippybeerbook.BeerListFragment"
