@@ -36,7 +36,7 @@ public class BeerListActivity extends Activity {
             mABTest = ABTest.getInstance(this);
         mABTest.recordEvent("AddButtonShown");
 
-        setContentView(mABTest.buttonsOnViewScreen()
+        setContentView(mABTest.colorfulButtons()
                 ? R.layout.activity_beer_list_withadd
                 : R.layout.activity_beer_list);
 
@@ -58,7 +58,7 @@ public class BeerListActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(mABTest.buttonsOnViewScreen()
+        inflater.inflate(mABTest.colorfulButtons()
                 ? R.menu.actionbar_noadd
                 : R.menu.actionbar,
                 menu);
@@ -76,7 +76,7 @@ public class BeerListActivity extends Activity {
             case R.id.action_bar_item_brewery: return setSorting(DatabaseContract.BeerColumns.BREWERY);
             case R.id.action_bar_devel_AddButtonInList:
                 ABTest abTest = ABTest.getInstance(this);
-                abTest.overrideButtonsOnViewScreen(!abTest.buttonsOnViewScreen());
+                abTest.setColorfulButtonsTo(!abTest.colorfulButtons());
                 return true;
             default: return super.onOptionsItemSelected(item);
         }

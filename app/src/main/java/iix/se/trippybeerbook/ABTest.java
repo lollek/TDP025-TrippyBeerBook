@@ -11,7 +11,7 @@ import com.amazon.insights.*;
 public class ABTest {
     private static ABTest mABTest;
     private AmazonInsights mAmazonInsights;
-    private boolean mAB_ButtonsOnViewScreen;
+    private boolean mAB_ColorfulButtons;
 
     /**
      * Return ABTest instance, and create one if necessary
@@ -26,17 +26,20 @@ public class ABTest {
 
     /**
      * AB Test for placing buttons
-     * @return True if we should place buttons on the main screen, False if we should place them on the ActionBar.
+     * @return True if we should place colorful buttons on the main screen,
+     *         False if we should place them on the ActionBar (therefore quite grey)
      */
-    public boolean buttonsOnViewScreen() {
-      return mAB_ButtonsOnViewScreen;
+    public boolean colorfulButtons() { 
+        return mAB_ColorfulButtons;
     }
 
     /**
      * Manually set ABTest-boolean. Useful to test that all test versions work
      * @param b New value of test
      */
-    public void overrideButtonsOnViewScreen(boolean b) { mAB_ButtonsOnViewScreen = b; }
+    public void setColorfulButtonsTo(boolean b) { 
+        mAB_ColorfulButtons = b;
+    }
 
     /**
      * Record that an event has triggered.
@@ -65,13 +68,13 @@ public class ABTest {
         mAmazonInsights = AmazonInsights.newInstance(credentials, activity.getApplicationContext());
 
         mAmazonInsights.getABTestClient()
-                .getVariations("ButtonLocation")
+                .getVariations("Visuals")
                 .setCallback(new InsightsCallback<VariationSet>() {
                     @Override
                     public void onComplete(VariationSet variations) {
-                        mAB_ButtonsOnViewScreen = variations
-                                .getVariation("ButtonLocation")
-                                .getVariableAsBoolean("AddButtonInList", false);
+                        mAB_ColorfulButtons = variations
+                                .getVariation("Visuals")
+                                .getVariableAsBoolean("ColorfulButtons", false);
                     }
                 });
     }
