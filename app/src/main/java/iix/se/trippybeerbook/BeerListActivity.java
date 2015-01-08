@@ -19,7 +19,7 @@ import iix.se.trippybeerbook.database.DatabaseContract;
  * lead to a {@link BeerDetailActivity} representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
- *
+ * <p>
  * The activity makes heavy use of fragments. The list of items is a
  * {@link BeerListFragment} and the item details
  * (if present) is a {@link BeerDetailFragment}.
@@ -34,6 +34,7 @@ public class BeerListActivity extends Activity {
         super.onCreate(savedInstanceState);
         if (mABTest == null)
             mABTest = ABTest.getInstance(this);
+        mABTest.recordEvent("AddButtonShown");
 
         setContentView(mABTest.buttonsOnViewScreen()
                 ? R.layout.activity_beer_list_withadd
@@ -73,6 +74,10 @@ public class BeerListActivity extends Activity {
             case R.id.action_bar_item_score: return setSorting(DatabaseContract.BeerColumns.STARS);
             case R.id.action_bar_item_name: return setSorting(DatabaseContract.BeerColumns.BEER_NAME);
             case R.id.action_bar_item_brewery: return setSorting(DatabaseContract.BeerColumns.BREWERY);
+            case R.id.action_bar_devel_AddButtonInList:
+                ABTest abTest = ABTest.getInstance(this);
+                abTest.overrideButtonsOnViewScreen(!abTest.buttonsOnViewScreen());
+                return true;
             default: return super.onOptionsItemSelected(item);
         }
     }
@@ -88,6 +93,7 @@ public class BeerListActivity extends Activity {
      * @param id ID of the clicked item
      */
     public void onItemSelected(Beer id) {
+        mABTest.recordEvent("ItemShown");
         if (mTwoPane) {
             changeFragmentForTwoPane(id.mID);
         } else {
@@ -100,7 +106,7 @@ public class BeerListActivity extends Activity {
      * @param _unused Unused
      */
     public void addItem(View _unused) {
-        mABTest.recordEvent("AddButtonClick");
+        mABTest.recordEvent("AddButtonClicked");
         if (mTwoPane) {
             changeFragmentForTwoPane(-1);
         } else {

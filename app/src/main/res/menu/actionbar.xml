@@ -24,4 +24,13 @@
                 android:title="@string/brewery" />
         </menu>
     </item>
+    <item
+        android:id="@+id/action_bar_devel"
+        android:title="Toggle Development Options">
+        <menu>
+            <item
+                android:id="@+id/action_bar_devel_AddButtonInList"
+                android:title="AddButtonInList"/>
+        </menu>
+    </item>
 </menu>
