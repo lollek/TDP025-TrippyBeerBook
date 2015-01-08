@@ -14,8 +14,9 @@ public class ABTest {
     private boolean mAB_ButtonsOnViewScreen;
 
     /**
-     * Returns the ABTest instance currently running, or creating one if there is none.
-     * @param activity The activity to use the ABTest class
+     * Return ABTest instance, and create one if necessary
+     * @param activity
+     * @return ABTest object
      */
     public static ABTest getInstance(Activity activity) {
         if (mABTest == null)
@@ -32,22 +33,27 @@ public class ABTest {
     }
 
     /**
-     * Record something the user has done
-     * @param event What the user has done
+     * Manually set ABTest-boolean. Useful to test that all test versions work
+     * @param b New value of test
+     */
+    public void overrideButtonsOnViewScreen(boolean b) { mAB_ButtonsOnViewScreen = b; }
+
+    /**
+     * Record that an event has triggered.
+     * @param event Name of the event
      */
     public void recordEvent(String event) {
         final EventClient eventClient = mAmazonInsights.getEventClient();
         eventClient.recordEvent(eventClient.createEvent(event));
     }
-
     /**
      * Send recorded events to Amazon.
      * This should run on onPause in each Activity which uses recordEvent
      */
     public void submitEvents() {
-      mAmazonInsights.getEventClient().submitEvents();
+        mAmazonInsights.getEventClient().submitEvents();
     }
-
+    
     /**
      * ABTest constructor
      * @param activity The activity to initialize the ABTest
