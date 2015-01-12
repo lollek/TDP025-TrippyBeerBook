@@ -104,7 +104,7 @@ public class BeerListActivity extends Activity {
      * Handle onClick for the add-new-beer-button
      * @param _unused Unused
      */
-    void addItem(View _unused) {
+    void addItem(@SuppressWarnings("UnusedParameters") View _unused) {
         mABTest.recordEvent("AddButtonClicked");
         if (mTwoPane) {
             changeFragmentForTwoPane(-1);
@@ -145,7 +145,7 @@ public class BeerListActivity extends Activity {
      * Handle onClick for save-button.
      * This is only used to make Android Studio stop complaining
      */
-    public void saveChanges(View _unused) {
+    public void saveChanges(@SuppressWarnings("UnusedParameters") View _unused) {
         Fragment detailFragment = getFragmentManager().findFragmentByTag("DetailFragment");
         ((BeerDetailFragment)detailFragment).saveChanges();
     }
@@ -154,7 +154,7 @@ public class BeerListActivity extends Activity {
      * Handle onClick for cancel-button.
      * This is only used to make Android Studio stop complaining
      */
-    public void cancelChanges(View _unused) {
+    public void cancelChanges(@SuppressWarnings("UnusedParameters") View _unused) {
         Fragment fragment = getFragmentManager().findFragmentByTag("DetailFragment");
         ((BeerDetailFragment)fragment).cancelChanges();
     }
