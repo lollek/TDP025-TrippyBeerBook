@@ -25,7 +25,17 @@ public class ABTest {
     }
 
     /**
-     * AB Test for placing buttons
+     * This AB-test sets the "Add-new-beer" button to a big green button
+     * at the top of the beer list. If the test is turned off, the add button is instead a small
+     * plus on the ActionBar.
+     *
+     * Pros:
+     *  Makes the app look more friendly and colorful
+     *  Easier to find
+     *
+     * Cons:
+     *  Takes up some space (clutters the screen)
+     *
      * @return True if we should place colorful buttons on the main screen,
      *         False if we should place them on the ActionBar (therefore quite grey)
      */
