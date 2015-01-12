@@ -31,7 +31,7 @@
         <menu>
             <item
                 android:id="@+id/action_bar_devel_AddButtonInList"
-                android:title="AddButtonInList"/>
+                android:title="ColorfulButtons"/>
         </menu>
     </item>
 </menu>
