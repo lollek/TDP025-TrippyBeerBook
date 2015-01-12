@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
+<menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_bar_add"
@@ -26,7 +26,8 @@
     </item>
     <item
         android:id="@+id/action_bar_devel"
-        android:title="Toggle Development Options">
+        android:title="Toggle Development Options"
+        tools:ignore="HardcodedText">
         <menu>
             <item
                 android:id="@+id/action_bar_devel_AddButtonInList"
