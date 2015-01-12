@@ -15,7 +15,7 @@ public class ABTest {
 
     /**
      * Return ABTest instance, and create one if necessary
-     * @param activity
+     * @param activity activity
      * @return ABTest object
      */
     public static ABTest getInstance(Activity activity) {
