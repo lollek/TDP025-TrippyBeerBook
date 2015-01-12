@@ -143,7 +143,8 @@ public class Database {
         String sortingString = activity
                 .getPreferences(Context.MODE_PRIVATE)
                 .getString("sort", DatabaseContract.BeerColumns._ID);
-        if (sortingString.equals(DatabaseContract.BeerColumns.STARS))
+        if (sortingString.equals(DatabaseContract.BeerColumns.STARS) ||
+            sortingString.equals(DatabaseContract.BeerColumns._ID))
             sortingString += " DESC";
         return sortingString;
     }
