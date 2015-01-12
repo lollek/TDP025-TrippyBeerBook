@@ -1,5 +1,6 @@
 package iix.se.trippybeerbook;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,8 +38,12 @@ public class BeerListActivity extends Activity {
         mABTest.recordEvent("AddButtonShown");
 
         setContentView(R.layout.activity_beer_list);
-        if (mABTest.colorfulButtons())
+        if (mABTest.colorfulButtons()) {
+            final ActionBar actionBar = getActionBar();
+            if (actionBar != null)
+                actionBar.hide();
             findViewById(R.id.add_button).setVisibility(View.VISIBLE);
+        }
 
         if (findViewById(R.id.beer_detail_container) != null) {
             // The detail container view will be present only in the
@@ -104,7 +109,7 @@ public class BeerListActivity extends Activity {
      * Handle onClick for the add-new-beer-button
      * @param _unused Unused
      */
-    void addItem(@SuppressWarnings("UnusedParameters") View _unused) {
+    public void addItem(@SuppressWarnings("UnusedParameters") View _unused) {
         mABTest.recordEvent("AddButtonClicked");
         if (mTwoPane) {
             changeFragmentForTwoPane(-1);

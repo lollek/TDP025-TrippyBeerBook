@@ -43,6 +43,12 @@ public class BeerDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle _unused) {
         final View rootView = inflater.inflate(R.layout.fragment_beer_detail,
                 container, false);
+        final ABTest mABTest = ABTest.getInstance(getActivity());
+
+        if (mABTest.colorfulButtons()) {
+            rootView.findViewById(R.id.save_btn).setVisibility(View.VISIBLE);
+            rootView.findViewById(R.id.cancel_btn).setVisibility(View.VISIBLE);
+        }
 
         if (mItem != null)
             onCreateViewExisting(rootView);
@@ -93,19 +99,12 @@ public class BeerDetailFragment extends Fragment {
         view.findViewById(R.id.country_edit).setVisibility(View.VISIBLE);
         view.findViewById(R.id.percentage_edit).setVisibility(View.VISIBLE);
         view.findViewById(R.id.beer_comment_edit).setVisibility(View.VISIBLE);
-
-        view.findViewById(R.id.save_btn).setVisibility(View.VISIBLE);
     }
 
     /**
      * Unset any changes made and return to "view mode"
      */
     void cancelChanges() {
-        final Activity activity = getActivity();
-
-        activity.findViewById(R.id.save_btn).setVisibility(View.GONE);
-        activity.findViewById(R.id.cancel_btn).setVisibility(View.GONE);
-
         disableEditMode(R.id.beer_name, R.id.beer_name_edit, false);
         disableEditMode(R.id.beer_type, R.id.beer_type_edit, false);
         disableEditMode(R.id.brewery_name, R.id.brewery_name_edit, false);
@@ -118,11 +117,6 @@ public class BeerDetailFragment extends Fragment {
      * Save any changes made and return to "view mode"
      */
     void saveChanges() {
-        final Activity activity = getActivity();
-
-        activity.findViewById(R.id.save_btn).setVisibility(View.GONE);
-        activity.findViewById(R.id.cancel_btn).setVisibility(View.GONE);
-
         disableEditMode(R.id.beer_name, R.id.beer_name_edit, true);
         disableEditMode(R.id.beer_type, R.id.beer_type_edit, true);
         disableEditMode(R.id.brewery_name, R.id.brewery_name_edit, true);
@@ -130,6 +124,7 @@ public class BeerDetailFragment extends Fragment {
         disableEditMode(R.id.percentage, R.id.percentage_edit, true);
         disableEditMode(R.id.beer_comment, R.id.beer_comment_edit, true);
 
+        final Activity activity = getActivity();
         if (mDatabase == null) {
             mDatabase = new Database(activity);
         }
@@ -158,10 +153,6 @@ public class BeerDetailFragment extends Fragment {
      */
     void activateEditMode(int readID, int writeID) {
         final Activity activity = getActivity();
-
-        activity.findViewById(R.id.save_btn).setVisibility(View.VISIBLE);
-        activity.findViewById(R.id.cancel_btn).setVisibility(View.VISIBLE);
-
         final TextView readText = (TextView) activity.findViewById(readID);
         final EditText writeText = (EditText) activity.findViewById(writeID);
 

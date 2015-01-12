@@ -1,9 +1,12 @@
 package iix.se.trippybeerbook;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.app.NavUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -18,16 +21,23 @@ import android.view.View;
  */
 public class BeerDetailActivity extends Activity {
     private boolean mCurrentItem;
-    private boolean mEditMode = false;
+    private ABTest mABTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beer_detail);
+        if (mABTest == null)
+            mABTest = ABTest.getInstance(this);
 
-        // Show the Up button in the action bar.
-        if (getActionBar() != null) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+        final ActionBar actionBar = getActionBar();
+        if (mABTest.colorfulButtons()) {
+            if (actionBar != null)
+                actionBar.hide();
+        } else {
+            // Show the Up button in the action bar.
+            if (actionBar != null)
+                actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         // Add fragment if we don't already have one
@@ -45,20 +55,37 @@ public class BeerDetailActivity extends Activity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (mABTest.colorfulButtons()) {
+            return super.onCreateOptionsMenu(menu);
+        } else {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.actionbar_detail, menu);
             return true;
         }
-        return super.onOptionsItemSelected(item);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
+                return true;
+            case R.id.action_bar_cancel:
+                cancelChanges(null);
+                return true;
+            case R.id.action_bar_save:
+                saveChanges(null);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
     public void onBackPressed() {
-        if (mEditMode)
-            cancelChanges(null);
-        else
-            NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
+        NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
     }
 
     /**
@@ -66,13 +93,8 @@ public class BeerDetailActivity extends Activity {
      * @param _unused Unused
      */
     public void saveChanges(View _unused) {
-        mEditMode = false;
         getBeerDetailFragment().saveChanges();
-
-        // If we're creating a new item, saving returns us to the BeerList
-        if (mCurrentItem) {
-            NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
-        }
+        NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
     }
 
     /**
@@ -80,8 +102,11 @@ public class BeerDetailActivity extends Activity {
      * @param view Unused
      */
     public void cancelChanges(View view) {
-        mEditMode = false;
-        getBeerDetailFragment().cancelChanges();
+        // If we're creating a new item, saving returns us to the BeerList
+        if (!mCurrentItem) {
+            getBeerDetailFragment().cancelChanges();
+        }
+        NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
     }
 
     /**
@@ -89,7 +114,6 @@ public class BeerDetailActivity extends Activity {
      * @param view View to edit
      */
     public void editMode(View view) {
-        mEditMode = true;
         getBeerDetailFragment().editMode(view.getId());
     }
 

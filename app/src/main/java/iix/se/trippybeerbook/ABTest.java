@@ -25,16 +25,18 @@ public class ABTest {
     }
 
     /**
-     * This AB-test sets the "Add-new-beer" button to a big green button
-     * at the top of the beer list. If the test is turned off, the add button is instead a small
-     * plus on the ActionBar.
+     * This AB-test sets the "Add-new-beer" button to a big green button,
+     * and shows two bit buttons (Save/Cancel) on the details screen.
+     *
+     * If it is not set, the action bar is shown (otherwise hidden), with a plus
+     * for adding a beer, or on the details screen, a cancel and save button.
      *
      * Pros:
-     *  Makes the app look more friendly and colorful
-     *  Easier to find
+     *  Easier to find buttons, and clearer what they do
+     *  Bright and friendly colors
      *
      * Cons:
-     *  Takes up some space (clutters the screen)
+     *  Not as clean look, may come off as childish
      *
      * @return True if we should place colorful buttons on the main screen,
      *         False if we should place them on the ActionBar (therefore quite grey)
