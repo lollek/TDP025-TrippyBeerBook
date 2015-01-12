@@ -80,7 +80,7 @@ public class BeerListFragment extends ListFragment {
 
     /**
      * Change the way the list is sorted
-     * @param sorting See {@link DatabaseContract.BeerColumns}
+     * @param sorting See {@link iix.se.trippybeerbook.database.DatabaseContract.BeerColumns}
      */
     public void setSorting(String sorting) {
         mDatabase.sortBy(getActivity(), sorting, true);

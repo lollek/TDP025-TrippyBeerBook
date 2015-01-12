@@ -12,9 +12,9 @@ import java.util.List;
  * Database is an abstraction for interacting with the SQLite database.
  * The real action takes place in {@link DatabaseHelper} */
 public class Database {
-    DatabaseHelper mHelper;             /* SQLite backend */
-    BeerArrayAdapter mAdapter;          /* Adapter for mList */
-    List<Beer> mList;                   /* List of items in database */
+    private final DatabaseHelper mHelper;             /* SQLite backend */
+    private BeerArrayAdapter mAdapter;          /* Adapter for mList */
+    private List<Beer> mList;                   /* List of items in database */
 
     /**
      * Constructor

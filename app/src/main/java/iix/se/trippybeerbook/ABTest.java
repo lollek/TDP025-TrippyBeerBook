@@ -10,7 +10,7 @@ import com.amazon.insights.*;
  */
 public class ABTest {
     private static ABTest mABTest;
-    private AmazonInsights mAmazonInsights;
+    private final AmazonInsights mAmazonInsights;
     private boolean mAB_ColorfulButtons;
 
     /**

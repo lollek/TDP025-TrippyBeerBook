@@ -4,13 +4,13 @@ import android.database.Cursor;
 
 public class Beer {
     public long mID;
-    public String mName;
-    public String mBrewery;
-    public String mBeerType;
-    public String mCountry;
-    public String mPercentage;
+    public final String mName;
+    public final String mBrewery;
+    public final String mBeerType;
+    public final String mCountry;
+    public final String mPercentage;
     public String mStars;
-    public String mComment;
+    public final String mComment;
 
     public Beer(String name, String brewery, String beerType,
                 String country, String percentage, String stars,

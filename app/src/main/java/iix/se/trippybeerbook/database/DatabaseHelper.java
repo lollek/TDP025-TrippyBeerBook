@@ -9,9 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Backend class which accesses the SQLite database
  */
-public class DatabaseHelper extends SQLiteOpenHelper {
-    public static int DATABASE_VERSION = 1;
-    public static String DATABASE_NAME = "TrippyBeerBook.db";
+class DatabaseHelper extends SQLiteOpenHelper {
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "TrippyBeerBook.db";
     private SQLiteDatabase mCurrentDB;
 
     public DatabaseHelper(Context context) {

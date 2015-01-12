@@ -14,9 +14,9 @@ import java.util.List;
 import iix.se.trippybeerbook.R;
 
 public class BeerArrayAdapter extends ArrayAdapter<Beer> {
-    static int LAYOUT = R.layout.beer_list_item;
-    Context mContext;
-    List<Beer> mList;
+    private static final int LAYOUT = R.layout.beer_list_item;
+    private final Context mContext;
+    private final List<Beer> mList;
 
     public BeerArrayAdapter(Context context, List<Beer> objects) {
         super(context, LAYOUT, objects);

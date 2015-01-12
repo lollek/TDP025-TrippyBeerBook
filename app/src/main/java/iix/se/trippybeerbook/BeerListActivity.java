@@ -26,8 +26,8 @@ import iix.se.trippybeerbook.database.DatabaseContract;
  */
 public class BeerListActivity extends Activity {
 
-    boolean mTwoPane; // Are we running in 2-pane mode (tablet) ?
-    ABTest mABTest;
+    private boolean mTwoPane; // Are we running in 2-pane mode (tablet) ?
+    private ABTest mABTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +104,7 @@ public class BeerListActivity extends Activity {
      * Handle onClick for the add-new-beer-button
      * @param _unused Unused
      */
-    public void addItem(View _unused) {
+    void addItem(View _unused) {
         mABTest.recordEvent("AddButtonClicked");
         if (mTwoPane) {
             changeFragmentForTwoPane(-1);
@@ -145,7 +145,7 @@ public class BeerListActivity extends Activity {
      * Handle onClick for save-button.
      * This is only used to make Android Studio stop complaining
      */
-    public void saveChanges(View view) {
+    public void saveChanges(View _unused) {
         Fragment detailFragment = getFragmentManager().findFragmentByTag("DetailFragment");
         ((BeerDetailFragment)detailFragment).saveChanges();
     }
@@ -154,7 +154,7 @@ public class BeerListActivity extends Activity {
      * Handle onClick for cancel-button.
      * This is only used to make Android Studio stop complaining
      */
-    public void cancelChanges(View view) {
+    public void cancelChanges(View _unused) {
         Fragment fragment = getFragmentManager().findFragmentByTag("DetailFragment");
         ((BeerDetailFragment)fragment).cancelChanges();
     }
@@ -173,7 +173,7 @@ public class BeerListActivity extends Activity {
      * @param sort The column to sort by.
      * See {@link DatabaseContract.BeerColumns} for more info
      */
-    public boolean setSorting(String sort) {
+    boolean setSorting(String sort) {
         ((BeerListFragment) getFragmentManager().findFragmentById(R.id.beer_list))
                            .setSorting(sort);
         return true;

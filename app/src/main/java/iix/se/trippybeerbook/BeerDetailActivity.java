@@ -17,8 +17,8 @@ import android.view.View;
  * more than a {@link BeerDetailFragment}.
  */
 public class BeerDetailActivity extends Activity {
-    boolean mCurrentItem;
-    boolean mEditMode = false;
+    private boolean mCurrentItem;
+    private boolean mEditMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +63,9 @@ public class BeerDetailActivity extends Activity {
 
     /**
      * Save any modifications we have done
-     * @param view Unused
+     * @param _unused Unused
      */
-    public void saveChanges(View view) {
+    public void saveChanges(View _unused) {
         mEditMode = false;
         getBeerDetailFragment().saveChanges();
 
