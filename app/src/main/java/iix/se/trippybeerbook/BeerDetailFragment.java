@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.NoSuchElementException;
+
 import iix.se.trippybeerbook.database.Beer;
 import iix.se.trippybeerbook.database.Database;
 
@@ -43,26 +45,22 @@ public class BeerDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle _unused) {
         final View rootView = inflater.inflate(R.layout.fragment_beer_detail,
                 container, false);
-        final ABTest mABTest = ABTest.getInstance(getActivity());
 
+        final ABTest mABTest = ABTest.getInstance(getActivity());
         if (mABTest.colorfulButtons()) {
             rootView.findViewById(R.id.save_btn).setVisibility(View.VISIBLE);
             rootView.findViewById(R.id.cancel_btn).setVisibility(View.VISIBLE);
         }
 
-        if (mItem != null)
-            onCreateViewExisting(rootView);
-        else
-            onCreateViewNew(rootView);
-
-        return rootView;
+        return mItem == null ? onCreateViewNew(rootView) : onCreateViewExisting(rootView);
     }
 
     /**
      * onCreateView for editing or viewing an item
      * @param view The root view
+     * @return The provided view
      */
-    void onCreateViewExisting(final View view) {
+    View onCreateViewExisting(final View view) {
         final RatingBar stars = (RatingBar) view.findViewById(R.id.RatingBar);
         stars.setRating(Float.parseFloat(mItem.mStars));
         stars.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -77,15 +75,18 @@ public class BeerDetailFragment extends Fragment {
         ((TextView) view.findViewById(R.id.brewery_name)).setText(mItem.mBrewery);
         ((TextView) view.findViewById(R.id.beer_type)).setText(mItem.mBeerType);
         ((TextView) view.findViewById(R.id.country)).setText(mItem.mCountry);
-        ((TextView) view.findViewById(R.id.percentage)).setText(mItem.mPercentage);
+        ((TextView) view.findViewById(R.id.percentage)).setText(mItem.mPercentage + "%");
         ((TextView) view.findViewById(R.id.beer_comment)).setText(mItem.mComment);
+
+        return view;
     }
 
     /**
      * onCreateview for new items
      * @param view The root view
+     * @return The provided view
      */
-    void onCreateViewNew(final View view) {
+    View onCreateViewNew(final View view) {
         view.findViewById(R.id.beer_name).setVisibility(View.GONE);
         view.findViewById(R.id.brewery_name).setVisibility(View.GONE);
         view.findViewById(R.id.beer_type).setVisibility(View.GONE);
@@ -99,30 +100,32 @@ public class BeerDetailFragment extends Fragment {
         view.findViewById(R.id.country_edit).setVisibility(View.VISIBLE);
         view.findViewById(R.id.percentage_edit).setVisibility(View.VISIBLE);
         view.findViewById(R.id.beer_comment_edit).setVisibility(View.VISIBLE);
+
+        return view;
     }
 
     /**
      * Unset any changes made and return to "view mode"
      */
     void cancelChanges() {
-        disableEditMode(R.id.beer_name, R.id.beer_name_edit, false);
-        disableEditMode(R.id.beer_type, R.id.beer_type_edit, false);
-        disableEditMode(R.id.brewery_name, R.id.brewery_name_edit, false);
-        disableEditMode(R.id.country, R.id.country_edit, false);
-        disableEditMode(R.id.percentage, R.id.percentage_edit, false);
-        disableEditMode(R.id.beer_comment, R.id.beer_comment_edit, false);
+        disableEditMode(R.id.beer_name, false);
+        disableEditMode(R.id.beer_type, false);
+        disableEditMode(R.id.brewery_name, false);
+        disableEditMode(R.id.country, false);
+        disableEditMode(R.id.percentage, false);
+        disableEditMode(R.id.beer_comment, false);
     }
 
     /**
      * Save any changes made and return to "view mode"
      */
     void saveChanges() {
-        disableEditMode(R.id.beer_name, R.id.beer_name_edit, true);
-        disableEditMode(R.id.beer_type, R.id.beer_type_edit, true);
-        disableEditMode(R.id.brewery_name, R.id.brewery_name_edit, true);
-        disableEditMode(R.id.country, R.id.country_edit, true);
-        disableEditMode(R.id.percentage, R.id.percentage_edit, true);
-        disableEditMode(R.id.beer_comment, R.id.beer_comment_edit, true);
+        disableEditMode(R.id.beer_name, true);
+        disableEditMode(R.id.beer_type, true);
+        disableEditMode(R.id.brewery_name, true);
+        disableEditMode(R.id.country, true);
+        disableEditMode(R.id.percentage, true);
+        disableEditMode(R.id.beer_comment, true);
 
         final Activity activity = getActivity();
         if (mDatabase == null) {
@@ -130,13 +133,13 @@ public class BeerDetailFragment extends Fragment {
         }
 
         Beer item = new Beer(
-                ((TextView)activity.findViewById(R.id.beer_name)).getText().toString(),
-                ((TextView)activity.findViewById(R.id.brewery_name)).getText().toString(),
-                ((TextView)activity.findViewById(R.id.beer_type)).getText().toString(),
-                ((TextView)activity.findViewById(R.id.country)).getText().toString(),
-                ((TextView)activity.findViewById(R.id.percentage)).getText().toString(),
+                getTextFromView(((TextView)activity.findViewById(R.id.beer_name))).toString(),
+                getTextFromView(((TextView)activity.findViewById(R.id.brewery_name))).toString(),
+                getTextFromView(((TextView)activity.findViewById(R.id.beer_type))).toString(),
+                getTextFromView(((TextView)activity.findViewById(R.id.country))).toString(),
+                getTextFromView(((TextView)activity.findViewById(R.id.percentage))).toString(),
                 Float.toString(((RatingBar)activity.findViewById(R.id.RatingBar)).getRating()),
-                ((TextView)activity.findViewById(R.id.beer_comment)).getText().toString());
+                getTextFromView(((TextView)activity.findViewById(R.id.beer_comment))).toString());
 
         if (mItem != null) {
             item.mID = mItem.mID;
@@ -148,51 +151,68 @@ public class BeerDetailFragment extends Fragment {
 
     /**
      * Helper function to enter edit mode for one field
-     * @param readID ID of the TextView
-     * @param writeID ID of the EditView
+     * @param id ID of the TextView to activate edit mode for
      */
-    void activateEditMode(int readID, int writeID) {
+    void activateEditMode(int id) {
         final Activity activity = getActivity();
-        final TextView readText = (TextView) activity.findViewById(readID);
-        final EditText writeText = (EditText) activity.findViewById(writeID);
+        final TextView textView = (TextView) activity.findViewById(id);
+        final EditText editText = getEditTextforId(id);
 
-        writeText.setText(readText.getText());
+        editText.setText(getTextFromView(textView));
 
-        readText.setVisibility(View.GONE);
-        writeText.setVisibility(View.VISIBLE);
+        textView.setVisibility(View.GONE);
+        editText.setVisibility(View.VISIBLE);
     }
 
     /**
      * Helper function to exit edit mode for one field
-     * @param readID ID of the TextView
-     * @param writeID ID of the EditView
+     * @param id ID of the TextView to disable edit mode for
      * @param saveChangedData Should we copy the changed data to the TextView?
      */
-    void disableEditMode(int readID, int writeID, boolean saveChangedData) {
+    void disableEditMode(int id, boolean saveChangedData) {
         final Activity activity = getActivity();
-        final EditText writeText = (EditText) activity.findViewById(writeID);
+        final EditText editText = getEditTextforId(id);
 
-        if (writeText.getVisibility() == View.VISIBLE) {
-            final TextView readText = (TextView) activity.findViewById(readID);
-            if (saveChangedData)
-                readText.setText(writeText.getText());
-            readText.setVisibility(View.VISIBLE);
-            writeText.setVisibility(View.GONE);
+        if (editText.getVisibility() != View.VISIBLE)
+            return;
+
+        final TextView textView = (TextView) activity.findViewById(id);
+        if (saveChangedData)
+            textView.setText(getTextFromView(editText));
+
+        textView.setVisibility(View.VISIBLE);
+        editText.setVisibility(View.GONE);
+    }
+
+    CharSequence getTextFromView(EditText editText) {
+        return editText.getId() == R.id.percentage
+                ? editText.getText() + "%"
+                : editText.getText().toString();
+    }
+    CharSequence getTextFromView(TextView textView) {
+        return textView.getId() == R.id.percentage
+                ? textView.getText().subSequence(0, textView.getText().length() -1)
+                : textView.getText();
+    }
+
+    EditText getEditTextforId(int id) {
+        final Activity activity = getActivity();
+        switch (id) {
+            case R.id.beer_name: return (EditText) activity.findViewById(R.id.beer_name_edit);
+            case R.id.brewery_name: return (EditText) activity.findViewById(R.id.brewery_name_edit);
+            case R.id.beer_type: return (EditText) activity.findViewById(R.id.beer_type_edit);
+            case R.id.country: return (EditText) activity.findViewById(R.id.country_edit);
+            case R.id.percentage: return (EditText) activity.findViewById(R.id.percentage_edit);
+            case R.id.beer_comment: return (EditText) activity.findViewById(R.id.beer_comment_edit);
+            default: throw new NoSuchElementException();
         }
     }
 
     /**
-     * Helper function for activateEditMode
+     * Helper function for activateEditMode to keep a stable API
      * @param id ID of the TextView to edit
      */
     void editMode(int id) {
-        switch (id) {
-            case R.id.beer_name: activateEditMode(id, R.id.beer_name_edit); break;
-            case R.id.brewery_name: activateEditMode(id, R.id.brewery_name_edit); break;
-            case R.id.beer_type: activateEditMode(id, R.id.beer_type_edit); break;
-            case R.id.country: activateEditMode(id, R.id.country_edit); break;
-            case R.id.percentage: activateEditMode(id, R.id.percentage_edit); break;
-            case R.id.beer_comment: activateEditMode(id, R.id.beer_comment_edit); break;
-        }
+        activateEditMode(id);
     }
 }
