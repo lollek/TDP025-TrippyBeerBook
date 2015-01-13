@@ -26,6 +26,7 @@ public class BeerDetailFragment extends Fragment {
     public static final String ARG_ITEM_ID = "item_id";
     private Database mDatabase;
     private Beer mItem;
+    private int mPrevEditedField = -1;
 
     /* Mandatory empty constructor for screen orientation changes and stuff */
     public BeerDetailFragment() {}
@@ -213,6 +214,9 @@ public class BeerDetailFragment extends Fragment {
      * @param id ID of the TextView to edit
      */
     void editMode(int id) {
+        if (mPrevEditedField != -1)
+            disableEditMode(mPrevEditedField, true);
+        mPrevEditedField = id;
         activateEditMode(id);
     }
 }
