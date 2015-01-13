@@ -7,8 +7,10 @@
         android:icon="@drawable/ic_action_new"
         android:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/action_bar_text"
-        android:title="@string/sort_by" >
+        android:id="@+id/action_bar_sort"
+        android:title="@string/sort_by"
+        android:icon="@drawable/ic_action_sort"
+        android:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/action_bar_item_new"
@@ -27,6 +29,7 @@
     <item
         android:id="@+id/action_bar_devel"
         android:title="Toggle Development Options"
+        android:showAsAction="never"
         tools:ignore="HardcodedText">
         <menu>
             <item

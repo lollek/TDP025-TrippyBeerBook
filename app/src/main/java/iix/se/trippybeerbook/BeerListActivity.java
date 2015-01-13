@@ -69,8 +69,10 @@ public class BeerListActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.actionbar, menu);
-        if (mABTest.colorfulButtons())
+        if (mABTest.colorfulButtons()) {
             menu.findItem(R.id.action_bar_add).setVisible(false);
+            menu.findItem(R.id.action_bar_sort).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        }
         return true;
     }
 
