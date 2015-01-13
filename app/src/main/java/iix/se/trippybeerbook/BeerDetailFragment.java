@@ -191,9 +191,11 @@ public class BeerDetailFragment extends Fragment {
                 : editText.getText().toString();
     }
     CharSequence getTextFromView(TextView textView) {
-        return textView.getId() == R.id.percentage
-                ? textView.getText().subSequence(0, textView.getText().length() -1)
-                : textView.getText();
+        final CharSequence charSequence = textView.getText();
+        if (textView.getId() == R.id.percentage && charSequence.length() > 0 &&
+            charSequence.charAt(charSequence.length() -1) == '%')
+            return textView.getText().subSequence(0, textView.getText().length() -1);
+        return charSequence;
     }
 
     EditText getEditTextforId(int id) {
