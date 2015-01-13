@@ -86,10 +86,13 @@ public class BeerListActivity extends Activity {
             case R.id.action_bar_item_name: return setSorting(DatabaseContract.BeerColumns.BEER_NAME);
             case R.id.action_bar_item_brewery: return setSorting(DatabaseContract.BeerColumns.BREWERY);
             case R.id.action_bar_devel_ColorfulButtons:
-                mABTest.setColorfulButtonsTo(!mABTest.colorfulButtons());
+                mABTest.setColorfulButtons(!mABTest.colorfulButtons());
                 return true;
             case R.id.action_bar_devel_ColorfulActionBar:
                 mABTest.setColorfulActionBar(!mABTest.colorfulActionBar());
+                return true;
+            case R.id.action_bar_devel_ShowPercentage:
+                mABTest.setShowPercentage(!mABTest.showPercentage());
                 return true;
             default: return super.onOptionsItemSelected(item);
         }

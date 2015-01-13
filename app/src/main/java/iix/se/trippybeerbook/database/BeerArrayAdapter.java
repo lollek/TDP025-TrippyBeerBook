@@ -11,25 +11,32 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import iix.se.trippybeerbook.ABTest;
 import iix.se.trippybeerbook.R;
 
 public class BeerArrayAdapter extends ArrayAdapter<Beer> {
-    private static final int LAYOUT = R.layout.beer_list_item;
     private final Context mContext;
     private final List<Beer> mList;
+    private int mLayoutId = -1;
 
     public BeerArrayAdapter(Context context, List<Beer> objects) {
-        super(context, LAYOUT, objects);
+        super(context, ABTest.getInstance((Activity)context).showPercentage()
+                        ? R.layout.beer_list_item_percentage
+                        : R.layout.beer_list_item,
+              objects);
         mContext = context;
         mList = objects;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        if (mLayoutId == -1)
+            mLayoutId = ABTest.getInstance((Activity)mContext).showPercentage()
+                    ? R.layout.beer_list_item_percentage
+                    : R.layout.beer_list_item;
         View view = convertView;
-        if (view == null) {
-            view = ((Activity)mContext).getLayoutInflater().inflate(LAYOUT, parent, false);
-        }
+        if (view == null)
+            view = ((Activity)mContext).getLayoutInflater().inflate(mLayoutId, parent, false);
 
         final TextView text1 = (TextView)view.findViewById(R.id.text1);
         final TextView text2 = (TextView)view.findViewById(R.id.text2);
@@ -52,6 +59,12 @@ public class BeerArrayAdapter extends ArrayAdapter<Beer> {
                 stars.setText("?");
                 break;
         }
+
+        if (mLayoutId == R.layout.beer_list_item_percentage) {
+            final TextView percentage = (TextView)view.findViewById(R.id.listed_percentage);
+            percentage.setText(item.mPercentage + "%");
+        }
+
         return view;
     }
 }

@@ -13,6 +13,7 @@ public class ABTest {
     private final AmazonInsights mAmazonInsights;
     private boolean mAB_ColorfulButtons;
     private boolean mAB_ColorfulActionBar;
+    private boolean mAB_ShowPercentage;
 
     /**
      * Return ABTest instance, and create one if necessary
@@ -61,18 +62,36 @@ public class ABTest {
         return mAB_ColorfulActionBar;
     }
 
+    /**
+     * This AB-test adds the percentage of the beverage on the list view.
+     *
+     * Pros:
+     *  More information readily available
+     *
+     * Cons:
+     *  Clutters the screen
+     *
+     * @return True if we should show the percentage of the beverage
+     *         False if the space should be left empty
+     */
+    public boolean showPercentage() {
+        return mAB_ShowPercentage;
+    }
+
 
     /**
      * Manually override ABTest-boolean. Useful to test that all test versions work
      * @param b New value of test
      */
-    public void setColorfulButtonsTo(boolean b) { 
+    public void setColorfulButtons(boolean b) {
         mAB_ColorfulButtons = b;
     }
     public void setColorfulActionBar(boolean b) {
         mAB_ColorfulActionBar = b;
     }
-
+    public void setShowPercentage(boolean b) {
+        mAB_ShowPercentage = b;
+    }
 
 
     /**
@@ -112,6 +131,9 @@ public class ABTest {
                         mAB_ColorfulActionBar = variations
                                 .getVariation("Visuals")
                                 .getVariableAsBoolean("ColorfulActionBar", true);
+                        mAB_ShowPercentage = variations
+                                .getVariation("Visuals")
+                                .getVariableAsBoolean("ShowPercentage", true);
                     }
                 });
     }
