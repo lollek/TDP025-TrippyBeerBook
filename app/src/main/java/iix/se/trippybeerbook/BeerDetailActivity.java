@@ -22,6 +22,7 @@ import android.view.View;
  * more than a {@link BeerDetailFragment}.
  */
 public class BeerDetailActivity extends Activity {
+    private boolean mEditMode = false;
     private boolean mCurrentItem;
     private ABTest mABTest;
 
@@ -90,7 +91,10 @@ public class BeerDetailActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
+        if (mEditMode)
+            cancelChanges(null);
+        else
+            NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
     }
 
     /**
@@ -99,19 +103,23 @@ public class BeerDetailActivity extends Activity {
      */
     public void saveChanges(View _unused) {
         getBeerDetailFragment().saveChanges();
-        NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
+        if (mCurrentItem || !mEditMode)
+            NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
+        else
+            mEditMode = false;
     }
 
     /**
      * Cancel any modifications we have done.
-     * @param view Unused
+     * @param _unused Unused
      */
-    public void cancelChanges(View view) {
-        // If we're creating a new item, saving returns us to the BeerList
-        if (!mCurrentItem) {
+    public void cancelChanges(View _unused) {
+        if (mCurrentItem || !mEditMode)
+            NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
+        else {
             getBeerDetailFragment().cancelChanges();
+            mEditMode = false;
         }
-        NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
     }
 
     /**
@@ -119,6 +127,7 @@ public class BeerDetailActivity extends Activity {
      * @param view View to edit
      */
     public void editMode(View view) {
+        mEditMode = true;
         getBeerDetailFragment().editMode(view.getId());
     }
 
