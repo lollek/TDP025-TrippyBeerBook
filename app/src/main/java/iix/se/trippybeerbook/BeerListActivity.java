@@ -3,6 +3,8 @@ package iix.se.trippybeerbook;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -38,11 +40,14 @@ public class BeerListActivity extends Activity {
         mABTest.recordEvent("AddButtonShown");
 
         setContentView(R.layout.activity_beer_list);
+        final ActionBar actionBar = getActionBar();
         if (mABTest.colorfulButtons()) {
-            final ActionBar actionBar = getActionBar();
             if (actionBar != null)
                 actionBar.hide();
             findViewById(R.id.add_button).setVisibility(View.VISIBLE);
+        } else if (mABTest.colorfulActionBar()) {
+            if (actionBar != null)
+                actionBar.setBackgroundDrawable(new ColorDrawable((Color.parseColor("#669900"))));
         }
 
         if (findViewById(R.id.beer_detail_container) != null) {
@@ -78,9 +83,11 @@ public class BeerListActivity extends Activity {
             case R.id.action_bar_item_score: return setSorting(DatabaseContract.BeerColumns.STARS);
             case R.id.action_bar_item_name: return setSorting(DatabaseContract.BeerColumns.BEER_NAME);
             case R.id.action_bar_item_brewery: return setSorting(DatabaseContract.BeerColumns.BREWERY);
-            case R.id.action_bar_devel_AddButtonInList:
-                ABTest abTest = ABTest.getInstance(this);
-                abTest.setColorfulButtonsTo(!abTest.colorfulButtons());
+            case R.id.action_bar_devel_ColorfulButtons:
+                mABTest.setColorfulButtonsTo(!mABTest.colorfulButtons());
+                return true;
+            case R.id.action_bar_devel_ColorfulActionBar:
+                mABTest.setColorfulActionBar(!mABTest.colorfulActionBar());
                 return true;
             default: return super.onOptionsItemSelected(item);
         }

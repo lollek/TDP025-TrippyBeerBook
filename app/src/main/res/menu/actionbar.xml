@@ -30,8 +30,11 @@
         tools:ignore="HardcodedText">
         <menu>
             <item
-                android:id="@+id/action_bar_devel_AddButtonInList"
+                android:id="@+id/action_bar_devel_ColorfulButtons"
                 android:title="ColorfulButtons"/>
+            <item
+                android:id="@+id/action_bar_devel_ColorfulActionBar"
+                android:title="ColorfulActionBar"/>
         </menu>
     </item>
 </menu>

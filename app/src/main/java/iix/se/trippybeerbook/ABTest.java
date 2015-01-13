@@ -12,6 +12,7 @@ public class ABTest {
     private static ABTest mABTest;
     private final AmazonInsights mAmazonInsights;
     private boolean mAB_ColorfulButtons;
+    private boolean mAB_ColorfulActionBar;
 
     /**
      * Return ABTest instance, and create one if necessary
@@ -46,12 +47,33 @@ public class ABTest {
     }
 
     /**
-     * Manually set ABTest-boolean. Useful to test that all test versions work
+     * This AB-test changes the color of the actionbar. It is a kind of compromise between
+     * colorfulButtons (which is very colorful) and the default (which is a bit grey)
+     * If colorfulButtons is true, this value has no effect.
+     *
+     * Pros:
+     *  Looks a bit less grey and boring than the default
+     *
+     * @return True if the actionbar should be colored.
+     *         False if it should be black/grey
+     */
+    public boolean colorfulActionBar() {
+        return mAB_ColorfulActionBar;
+    }
+
+
+    /**
+     * Manually override ABTest-boolean. Useful to test that all test versions work
      * @param b New value of test
      */
     public void setColorfulButtonsTo(boolean b) { 
         mAB_ColorfulButtons = b;
     }
+    public void setColorfulActionBar(boolean b) {
+        mAB_ColorfulActionBar = b;
+    }
+
+
 
     /**
      * Record that an event has triggered.
@@ -87,6 +109,9 @@ public class ABTest {
                         mAB_ColorfulButtons = variations
                                 .getVariation("Visuals")
                                 .getVariableAsBoolean("ColorfulButtons", true);
+                        mAB_ColorfulActionBar = variations
+                                .getVariation("Visuals")
+                                .getVariableAsBoolean("ColorfulActionBar", true);
                     }
                 });
     }

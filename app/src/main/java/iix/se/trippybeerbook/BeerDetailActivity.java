@@ -2,6 +2,8 @@ package iix.se.trippybeerbook;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.app.NavUtils;
@@ -31,13 +33,16 @@ public class BeerDetailActivity extends Activity {
             mABTest = ABTest.getInstance(this);
 
         final ActionBar actionBar = getActionBar();
+        // Show the Up button in the action bar.
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
+
         if (mABTest.colorfulButtons()) {
             if (actionBar != null)
                 actionBar.hide();
-        } else {
-            // Show the Up button in the action bar.
+        } else if (mABTest.colorfulActionBar()) {
             if (actionBar != null)
-                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setBackgroundDrawable(new ColorDrawable((Color.parseColor("#669900"))));
         }
 
         // Add fragment if we don't already have one
