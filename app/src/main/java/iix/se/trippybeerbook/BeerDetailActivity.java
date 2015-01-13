@@ -127,6 +127,8 @@ public class BeerDetailActivity extends Activity {
      * @param view View to edit
      */
     public void editMode(View view) {
+        if (mEditMode)
+            cancelChanges(null);
         mEditMode = true;
         getBeerDetailFragment().editMode(view.getId());
     }
