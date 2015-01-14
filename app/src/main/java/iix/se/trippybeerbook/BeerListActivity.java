@@ -44,7 +44,7 @@ public class BeerListActivity extends Activity {
         if (mABTest.colorfulButtons()) {
             if (actionBar != null)
                 actionBar.hide();
-            findViewById(R.id.add_button).setVisibility(View.VISIBLE);
+            findViewById(R.id.colorful_buttons).setVisibility(View.VISIBLE);
         } else if (mABTest.colorfulActionBar()) {
             if (actionBar != null)
                 actionBar.setBackgroundDrawable(new ColorDrawable((Color.parseColor("#669900"))));
@@ -183,6 +183,14 @@ public class BeerListActivity extends Activity {
     public void editMode(View view) {
         Fragment fragment = getFragmentManager().findFragmentByTag("DetailFragment");
         ((BeerDetailFragment)fragment).editMode(view.getId());
+    }
+
+    /**
+     * Handle onClick for options-button
+     * @param _unused Unused
+     */
+    public void options(@SuppressWarnings("UnusedParameters") View _unused) {
+        openOptionsMenu();
     }
 
     /**

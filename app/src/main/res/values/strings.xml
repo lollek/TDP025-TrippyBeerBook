@@ -19,5 +19,6 @@
     <string name="score">Score</string>
     <string name="id">New</string>
     <string name="add_comment">Click here to add a comment</string>
+    <string name="options">Options</string>
 
 </resources>
