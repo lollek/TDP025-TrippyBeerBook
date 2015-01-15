@@ -127,7 +127,7 @@ public class ABTest {
                     public void onComplete(VariationSet variations) {
                         mAB_ColorfulButtons = variations
                                 .getVariation("Visuals")
-                                .getVariableAsBoolean("ColorfulButtons", true);
+                                .getVariableAsBoolean("ColorfulButtons", false);
                         mAB_ColorfulActionBar = variations
                                 .getVariation("Visuals")
                                 .getVariableAsBoolean("ColorfulActionBar", true);
