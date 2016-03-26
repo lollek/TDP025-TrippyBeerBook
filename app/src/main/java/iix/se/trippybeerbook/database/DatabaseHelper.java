@@ -26,13 +26,13 @@ class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor query(String selection, String sort) {
         mCurrentDB = getReadableDatabase();
         return mCurrentDB.query(
-                DatabaseContract.BeerColumns.TABLE_NAME,
-                DatabaseContract.projection,
-                selection,
-                null,
-                null,
-                null,
-                sort);
+            DatabaseContract.BeerColumns.TABLE_NAME,
+            DatabaseContract.projection,
+            selection,
+            null,
+            null,
+            null,
+            sort);
     }
 
     public void insertOrThrowThenClose(Beer item) {

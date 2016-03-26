@@ -26,11 +26,14 @@ public class BeerArrayAdapter extends ArrayAdapter<Beer> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (mLayoutId == -1)
+        if (mLayoutId == -1) {
             mLayoutId = R.layout.beer_list_item_percentage;
+        }
+
         View view = convertView;
-        if (view == null)
-            view = ((Activity)mContext).getLayoutInflater().inflate(mLayoutId, parent, false);
+        if (view == null) {
+            view = ((Activity) mContext).getLayoutInflater().inflate(mLayoutId, parent, false);
+        }
 
         final TextView text1 = (TextView)view.findViewById(R.id.text1);
         final TextView text2 = (TextView)view.findViewById(R.id.text2);
@@ -43,12 +46,22 @@ public class BeerArrayAdapter extends ArrayAdapter<Beer> {
         final GradientDrawable shape = (GradientDrawable) stars.getBackground();
 
         switch((int)Float.parseFloat(item.mStars)) {
-            case 1: shape.setColor(Color.rgb(255, 136,  0)); break;  /* Dark orange */
-            case 2: shape.setColor(Color.rgb(255, 187, 51)); break;  /* Light orange */
-            case 3: shape.setColor(Color.YELLOW); break;             /* Yellow */
-            case 4: shape.setColor(Color.rgb(153, 204,  0)); break;  /* Light green */
-            case 5: shape.setColor(Color.rgb(102, 153,  0)); break;  /* Dark green */
-            default:                                                 /* No score = white "?" */
+            case 1: /* Dark orange */
+                shape.setColor(Color.rgb(255, 136,  0));
+                break;
+            case 2: /* Light orange */
+                shape.setColor(Color.rgb(255, 187, 51));
+                break;
+            case 3: /* Yellow */
+                shape.setColor(Color.YELLOW);
+                break;
+            case 4: /* Light green */
+                shape.setColor(Color.rgb(153, 204,  0));
+                break;
+            case 5:/* Dark green */
+                shape.setColor(Color.rgb(102, 153,  0));
+                break;
+            default: /* No score = white "?" */
                 shape.setColor(Color.WHITE);
                 stars.setText("?");
                 break;

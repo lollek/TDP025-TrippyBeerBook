@@ -37,15 +37,16 @@ public class BeerDetailFragment extends Fragment {
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             final long id = getArguments().getLong(ARG_ITEM_ID);
-            if (id != -1)
+            if (id != -1) {
                 mItem = new Database(getActivity().getApplicationContext()).getBeerById(id);
+            }
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle _unused) {
         final View rootView = inflater.inflate(R.layout.fragment_beer_detail,
-                container, false);
+            container, false);
 
         return mItem == null ? onCreateViewNew(rootView) : onCreateViewExisting(rootView);
     }
@@ -61,8 +62,8 @@ public class BeerDetailFragment extends Fragment {
         stars.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                mItem.mStars = Float.toString(v);
-                saveChanges();
+            mItem.mStars = Float.toString(v);
+            saveChanges();
             }
         });
 
@@ -128,13 +129,13 @@ public class BeerDetailFragment extends Fragment {
         }
 
         Beer item = new Beer(
-                getTextFromView(((TextView)activity.findViewById(R.id.beer_name))).toString(),
-                getTextFromView(((TextView)activity.findViewById(R.id.brewery_name))).toString(),
-                getTextFromView(((TextView)activity.findViewById(R.id.beer_type))).toString(),
-                getTextFromView(((TextView)activity.findViewById(R.id.country))).toString(),
-                getTextFromView(((TextView)activity.findViewById(R.id.percentage))).toString(),
-                Float.toString(((RatingBar)activity.findViewById(R.id.RatingBar)).getRating()),
-                getTextFromView(((TextView)activity.findViewById(R.id.beer_comment))).toString());
+            getTextFromView(((TextView)activity.findViewById(R.id.beer_name))).toString(),
+            getTextFromView(((TextView)activity.findViewById(R.id.brewery_name))).toString(),
+            getTextFromView(((TextView)activity.findViewById(R.id.beer_type))).toString(),
+            getTextFromView(((TextView)activity.findViewById(R.id.country))).toString(),
+            getTextFromView(((TextView)activity.findViewById(R.id.percentage))).toString(),
+            Float.toString(((RatingBar)activity.findViewById(R.id.RatingBar)).getRating()),
+            getTextFromView(((TextView)activity.findViewById(R.id.beer_comment))).toString());
 
         if (mItem != null) {
             item.mID = mItem.mID;
@@ -168,12 +169,14 @@ public class BeerDetailFragment extends Fragment {
         final Activity activity = getActivity();
         final EditText editText = getEditTextforId(id);
 
-        if (editText.getVisibility() != View.VISIBLE)
+        if (editText.getVisibility() != View.VISIBLE) {
             return;
+        }
 
         final TextView textView = (TextView) activity.findViewById(id);
-        if (saveChangedData)
+        if (saveChangedData) {
             textView.setText(getTextFromView(editText));
+        }
 
         textView.setVisibility(View.VISIBLE);
         editText.setVisibility(View.GONE);
@@ -181,27 +184,35 @@ public class BeerDetailFragment extends Fragment {
 
     CharSequence getTextFromView(EditText editText) {
         return editText.getId() == R.id.percentage
-                ? editText.getText() + "%"
-                : editText.getText().toString();
+            ? editText.getText() + "%"
+            : editText.getText().toString();
     }
     CharSequence getTextFromView(TextView textView) {
         final CharSequence charSequence = textView.getText();
         if (textView.getId() == R.id.percentage && charSequence.length() > 0 &&
-            charSequence.charAt(charSequence.length() -1) == '%')
-            return textView.getText().subSequence(0, textView.getText().length() -1);
+            charSequence.charAt(charSequence.length() -1) == '%') {
+            return textView.getText().subSequence(0, textView.getText().length() - 1);
+        }
         return charSequence;
     }
 
     EditText getEditTextforId(int id) {
         final Activity activity = getActivity();
         switch (id) {
-            case R.id.beer_name: return (EditText) activity.findViewById(R.id.beer_name_edit);
-            case R.id.brewery_name: return (EditText) activity.findViewById(R.id.brewery_name_edit);
-            case R.id.beer_type: return (EditText) activity.findViewById(R.id.beer_type_edit);
-            case R.id.country: return (EditText) activity.findViewById(R.id.country_edit);
-            case R.id.percentage: return (EditText) activity.findViewById(R.id.percentage_edit);
-            case R.id.beer_comment: return (EditText) activity.findViewById(R.id.beer_comment_edit);
-            default: throw new NoSuchElementException();
+            case R.id.beer_name:
+                return (EditText) activity.findViewById(R.id.beer_name_edit);
+            case R.id.brewery_name:
+                return (EditText) activity.findViewById(R.id.brewery_name_edit);
+            case R.id.beer_type:
+                return (EditText) activity.findViewById(R.id.beer_type_edit);
+            case R.id.country:
+                return (EditText) activity.findViewById(R.id.country_edit);
+            case R.id.percentage:
+                return (EditText) activity.findViewById(R.id.percentage_edit);
+            case R.id.beer_comment:
+                return (EditText) activity.findViewById(R.id.beer_comment_edit);
+            default:
+                throw new NoSuchElementException();
         }
     }
 
@@ -210,8 +221,9 @@ public class BeerDetailFragment extends Fragment {
      * @param id ID of the TextView to edit
      */
     void editMode(int id) {
-        if (mPrevEditedField != -1)
+        if (mPrevEditedField != -1) {
             disableEditMode(mPrevEditedField, true);
+        }
         mPrevEditedField = id;
         activateEditMode(id);
     }

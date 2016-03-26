@@ -43,8 +43,9 @@ public class Database {
 
             mHelper.close(cursor);
 
-            if (mAdapter != null)
+            if (mAdapter != null) {
                 mAdapter.notifyDataSetChanged();
+            }
         }
         return mList;
     }
@@ -55,8 +56,9 @@ public class Database {
      * @return An adapter of the database item list
      */
      public BeerArrayAdapter getAdapter(Activity activity) {
-        if (mAdapter == null)
+        if (mAdapter == null) {
             mAdapter = new BeerArrayAdapter(activity, getList(activity));
+        }
         return mAdapter;
     }
 
@@ -82,8 +84,9 @@ public class Database {
         mHelper.update(item);
         if (mList != null) {
             int pos = mList.indexOf(item);
-            if (pos != -1)
+            if (pos != -1) {
                 mList.set(pos, item);
+            }
         }
         if (mAdapter != null)
             mAdapter.notifyDataSetChanged();
@@ -97,8 +100,9 @@ public class Database {
         mHelper.remove(item.mID);
         if (mList != null) {
             mList.remove(item);
-            if (mAdapter != null)
+            if (mAdapter != null) {
                 mAdapter.notifyDataSetChanged();
+            }
         }
     }
 
@@ -144,8 +148,9 @@ public class Database {
                 .getPreferences(Context.MODE_PRIVATE)
                 .getString("sort", DatabaseContract.BeerColumns._ID);
         if (sortingString.equals(DatabaseContract.BeerColumns.STARS) ||
-            sortingString.equals(DatabaseContract.BeerColumns._ID))
+            sortingString.equals(DatabaseContract.BeerColumns._ID)) {
             sortingString += " DESC";
+        }
         return sortingString;
     }
 }

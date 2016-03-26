@@ -32,11 +32,13 @@ public class BeerDetailActivity extends Activity {
 
         final ActionBar actionBar = getActionBar();
         // Show the Up button in the action bar.
-        if (actionBar != null)
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
-        if (actionBar != null)
+        if (actionBar != null) {
             actionBar.setBackgroundDrawable(new ColorDrawable((Color.parseColor("#669900"))));
+        }
 
         // Add fragment if we don't already have one
         if (savedInstanceState == null) {
@@ -47,8 +49,8 @@ public class BeerDetailActivity extends Activity {
             BeerDetailFragment fragment = new BeerDetailFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
-                    .add(R.id.beer_detail_container, fragment, "DetailFragment")
-                    .commit();
+                .add(R.id.beer_detail_container, fragment, "DetailFragment")
+                .commit();
         }
     }
 
@@ -78,10 +80,11 @@ public class BeerDetailActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if (mEditMode)
+        if (mEditMode) {
             cancelChanges(null);
-        else
+        } else {
             NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
+        }
     }
 
     /**
@@ -90,10 +93,11 @@ public class BeerDetailActivity extends Activity {
      */
     public void saveChanges(View _unused) {
         getBeerDetailFragment().saveChanges();
-        if (mCurrentItem || !mEditMode)
+        if (mCurrentItem || !mEditMode) {
             NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
-        else
+        } else {
             mEditMode = false;
+        }
     }
 
     /**
@@ -101,9 +105,9 @@ public class BeerDetailActivity extends Activity {
      * @param _unused Unused
      */
     public void cancelChanges(View _unused) {
-        if (mCurrentItem || !mEditMode)
+        if (mCurrentItem || !mEditMode) {
             NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
-        else {
+        } else {
             getBeerDetailFragment().cancelChanges();
             mEditMode = false;
         }

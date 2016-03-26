@@ -4,17 +4,17 @@ import android.provider.BaseColumns;
 
 public class DatabaseContract {
     public static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + BeerColumns.TABLE_NAME + " (" +
-                    BeerColumns._ID + " INTEGER PRIMARY KEY," +
-                    BeerColumns.BEER_NAME  + " TEXT," +
-                    BeerColumns.BREWERY    + " TEXT," +
-                    BeerColumns.BEER_TYPE  + " TEXT," +
-                    BeerColumns.COUNTRY    + " TEXT," +
-                    BeerColumns.PERCENTAGE + " TEXT," +
-                    BeerColumns.STARS      + " TEXT," +
-                    BeerColumns.COMMENT    + " TEXT)";
+        "CREATE TABLE " + BeerColumns.TABLE_NAME + " (" +
+        BeerColumns._ID + " INTEGER PRIMARY KEY," +
+        BeerColumns.BEER_NAME  + " TEXT," +
+        BeerColumns.BREWERY    + " TEXT," +
+        BeerColumns.BEER_TYPE  + " TEXT," +
+        BeerColumns.COUNTRY    + " TEXT," +
+        BeerColumns.PERCENTAGE + " TEXT," +
+        BeerColumns.STARS      + " TEXT," +
+        BeerColumns.COMMENT    + " TEXT)";
     public static final String SQL_DROP_ENTRIES =
-            "DROP TABLE IF EXISTS " + BeerColumns.TABLE_NAME;
+        "DROP TABLE IF EXISTS " + BeerColumns.TABLE_NAME;
 
     public static abstract class BeerColumns implements BaseColumns {
         public static final String TABLE_NAME = "Beers";
@@ -28,13 +28,13 @@ public class DatabaseContract {
     }
 
     public static final String[] projection = {
-            BeerColumns._ID,
-            BeerColumns.BEER_NAME,
-            BeerColumns.BREWERY,
-            BeerColumns.BEER_TYPE,
-            BeerColumns.COUNTRY,
-            BeerColumns.PERCENTAGE,
-            BeerColumns.STARS,
-            BeerColumns.COMMENT
+        BeerColumns._ID,
+        BeerColumns.BEER_NAME,
+        BeerColumns.BREWERY,
+        BeerColumns.BEER_TYPE,
+        BeerColumns.COUNTRY,
+        BeerColumns.PERCENTAGE,
+        BeerColumns.STARS,
+        BeerColumns.COMMENT
     };
 }

@@ -41,8 +41,9 @@ public class BeerListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (mDatabase == null)
+        if (mDatabase == null) {
             new AsyncCreateList().execute();
+        }
     }
 
     @Override
@@ -95,8 +96,8 @@ public class BeerListFragment extends ListFragment {
         // When setting CHOICE_MODE_SINGLE, ListView will automatically
         // give items the 'activated' state when touched.
         getListView().setChoiceMode(activateOnItemClick
-                ? ListView.CHOICE_MODE_SINGLE
-                : ListView.CHOICE_MODE_NONE);
+            ? ListView.CHOICE_MODE_SINGLE
+            : ListView.CHOICE_MODE_NONE);
     }
 
     /**
@@ -123,15 +124,15 @@ public class BeerListFragment extends ListFragment {
             final Activity activity = getActivity();
             final String item_name = mDatabase.getList(activity).get(item_pos).toString();
             new AlertDialog.Builder(getActivity())
-                    .setMessage(getString(R.string.delete) + " " + item_name + "?")
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            mDatabase.removeBeer(mDatabase.getList(activity).get(item_pos));
-                        }
-                    })
-                    .setNegativeButton(R.string.no, null)
-                    .show();
+                .setMessage(getString(R.string.delete) + " " + item_name + "?")
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mDatabase.removeBeer(mDatabase.getList(activity).get(item_pos));
+                    }
+                })
+                .setNegativeButton(R.string.no, null)
+                .show();
             return true;
         }
     }

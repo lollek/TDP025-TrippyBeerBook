@@ -37,8 +37,9 @@ public class BeerListActivity extends Activity {
 
         setContentView(R.layout.activity_beer_list);
         final ActionBar actionBar = getActionBar();
-        if (actionBar != null)
+        if (actionBar != null) {
             actionBar.setBackgroundDrawable(new ColorDrawable((Color.parseColor("#669900"))));
+        }
 
         if (findViewById(R.id.beer_detail_container) != null) {
             // The detail container view will be present only in the
@@ -50,8 +51,8 @@ public class BeerListActivity extends Activity {
             // In two-pane mode, list items should be given the
             // 'activated' state when touched.
             ((BeerListFragment) getFragmentManager()
-                    .findFragmentById(R.id.beer_list))
-                    .setActivateOnItemClick(true);
+                .findFragmentById(R.id.beer_list))
+                .setActivateOnItemClick(true);
         }
     }
 
@@ -119,8 +120,8 @@ public class BeerListActivity extends Activity {
         BeerDetailFragment fragment = new BeerDetailFragment();
         fragment.setArguments(arguments);
         getFragmentManager().beginTransaction()
-                .replace(R.id.beer_detail_container, fragment, "DetailFragment")
-                .commit();
+            .replace(R.id.beer_detail_container, fragment, "DetailFragment")
+            .commit();
     }
 
     /** Display a beer in a separate fragment.
@@ -176,7 +177,7 @@ public class BeerListActivity extends Activity {
      */
     boolean setSorting(String sort) {
         ((BeerListFragment) getFragmentManager().findFragmentById(R.id.beer_list))
-                           .setSorting(sort);
+           .setSorting(sort);
         return true;
     }
 }
