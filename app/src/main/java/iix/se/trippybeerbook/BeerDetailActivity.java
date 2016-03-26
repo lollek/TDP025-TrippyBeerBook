@@ -24,27 +24,19 @@ import android.view.View;
 public class BeerDetailActivity extends Activity {
     private boolean mEditMode = false;
     private boolean mCurrentItem;
-    private ABTest mABTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beer_detail);
-        if (mABTest == null)
-            mABTest = ABTest.getInstance(this);
 
         final ActionBar actionBar = getActionBar();
         // Show the Up button in the action bar.
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
 
-        if (mABTest.colorfulButtons()) {
-            if (actionBar != null)
-                actionBar.hide();
-        } else if (mABTest.colorfulActionBar()) {
-            if (actionBar != null)
-                actionBar.setBackgroundDrawable(new ColorDrawable((Color.parseColor("#669900"))));
-        }
+        if (actionBar != null)
+            actionBar.setBackgroundDrawable(new ColorDrawable((Color.parseColor("#669900"))));
 
         // Add fragment if we don't already have one
         if (savedInstanceState == null) {
@@ -62,14 +54,9 @@ public class BeerDetailActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (mABTest.colorfulButtons()) {
-            return super.onCreateOptionsMenu(menu);
-        } else {
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.actionbar_detail, menu);
-            return true;
-        }
-
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.actionbar_detail, menu);
+        return true;
     }
 
     @Override

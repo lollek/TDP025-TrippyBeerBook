@@ -30,25 +30,15 @@ import iix.se.trippybeerbook.database.DatabaseContract;
 public class BeerListActivity extends Activity {
 
     private boolean mTwoPane; // Are we running in 2-pane mode (tablet) ?
-    private ABTest mABTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (mABTest == null)
-            mABTest = ABTest.getInstance(this);
-        mABTest.recordEvent("AddButtonShown");
 
         setContentView(R.layout.activity_beer_list);
         final ActionBar actionBar = getActionBar();
-        if (mABTest.colorfulButtons()) {
-            if (actionBar != null)
-                actionBar.hide();
-            findViewById(R.id.colorful_buttons).setVisibility(View.VISIBLE);
-        } else if (mABTest.colorfulActionBar()) {
-            if (actionBar != null)
-                actionBar.setBackgroundDrawable(new ColorDrawable((Color.parseColor("#669900"))));
-        }
+        if (actionBar != null)
+            actionBar.setBackgroundDrawable(new ColorDrawable((Color.parseColor("#669900"))));
 
         if (findViewById(R.id.beer_detail_container) != null) {
             // The detail container view will be present only in the
@@ -69,10 +59,6 @@ public class BeerListActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.actionbar, menu);
-        if (mABTest.colorfulButtons()) {
-            menu.findItem(R.id.action_bar_add).setVisible(false);
-            menu.findItem(R.id.action_bar_sort).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-        }
         return true;
     }
 
@@ -80,28 +66,20 @@ public class BeerListActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_bar_add: addItem(null); return true;
-            case R.id.action_bar_item_new: return setSorting(DatabaseContract.BeerColumns._ID);
-            case R.id.action_bar_item_score: return setSorting(DatabaseContract.BeerColumns.STARS);
-            case R.id.action_bar_item_name: return setSorting(DatabaseContract.BeerColumns.BEER_NAME);
-            case R.id.action_bar_item_brewery: return setSorting(DatabaseContract.BeerColumns.BREWERY);
-            case R.id.action_bar_devel_ColorfulButtons:
-                mABTest.setColorfulButtons(!mABTest.colorfulButtons());
+            case R.id.action_bar_add:
+                addItem(null);
                 return true;
-            case R.id.action_bar_devel_ColorfulActionBar:
-                mABTest.setColorfulActionBar(!mABTest.colorfulActionBar());
-                return true;
-            case R.id.action_bar_devel_ShowPercentage:
-                mABTest.setShowPercentage(!mABTest.showPercentage());
-                return true;
-            default: return super.onOptionsItemSelected(item);
+            case R.id.action_bar_item_new:
+                return setSorting(DatabaseContract.BeerColumns._ID);
+            case R.id.action_bar_item_score:
+                return setSorting(DatabaseContract.BeerColumns.STARS);
+            case R.id.action_bar_item_name:
+                return setSorting(DatabaseContract.BeerColumns.BEER_NAME);
+            case R.id.action_bar_item_brewery:
+                return setSorting(DatabaseContract.BeerColumns.BREWERY);
+            default:
+                return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mABTest.submitEvents();
     }
 
     /**
@@ -109,7 +87,6 @@ public class BeerListActivity extends Activity {
      * @param id ID of the clicked item
      */
     public void onItemSelected(Beer id) {
-        mABTest.recordEvent("ItemShown");
         if (mTwoPane) {
             changeFragmentForTwoPane(id.mID);
         } else {
@@ -122,7 +99,6 @@ public class BeerListActivity extends Activity {
      * @param _unused Unused
      */
     public void addItem(@SuppressWarnings("UnusedParameters") View _unused) {
-        mABTest.recordEvent("AddButtonClicked");
         if (mTwoPane) {
             changeFragmentForTwoPane(-1);
         } else {

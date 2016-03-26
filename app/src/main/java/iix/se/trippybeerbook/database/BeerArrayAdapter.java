@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import iix.se.trippybeerbook.ABTest;
 import iix.se.trippybeerbook.R;
 
 public class BeerArrayAdapter extends ArrayAdapter<Beer> {
@@ -20,10 +19,7 @@ public class BeerArrayAdapter extends ArrayAdapter<Beer> {
     private int mLayoutId = -1;
 
     public BeerArrayAdapter(Context context, List<Beer> objects) {
-        super(context, ABTest.getInstance((Activity)context).showPercentage()
-                        ? R.layout.beer_list_item_percentage
-                        : R.layout.beer_list_item,
-              objects);
+        super(context, R.layout.beer_list_item_percentage, objects);
         mContext = context;
         mList = objects;
     }
@@ -31,9 +27,7 @@ public class BeerArrayAdapter extends ArrayAdapter<Beer> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (mLayoutId == -1)
-            mLayoutId = ABTest.getInstance((Activity)mContext).showPercentage()
-                    ? R.layout.beer_list_item_percentage
-                    : R.layout.beer_list_item;
+            mLayoutId = R.layout.beer_list_item_percentage;
         View view = convertView;
         if (view == null)
             view = ((Activity)mContext).getLayoutInflater().inflate(mLayoutId, parent, false);

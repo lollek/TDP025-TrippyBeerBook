@@ -47,12 +47,6 @@ public class BeerDetailFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_beer_detail,
                 container, false);
 
-        final ABTest mABTest = ABTest.getInstance(getActivity());
-        if (mABTest.colorfulButtons()) {
-            rootView.findViewById(R.id.save_btn).setVisibility(View.VISIBLE);
-            rootView.findViewById(R.id.cancel_btn).setVisibility(View.VISIBLE);
-        }
-
         return mItem == null ? onCreateViewNew(rootView) : onCreateViewExisting(rootView);
     }
 
