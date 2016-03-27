@@ -86,10 +86,19 @@ public class BeerListActivity extends Activity {
                 return setSorting(DatabaseContract.BeerColumns.BREWERY);
             case R.id.action_bar_option_colorful:
                 mOptions.setColorfulness(!mOptions.getColorfulness());
+                reloadActivity();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * Reload activity with new data
+     */
+    private void reloadActivity() {
+        finish();
+        startActivity(getIntent());
     }
 
     /**
