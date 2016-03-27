@@ -91,7 +91,7 @@ public class BeerDetailActivity extends Activity {
      * Save any modifications we have done
      * @param _unused Unused
      */
-    public void saveChanges(View _unused) {
+    public void saveChanges(@SuppressWarnings("UnusedParameters") View _unused) {
         getBeerDetailFragment().saveChanges();
         if (mCurrentItem || !mEditMode) {
             NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
@@ -104,7 +104,7 @@ public class BeerDetailActivity extends Activity {
      * Cancel any modifications we have done.
      * @param _unused Unused
      */
-    public void cancelChanges(View _unused) {
+    public void cancelChanges(@SuppressWarnings("UnusedParameters") View _unused) {
         if (mCurrentItem || !mEditMode) {
             NavUtils.navigateUpTo(this, new Intent(this, BeerListActivity.class));
         } else {

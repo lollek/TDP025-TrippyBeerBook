@@ -28,19 +28,13 @@
     </item>
     <item
         android:id="@+id/action_bar_devel"
-        android:title="Toggle Development Options"
+        android:title="Options"
         android:showAsAction="never"
         tools:ignore="HardcodedText">
         <menu>
             <item
-                android:id="@+id/action_bar_devel_ColorfulButtons"
-                android:title="ColorfulButtons"/>
-            <item
-                android:id="@+id/action_bar_devel_ColorfulActionBar"
-                android:title="ColorfulActionBar"/>
-            <item
-                android:id="@+id/action_bar_devel_ShowPercentage"
-                android:title="ShowPercentage"/>
+                android:id="@+id/action_bar_option_colorful"
+                android:title="Toggle Colorfulness"/>
         </menu>
     </item>
 </menu>

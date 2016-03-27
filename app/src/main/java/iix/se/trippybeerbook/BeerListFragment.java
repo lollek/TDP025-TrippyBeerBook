@@ -10,9 +10,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import iix.se.trippybeerbook.database.Beer;
-import iix.se.trippybeerbook.database.BeerArrayAdapter;
-import iix.se.trippybeerbook.database.Database;
+import iix.se.trippybeerbook.database.beer.Beer;
+import iix.se.trippybeerbook.database.beer.BeerArrayAdapter;
+import iix.se.trippybeerbook.database.beer.Database;
+import iix.se.trippybeerbook.database.beer.DatabaseContract;
 
 
 /**
@@ -81,7 +82,7 @@ public class BeerListFragment extends ListFragment {
 
     /**
      * Change the way the list is sorted
-     * @param sorting See {@link iix.se.trippybeerbook.database.DatabaseContract.BeerColumns}
+     * @param sorting See {@link DatabaseContract.BeerColumns}
      */
     public void setSorting(String sorting) {
         mDatabase.sortBy(getActivity(), sorting, true);

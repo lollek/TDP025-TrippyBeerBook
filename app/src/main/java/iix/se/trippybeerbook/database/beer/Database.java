@@ -1,4 +1,4 @@
-package iix.se.trippybeerbook.database;
+package iix.se.trippybeerbook.database.beer;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,7 +12,7 @@ import java.util.List;
  * Database is an abstraction for interacting with the SQLite database.
  * The real action takes place in {@link DatabaseHelper} */
 public class Database {
-    private final DatabaseHelper mHelper;             /* SQLite backend */
+    private final DatabaseHelper mHelper;       /* SQLite backend */
     private BeerArrayAdapter mAdapter;          /* Adapter for mList */
     private List<Beer> mList;                   /* List of items in database */
 

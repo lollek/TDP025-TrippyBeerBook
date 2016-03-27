@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import java.util.NoSuchElementException;
 
-import iix.se.trippybeerbook.database.Beer;
-import iix.se.trippybeerbook.database.Database;
+import iix.se.trippybeerbook.database.beer.Beer;
+import iix.se.trippybeerbook.database.beer.Database;
 
 
 /**

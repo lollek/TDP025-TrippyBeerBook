@@ -12,8 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import iix.se.trippybeerbook.database.Beer;
-import iix.se.trippybeerbook.database.DatabaseContract;
+import iix.se.trippybeerbook.database.beer.Beer;
+import iix.se.trippybeerbook.database.beer.DatabaseContract;
 
 /**
  * An activity representing a list of Beers. This activity
@@ -30,14 +30,20 @@ import iix.se.trippybeerbook.database.DatabaseContract;
 public class BeerListActivity extends Activity {
 
     private boolean mTwoPane; // Are we running in 2-pane mode (tablet) ?
+    private Options mOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_beer_list);
+
+        if (mOptions == null) {
+            mOptions = new Options(this);
+        }
+
         final ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
+        if (actionBar != null && mOptions.getColorfulness()) {
             actionBar.setBackgroundDrawable(new ColorDrawable((Color.parseColor("#669900"))));
         }
 
@@ -78,6 +84,9 @@ public class BeerListActivity extends Activity {
                 return setSorting(DatabaseContract.BeerColumns.BEER_NAME);
             case R.id.action_bar_item_brewery:
                 return setSorting(DatabaseContract.BeerColumns.BREWERY);
+            case R.id.action_bar_option_colorful:
+                mOptions.setColorfulness(!mOptions.getColorfulness());
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

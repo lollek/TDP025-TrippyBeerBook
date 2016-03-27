@@ -1,4 +1,4 @@
-package iix.se.trippybeerbook.database;
+package iix.se.trippybeerbook.database.beer;
 
 import android.database.Cursor;
 

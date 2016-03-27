@@ -1,4 +1,4 @@
-package iix.se.trippybeerbook.database;
+package iix.se.trippybeerbook.database.beer;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import iix.se.trippybeerbook.R;
+import iix.se.trippybeerbook.database.beer.Beer;
 
 public class BeerArrayAdapter extends ArrayAdapter<Beer> {
     private final Context mContext;
